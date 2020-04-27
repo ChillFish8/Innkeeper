@@ -1,0 +1,5 @@
+Django
+bs4
+diceroller
+discord.py
+lxml
