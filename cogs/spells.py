@@ -4,12 +4,14 @@ import aiohttp
 import re
 import pandas as pd
 
-dict_of_spells = {'test': 'https://k-is-geyh.com/'}
-spells_data_frame = pd.DataFrame.from_dict(dict_of_spells, orient='index', columns=['name', 'url'])
-print(spells_data_frame)
+dict_of_spells = [['test', 'https://k-is-geyh.com/'],
+                  ['lol', 'https://k-is-geyh.com/'],
+                  ['k', 'https://k-is-geyh.com/'],
+                  ['gayyy', 'https://k-is-geyh.com/']]
+
 
 class GetSpells:
-
+    spells_data_frame = pd.DataFrame(dict_of_spells, columns=['name', 'url'])
 
     @classmethod
     async def _get_request(cls, url):
@@ -22,8 +24,7 @@ class GetSpells:
 
     @classmethod
     async def _search_list(cls, keywords: list):
-        base = ' '.join(keywords)
-        return
+        pass
 
     @classmethod
     async def get_spell(cls, keywords: list):
