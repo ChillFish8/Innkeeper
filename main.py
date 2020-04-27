@@ -53,6 +53,11 @@ class Innkeeper(commands.AutoShardedBot):
 
         await self.process_commands(message)
 
+    async def on_command_error(self, context, exception):
+        """ Any errors that happen in the bot will get sent here """
+        if isinstance(exception, commands.CommandNotFound):
+            pass
+
 
 if __name__ == "__main__":
     the_innkeeper = Innkeeper(
