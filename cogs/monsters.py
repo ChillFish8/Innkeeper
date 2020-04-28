@@ -7,8 +7,8 @@ import discord
 
 class GetSpells:
     with open('./resources/monsters.json', 'r') as file:
-        monsters = json.load(file)
-    monsters_data_frame = pd.DataFrame(monsters, columns=['name', 'url'])
+        spells = json.load(file)
+    spells_data_frame = pd.DataFrame(spells, columns=['name', 'url'])
 
     @classmethod
     async def _get_request(cls, url):
@@ -25,8 +25,8 @@ class GetSpells:
     @classmethod
     def _search_list(cls, search: str):
         """ The heavy lifter, pandas searches the frame for matches """
-        results: pd.DataFrame = cls.monsters_data_frame[
-            cls.monsters_data_frame['name'].str.contains(search)]
+        results: pd.DataFrame = cls.spells_data_frame[
+            cls.spells_data_frame['name'].str.contains(search)]
         data: dict = results.to_dict(orient='index')
         return list(data.values())
 
@@ -41,7 +41,6 @@ class GetSpells:
     @classmethod
     async def get_spell(cls, search: str):
         """ Search and filter out a class_ from the list """
-
         results: list = cls._search_list(search)
         if len(results) != 0:
             exact = cls._filter_exact(search, results)
@@ -83,14 +82,35 @@ class Spells(commands.Cog):
                              icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
             return await ctx.send(embed=embed)
 
-        monster_data = await GetSpells.get_spell(spell.capitalize())
+        spell_data = await GetSpells.get_spell(spell.capitalize())
 
-        if not isinstance(monster_data, dict):
-            monster_data.color = self.bot.colour
-            return await ctx.send(embed=monster_data)
+        if not isinstance(spell_data, dict):
+            spell_data.color = self.bot.colour
+            return await ctx.send(embed=spell_data)
 
-        embed = discord.Embed(title=monster_data['name'], color=self.bot.colour)
+        embed = discord.Embed(title=spell_data['name'], color=self.bot.colour)
         embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)
+
+        stats = f"**Level:** `{spell_data['level']}`\n" \
+                f"**Range:** `{spell_data['range']}`\n" \
+                f"**Duration:** `{spell_data['duration']}`\n" \
+                f"**Components:** `{','.join(spell_data['components'])}`\n" \
+                f"**Casting time:** `{spell_data['casting_time']}`\n" \
+                f"**Concentration:** `{'yes' if spell_data['concentration'] else 'no'}`\n" \
+                f"**Ritual:** `{'yes' if spell_data['ritual'] else 'no'}`\n"
+        classes = f"**School:** `{spell_data['school']['name']}`\n" \
+                  f"**Classes:**\n"
+        for class_ in spell_data['classes']:
+            classes += f"`{class_['name']}`\n"
+        embed.add_field(name="Stats:", value=stats, inline=True)
+        embed.add_field(name="More:", value=classes, inline=True)
+
+        embed.add_field(name="Description", value=spell_data['desc'][0], inline=False)
+        for extra in spell_data['desc'][1:]:
+            embed.add_field(name="\u200b", value=extra, inline=False)
+
+        if 'higher_level' in spell_data.keys():
+            embed.add_field(name="At higher levels:", value="\n".join(spell_data['higher_level']), inline=False)
         embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
         await ctx.send(embed=embed)
 

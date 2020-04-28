@@ -534,7 +534,7 @@ async def Cleric(subclass):
                                            "\n"
                                            "**Domain Spells**\n"
                                            "\n"
-                                           "Each domain has a list of spells-its domain spells-that "
+                                           "Each domain has a list of monsters-its domain monsters-that "
                                            "you gain at the Cleric levels noted in the domain description."
                                            " Once you gain a domain spell, you always have it prepared, "
                                            "and it doesn't count against the number of Spells you can "
