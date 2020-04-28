@@ -43,7 +43,7 @@ class HelpCommand(commands.Cog):
         embed.add_field(name="\u200b", value=desc_4, inline=False)
 
         # Dungeon master's commands
-        desc_5 = f"<:gelatinous_cute:651475508684652554>  **Dungeon Master's Area**  <:gelatinous_cute:651475508684652554>\n" \
+        desc_5 = f"<:gelati_cute:704784002355036190>  **Dungeon Master's Area**  <:gelati_cute:704784002355036190>\n" \
                  f"`?loadaudio` - Load a audio file/url to have Innkeeper play during games.\n" \
                  f"`?play` - Play the loaded audio.\n" \
                  f"`?pause` - Pause the current playing audio track.\n" \

@@ -2,13 +2,30 @@ from discord.ext import commands
 import aiohttp
 import json
 import pandas as pd
-import discord
+import asyncio
+
+from resources import classes_srd
+from modules import paginator
 
 
 class GetClass:
     with open('./resources/classes.json', 'r') as file:
         spells = json.load(file)
-    spells_data_frame = pd.DataFrame(spells, columns=['name', 'url'])
+    spells_data_frame = pd.DataFrame(spells, columns=['name', 'id'])
+    base_classes = [
+        classes_srd.Barbarian,
+        classes_srd.Bard,
+        classes_srd.Cleric,
+        classes_srd.Druid,
+        classes_srd.Fighter,
+        classes_srd.Monk,
+        classes_srd.Paladin,
+        classes_srd.Ranger,
+        classes_srd.Rogue,
+        classes_srd.Sorcerer,
+        classes_srd.Warlock,
+        classes_srd.wizard,
+    ]
 
     @classmethod
     async def _get_request(cls, url):
@@ -18,7 +35,6 @@ class GetClass:
         async with aiohttp.ClientSession() as sess:
             async with sess.get(url) as resp:
                 if resp.status != 200:
-                    print(resp.status)
                     return False
                 else:
                     return await resp.json()
@@ -44,40 +60,18 @@ class GetClass:
         """ Search and filter out a class_ from the list """
         results: list = cls._search_list(search)
         if len(results) != 0:
-            exact = cls._filter_exact(search, results)
-            if exact is not None:
-                data = exact
-            else:
+            data = cls._filter_exact(search, results)
+            if data is None:
                 data = results[0]
-
-            if data['url'].startswith('http://dnd5eapi.co/api/'):
-                output = {}
-                base_class = await cls._get_request(data['url'])
-
-                # stuff that can just get copied over from api
-                output['name'] = base_class['name']
-                output['hit_die'] = base_class['hit_die']
-                output['proficiency_choices'] = {
-                    'choose': base_class['proficiency_choices'][0]['choose'],
-                    'from': base_class['proficiency_choices'][0]['from'],
-                }
-                output['proficiencies'] = base_class['proficiencies']
-                output['saving_throws'] = base_class['saving_throws']
-
-                # starting equipment
-                data = await cls._get_request(f"http://dnd5eapi.co{base_class['starting_equipment']['url']}")
-                start_equip = [f"{item['item']['name']} x {item['quantity']}" for item in data['starting_equipment']]
-                output['starting_equipment'] = start_equip
-
-                # class levels
-                data = await cls._get_request(f"http://dnd5eapi.co{base_class['class_levels']['url']}")
-
-
-
-
-            return
+            if data['id'].isdigit():
+                return await cls.base_classes[int(data['id']) - 1](False)
+            else:
+                pass  # todo add system for custom content
         else:
-            return None
+            text = f"<:wellfuck:704784002166554776> **Oops! I could not find anything matching that search!**\n" \
+                   f"Here are the classes i can bring up:\n"
+            text += '\n'.join([f"• `{item['name']}`" for item in cls.spells])
+            return text
 
 
 class Classes(commands.Cog):
@@ -88,13 +82,16 @@ class Classes(commands.Cog):
     async def classes(self, ctx, class_: str):
         """ Gets a class_ either from database or site """
 
-        class_data = await GetClass.get_class(class_.capitalize())
-
-        embed = discord.Embed(title=class_data['name'], color=self.bot.colour)
-        embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)
-
-        embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
-        await ctx.send(embed=embed)
+        if class_.isalpha():
+            class_data = await GetClass.get_class(class_.capitalize())
+            if isinstance(class_data, list):
+                pager = paginator.Paginator(class_data, ctx.message, self.bot, self.bot.colour)
+                asyncio.get_event_loop().create_task(pager.start())
+            else:
+                await ctx.send(class_data)
+        else:
+            await ctx.send(
+                "<:wellfuck:704784002166554776> **Oops! I cant search for things that are not words or letters.**")
 
 def setup(bot):
     bot.add_cog(Classes(bot))

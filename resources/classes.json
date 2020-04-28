@@ -1,1 +1,12 @@
-[{"name": "Barbarian", "url": "http://dnd5eapi.co/api/classes/barbarian"}, {"name": "Bard", "url": "http://dnd5eapi.co/api/classes/bard"}, {"name": "Cleric", "url": "http://dnd5eapi.co/api/classes/cleric"}, {"name": "Druid", "url": "http://dnd5eapi.co/api/classes/druid"}, {"name": "Fighter", "url": "http://dnd5eapi.co/api/classes/fighter"}, {"name": "Monk", "url": "http://dnd5eapi.co/api/classes/monk"}, {"name": "Paladin", "url": "http://dnd5eapi.co/api/classes/paladin"}, {"name": "Ranger", "url": "http://dnd5eapi.co/api/classes/ranger"}, {"name": "Rogue", "url": "http://dnd5eapi.co/api/classes/rogue"}, {"name": "Sorcerer", "url": "http://dnd5eapi.co/api/classes/sorcerer"}, {"name": "Warlock", "url": "http://dnd5eapi.co/api/classes/warlock"}, {"name": "Wizard", "url": "http://dnd5eapi.co/api/classes/wizard"}]
+[{"name": "Barbarian", "id": "1"},
+  {"name": "Bard", "id": "2"}
+, {"name": "Cleric", "id": "3"},
+  {"name": "Druid", "id": "4"},
+  {"name": "Fighter", "id": "5"},
+  {"name": "Monk", "id": "6"},
+  {"name": "Paladin", "id": "7"},
+  {"name": "Ranger", "id": "8"},
+  {"name": "Rogue", "id": "9"},
+  {"name": "Sorcerer", "id": "10"},
+  {"name": "Warlock", "id": "11"},
+  {"name": "Wizard", "id": "12"}]

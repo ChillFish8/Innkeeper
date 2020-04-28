@@ -62,6 +62,10 @@ class Spells(commands.Cog):
     async def spell(self, ctx, spell: str):
         """ Gets a class_ either from database or site """
 
+        if not spell.isalpha():
+            return await ctx.send(
+                "<:wellfuck:704784002166554776> **Oops! I cant search for things that are not words or letters.**")
+
         spell_data = await GetSpells.get_spell(spell.capitalize())
 
         embed = discord.Embed(title=spell_data['name'], color=self.bot.colour)

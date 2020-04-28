@@ -2605,6 +2605,7 @@ async def Warlock(subclass):
                                            "                "), color=colour)
         embed.set_footer(text=footer)
         embed_list.append(embed)
+
         embed = discord.Embed(title="Class - Warlock  Pg 8 / 15",
                               description=("\n"
                                            "**Eldritch Invocations**\n"

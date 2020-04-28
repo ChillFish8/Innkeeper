@@ -55,10 +55,15 @@ class Innkeeper(commands.AutoShardedBot):
 
         await self.process_commands(message)
 
-    async def on_command_error(self, context, exception):
+    async def on_command_error(self, ctx, exception):
         """ Any errors that happen in the bot will get sent here """
         if isinstance(exception, commands.CommandNotFound):
             pass
+        elif isinstance(exception, commands.MissingRequiredArgument):
+            await ctx.send("<:wellfuck:704784002166554776> **You didnt give me anything to work with.**")
+        else:
+            await ctx.send(exception)
+            raise exception
 
 
 if __name__ == "__main__":
