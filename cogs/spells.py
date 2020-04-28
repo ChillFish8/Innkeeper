@@ -88,7 +88,9 @@ class Spells(commands.Cog):
         embed.add_field(name="Description", value=spell_data['desc'][0], inline=False)
         for extra in spell_data['desc'][1:]:
             embed.add_field(name="\u200b", value=extra, inline=False)
-        embed.add_field(name="At higher levels:", value="\n".join(spell_data['higher_level']), inline=False)
+
+        if 'higher_level' in spell_data.keys():
+            embed.add_field(name="At higher levels:", value="\n".join(spell_data['higher_level']), inline=False)
         embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
         await ctx.send(embed=embed)
 

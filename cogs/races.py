@@ -2,30 +2,12 @@ from discord.ext import commands
 import aiohttp
 import json
 import pandas as pd
-import asyncio
-
-from resources import classes_srd
-from modules import paginator
 
 
-class GetClass:
-    with open('./resources/classes.json', 'r') as file:
-        classes = json.load(file)
-    spells_data_frame = pd.DataFrame(classes, columns=['name', 'id'])
-    base_classes = [
-        classes_srd.Barbarian,
-        classes_srd.Bard,
-        classes_srd.Cleric,
-        classes_srd.Druid,
-        classes_srd.Fighter,
-        classes_srd.Monk,
-        classes_srd.Paladin,
-        classes_srd.Ranger,
-        classes_srd.Rogue,
-        classes_srd.Sorcerer,
-        classes_srd.Warlock,
-        classes_srd.wizard,
-    ]
+class GetRace:
+    with open('./resources/races.json', 'r') as file:
+        races = json.load(file)
+    spells_data_frame = pd.DataFrame(races, columns=['name', 'url'])
 
     @classmethod
     async def _get_request(cls, url):
@@ -56,21 +38,18 @@ class GetClass:
         return None
 
     @classmethod
-    async def get_class(cls, search: str):
+    async def get_race(cls, search: str):
         """ Search and filter out a class_ from the list """
         results: list = cls._search_list(search)
         if len(results) != 0:
             data = cls._filter_exact(search, results)
             if data is None:
                 data = results[0]
-            if data['id'].isdigit():
-                return await cls.base_classes[int(data['id']) - 1](False)
-            else:
-                pass  # todo add system for custom content
+
         else:
             text = f"<:wellfuck:704784002166554776> **Oops! I could not find anything matching that search!**\n" \
                    f"Here are the classes i can bring up:\n"
-            text += '\n'.join([f"• `{item['name']}`" for item in cls.classes])
+            text += '\n'.join([f"• `{item['name']}`" for item in cls.races])
             return text
 
 
@@ -79,16 +58,13 @@ class Classes(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def classes(self, ctx, class_: str):
+    async def classes(self, ctx, race: str):
         """ Gets a class_ either from database or site """
 
-        if class_.isalpha():
-            class_data = await GetClass.get_class(class_.capitalize())
-            if isinstance(class_data, list):
-                pager = paginator.Paginator(class_data, ctx.message, self.bot, self.bot.colour)
-                asyncio.get_event_loop().create_task(pager.start())
-            else:
-                await ctx.send(class_data)
+        if race.isalpha():
+            race_data = await GetRace.get_race(race.capitalize())
+
+
         else:
             await ctx.send(
                 "<:wellfuck:704784002166554776> **Oops! I cant search for things that are not words or letters.**")
