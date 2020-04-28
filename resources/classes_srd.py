@@ -1,11 +1,11 @@
 import discord
 footer = "D&D 5e SRD Content, All rights and content goes to Wizards.com, Powered by CF8"
+colour = 0x3deaf5
 
-
-async def Barbarian(subclass, sata):
-    EmbedList = []
+async def Barbarian(subclass):
+    embed_list = []
     if not subclass:
-        Embed = discord.Embed(title="Class - Barbarian  Pg 1",
+        embed = discord.Embed(title="Class - Barbarian  Pg 1",
                               description=("\n"
                                            "        **Hit Points**\n"
                                            "        Hit Dice: `1d12 per Barbarian level`\n"
@@ -29,16 +29,16 @@ async def Barbarian(subclass, sata):
                                            "         •(a) a Greataxe or (b) any martial melee weapon\n"
                                            "         •(a) two handaxes or (b) any simple weapon\n"
                                            "         •An explorer’s pack and four javelins\n"
-                                           "                                       "), color=Colour)
+                                           "                                       "), color=colour)
 
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Barbarian  Pg 2",
-                              description="The Barbarian", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646040223213551635/1.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Barbarian  Pg 3",
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Barbarian  Pg 2",
+                              description="The Barbarian", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646040223213551635/1.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Barbarian  Pg 3",
                               description=("\n"
                                            "        **Rage**\n"
                                            "        In battle, you fight with primal ferocity. On Your "
@@ -69,10 +69,10 @@ async def Barbarian(subclass, sata):
                                            "Barbarian level, you must finish a Long Rest before you can rage "
                                            "again. You may rage 2 times at 1st level, 3 at 3rd, 4 at 6th, 5"
                                            " at 12th, and 6 at 17th.\n"
-                                           "                                            "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Barbarian  Pg 4",
+                                           "                                            "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Barbarian  Pg 4",
                               description=("\n"
                                            "        **Unarmored Defense**\n"
                                            "        While you are not wearing any armor, your Armor Class"
@@ -93,10 +93,10 @@ async def Barbarian(subclass, sata):
                                            "Doing so gives you advantage on melee weapon Attack rolls using "
                                            "Strength during this turn, but Attack rolls against you have advantage "
                                            "until your next turn.\n"
-                                           "                                      "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Barbarian  Pg 5",
+                                           "                                      "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Barbarian  Pg 5",
                               description=("\n"
                                            "        **Primal Path**\n"
                                            "        At 3rd level, you choose a path that shapes the"
@@ -118,10 +118,10 @@ async def Barbarian(subclass, sata):
                                            "        **Fast Movement**\n"
                                            "        Starting at 5th level, your speed increases by 10 "
                                            "feet while you aren't wearing Heavy Armor.\n"
-                                           "                                      "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Barbarian  Pg 6",
+                                           "                                      "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Barbarian  Pg 6",
                               description=("\n"
                                            "        **Feral Instinct**\n"
                                            "        By 7th level, your instincts are so honed that you have"
@@ -149,10 +149,10 @@ async def Barbarian(subclass, sata):
                                            "        Each time you use this feature after the first, "
                                            "the DC increases by 5. When you finish a short or Long Rest, the "
                                            "DC resets to 10.\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Barbarian  Pg 7",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Barbarian  Pg 7",
                               description=("\n"
                                            "**Persistent Rage**\n"
                                            "Beginning at 15th level, your rage is so fierce that it ends "
@@ -167,24 +167,23 @@ async def Barbarian(subclass, sata):
                                            "At 20th level, you embody the power of the wilds. Your Strength "
                                            "and Constitution scores increase by 4. Your maximum for those scores"
                                            " is now 24.\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Barbarian | Sub-Classes | Pg 8",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Barbarian | Sub-Classes | Pg 8",
                               description="""
 **Sub-Classes**
 `Path of the Berserker`
-                                      """, color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        await ClassPager(EmbedList, Data=sata)
+                                      """, color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
-async def Bard(Subclass, Data):
-    global Colour
-    EmbedList = []
-    if not Subclass:
-        Embed = discord.Embed(title="Class - Bard  Pg 1",
+async def Bard(subclass):
+    embed_list = []
+    if not subclass:
+        embed = discord.Embed(title="Class - Bard  Pg 1",
                               description=("\n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d8 per bard level`\n"
@@ -211,16 +210,16 @@ async def Bard(Subclass, Data):
                                            "• (a) a Diplomat's Pack or (b) an Entertainer's Pack\n"
                                            "• (a) a lute or (b) any other musical instrument\n"
                                            "• Leather Armor, and a Dagger                \n"
-                                           ""), color=Colour)
+                                           ""), color=colour)
 
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Bard  Pg 2",
-                              description="Table: The Bard ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646405274701266949/2.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Bard  Pg 3",
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Bard  Pg 2",
+                              description="Table: The Bard ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646405274701266949/2.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Bard  Pg 3",
                               description=("\n"
                                            "**Bardic Inspiration**\n"
                                            "You can inspire others through stirring words or music."
@@ -244,11 +243,11 @@ async def Bard(Subclass, Data):
                                            "Your Bardic Inspiration die changes when you reach certain "
                                            "levels in this class. The die becomes a d8 at 5th level, a "
                                            "d10 at 10th level, and a d12 at 15th level.               \n"
-                                           ""), color=Colour)
+                                           ""), color=colour)
 
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Bard  Pg 4",
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Bard  Pg 4",
                               description=("\n"
                                            "**Spellcasting**\n"
                                            "You have learned to untangle and reshape the fabric of reality "
@@ -273,10 +272,10 @@ async def Bard(Subclass, Data):
                                            "For example, if you know the 1st-level spell Cure Wounds "
                                            "and have a 1st-level and a 2nd-level spell slot available, "
                                            "you can cast Cure Wounds using either slot.\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Bard  Pg 5",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Bard  Pg 5",
                               description=("\n"
                                            "**Spells Known of 1st Level and Higher**\n"
                                            "\n"
@@ -317,10 +316,10 @@ async def Bard(Subclass, Data):
                                            "\n"
                                            "You can use a musical instrument (see \"Equipment\") as a "
                                            "Spellcasting focus for your Bard Spells.                              \n"
-                                           "                              "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Bard  Pg 6",
+                                           "                              "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Bard  Pg 6",
                               description=("\n"
                                            "**Jack of All Trades**\n"
                                            "Starting at 2nd level, you can add half your Proficiency Bonus,"
@@ -342,10 +341,10 @@ async def Bard(Subclass, Data):
                                            "At 3rd level, you delve into the advanced Techniques of a bard "
                                            "college of your choice, such as the College of Lore. Your choice "
                                            "grants you features at 3rd level and again at 6th and 14th level.\n"
-                                           "                          "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Bard  Pg 7",
+                                           "                          "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Bard  Pg 7",
                               description=("\n"
                                            "**Expertise**\n"
                                            "At 3rd level, choose two of your skill proficiencies."
@@ -366,10 +365,10 @@ async def Bard(Subclass, Data):
                                            "Beginning when you reach 5th level, you regain all "
                                            "of your expended uses of Bardic Inspiration when you finish a "
                                            "short or Long Rest.                              \n"
-                                           "                              "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Bard  Pg 8",
+                                           "                              "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Bard  Pg 8",
                               description=("\n"
                                            "**Countercharm**\n"
                                            "At 6th level, you gain the ability to use musical "
@@ -399,26 +398,25 @@ async def Bard(Subclass, Data):
                                            "**Superior Inspiration**\n"
                                            "At 20th level, when you roll Initiative and have no "
                                            "uses of Bardic Inspiration left, you regain one use.                              \n"
-                                           "                    "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Bard | Colleges | Pg 8",
+                                           "                    "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Bard | Colleges | Pg 8",
                               description=("\n"
                                            "`College of Lore`\n"
                                            "`College of Eloquence (UA)`\n"
                                            "`College of Glamour`\n"
                                            "`College of Whispers`\n"
-                                           "                    "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                           "                    "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
-async def Cleric(Subclass, Data):
-    global Colour
-    EmbedList = []
-    if not Subclass:
-        Embed = discord.Embed(title="Class - Cleric  Pg 1",
+async def Cleric(subclass):
+    embed_list = []
+    if not subclass:
+        embed = discord.Embed(title="Class - Cleric  Pg 1",
                               description=("\n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d8 per Cleric level`\n"
@@ -446,15 +444,15 @@ async def Cleric(Subclass, Data):
                                            "• (a) a Light Crossbow and 20 bolts or (b) any simple weapon\n"
                                            "• (a) a Priest's Pack or (b) an Explorer's Pack\n"
                                            "• A Shield and a holy Symbol\n"
-                                           "                            "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric  Pg 2",
-                              description="Table: The Cleric ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646412368188014610/3.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric  Pg 3",
+                                           "                            "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric  Pg 2",
+                              description="Table: The Cleric ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646412368188014610/3.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric  Pg 3",
                               description=("\n"
                                            "**Spellcasting**\n"
                                            "As a conduit for divine power, you can cast Cleric Spells. See "
@@ -491,10 +489,10 @@ async def Cleric(Subclass, Data):
                                            "Rest. Preparing a new list of Cleric Spells requires time spent in "
                                            "prayer and meditation: at least 1 minute per Spell Level for each "
                                            "spell on your list.\n"
-                                           "                                    "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric  Pg 4",
+                                           "                                    "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric  Pg 4",
                               description=("\n"
                                            "**Spellcasting Ability**\n"
                                            "\n"
@@ -519,10 +517,10 @@ async def Cleric(Subclass, Data):
                                            "\n"
                                            "You can use a holy Symbol (see \"Equipment\") as a "
                                            "Spellcasting focus for your Cleric Spells.\n"
-                                           "                     "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric  Pg 5",
+                                           "                     "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric  Pg 5",
                               description=("\n"
                                            "**Divine Domain**\n"
                                            "Choose one domain related to your deity, such as Life. "
@@ -545,10 +543,10 @@ async def Cleric(Subclass, Data):
                                            "If you have a domain spell that doesn't appear on the "
                                            "Cleric spell list, the spell is nonetheless a Cleric spell "
                                            "for you.\n"
-                                           "                    "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric  Pg 6",
+                                           "                    "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric  Pg 6",
                               description=("\n"
                                            "**Channel Divinity**\n"
                                            "At 2nd level, you gain the ability to channel divine energy "
@@ -570,10 +568,10 @@ async def Cleric(Subclass, Data):
                                            "twice between rests, and beginning at 18th level, you can "
                                            "use it three times between rests. When you finish a short "
                                            "or Long Rest, you regain your expended uses.\n"
-                                           "                            "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric  Pg 7",
+                                           "                            "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric  Pg 7",
                               description=("\n"
                                            "**Channel Divinity: Turn Undead**\n"
                                            "As an action, you present your holy Symbol and speak a prayer "
@@ -588,10 +586,10 @@ async def Cleric(Subclass, Data):
                                            "can use only the Dash action or try to escape from an effect that "
                                            "prevents it from moving. If there's nowhere to move, the creature"
                                            "can use the Dodge action.\n"
-                                           "                    "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric  Pg 8",
+                                           "                    "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric  Pg 8",
                               description=("\n"
                                            "**Ability Score Improvement**\n"
                                            "When you reach 4th level, and again at 8th, 12th, 16th,"
@@ -620,10 +618,10 @@ async def Cleric(Subclass, Data):
                                            "\n"
                                            "At 20th level, your call for intervention succeeds automatically,"
                                            " no roll required.\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric  Pg 9",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric  Pg 9",
                               description=("\n"
                                            "**Ability Score Improvement**\n"
                                            "When you reach 4th level, and again at 8th, 12th, 16th, and 19th "
@@ -653,10 +651,10 @@ async def Cleric(Subclass, Data):
                                            "\n"
                                            "At 20th level, your call for intervention succeeds"
                                            "automatically, no roll required.                              \n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Cleric | Domains | Pg 10",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Cleric | Domains | Pg 10",
                               description=("\n"
                                            "`Life Domain`\n"
                                            "`Arcana`\n"
@@ -669,17 +667,16 @@ async def Cleric(Subclass, Data):
                                            "`War`\n"
                                            "`Trickery`\n"
                                            "`Knowledge`\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
-async def Druid(Subclass, Data):
-    global Colour
-    EmbedList = []
-    if not Subclass:
-        Embed = discord.Embed(title="Class - Druid  Pg 1 / 11",
+async def Druid(subclass):
+    embed_list = []
+    if not subclass:
+        embed = discord.Embed(title="Class - Druid  Pg 1 / 11",
                               description=("\n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d8 per druid level`\n"
@@ -708,15 +705,15 @@ async def Druid(Subclass, Data):
                                            "• (a) a Scimitar or (b) any simple melee weapon\n"
                                            "• Leather Armor, an Explorer's Pack, and a druidic focus\n"
                                            "\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid  Pg 2 / 11",
-                              description="Table: The Druid ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646467680320356393/4.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid  Pg 3 / 11",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid  Pg 2 / 11",
+                              description="Table: The Druid ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646467680320356393/4.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid  Pg 3 / 11",
                               description=("\n"
                                            "**Druidic**\n"
                                            "You know Druidic, the Secret language of druids. "
@@ -725,10 +722,10 @@ async def Druid(Subclass, Data):
                                            "language automatically spot such a Message. "
                                            "Others spot the message's presence with a successful "
                                            "DC 15 Wisdom (Perception) check but can't decipher"
-                                           " it without magic.\n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid  Pg 4 / 11",
+                                           " it without magic.\n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid  Pg 4 / 11",
                               description=("\n"
                                            "**Spellcasting**\n"
                                            "Drawing on the divine essence of Nature itself, you can cast"
@@ -767,10 +764,10 @@ async def Druid(Subclass, Data):
                                            " finish a Long Rest. Preparing a new list of Druid Spells requires"
                                            " time spent in prayer and meditation: at least 1 minute per Spell "
                                            "Level for each spell on your list.\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid  Pg 5 / 11",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid  Pg 5 / 11",
                               description=("\n"
                                            "**Spellcasting Ability**\n"
                                            "\n"
@@ -793,10 +790,10 @@ async def Druid(Subclass, Data):
                                            "\n"
                                            "You can use a druidic focus (see \"Equipment\") as a Spellcasting "
                                            "focus for your Druid Spells.\n"
-                                           "                            "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid  Pg 6 / 11",
+                                           "                            "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid  Pg 6 / 11",
                               description=("\n"
                                            "**Wild Shape**\n"
                                            "Starting at 2nd level, you can use your action to magically"
@@ -809,11 +806,11 @@ async def Druid(Subclass, Data):
                                            " for example, you can transform into any beast that has a "
                                            "Challenge rating of 1/4 or lower that doesn't have a flying"
                                            " or swimming speed.\n"
-                                           " "), color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646468623376056340/4-2.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid | Beast Shape Part 1 | Pg 7 / 11",
+                                           " "), color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/646468623376056340/4-2.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid | Beast Shape Part 1 | Pg 7 / 11",
                               description=("\n"
                                            "You can stay in a beast shape for a number of hours equal to half"
                                            " your druid level (rounded down). You then revert to your normal "
@@ -839,10 +836,10 @@ async def Druid(Subclass, Data):
                                            "and have only 1 hit point left, you revert and take 9 damage. As long "
                                            "as the excess damage doesn't reduce your normal form to 0 Hit Points,"
                                            " you aren't knocked Unconscious.\n"
-                                           " "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid | Beast Shape Part 2 |  Pg 8 / 11",
+                                           " "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid | Beast Shape Part 2 |  Pg 8 / 11",
                               description=("\n"
                                            "• You can't cast Spells, and your ability to speak or take any action"
                                            " that requires hands is limited to the capabilities of your beast form."
@@ -861,10 +858,10 @@ async def Druid(Subclass, Data):
                                            "any Equipment that the new form can't wear must either fall to the ground "
                                            "or merge with it. Equipment that merges with the form has no effect until "
                                            "you leave the form.\n"
-                                           "                                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid  Pg 9 / 11",
+                                           "                                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid  Pg 9 / 11",
                               description=("\n"
                                            "**Druid Circle**\n"
                                            "At 2nd level, you choose to Identify with a circle of druids,"
@@ -882,10 +879,10 @@ async def Druid(Subclass, Data):
                                            "to age more slowly. For every 10 years that pass, your body ages "
                                            "only 1 year.\n"
                                            "\n"
-                                           "                            "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid  Pg 10 / 11",
+                                           "                            "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid  Pg 10 / 11",
                               description=("\n"
                                            "**Beast Spells**\n"
                                            "Beginning at 18th level, you can cast many of your Druid Spells"
@@ -901,24 +898,23 @@ async def Druid(Subclass, Data):
                                            " of your Druid Spells, as well as any material Components that "
                                            "lack a cost and aren't consumed by a spell. You gain this benefit "
                                            "in both your normal shape and your beast shape from Wild Shape.\n"
-                                           "                                    "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Druid | Domains | Pg 11 / 11",
+                                           "                                    "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Druid | Domains | Pg 11 / 11",
                               description="""
         `Circle of the moon`     
         `Circle of the land`                               
-                                    """, color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                    """, color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
-async def Fighter(Subclass, Data):
-    global Colour
-    EmbedList = []
-    if not Subclass:
-        Embed = discord.Embed(title="Class - Fighter  Pg 1 / 6",
+async def Fighter(subclass):
+    embed_list = []
+    if not subclass:
+        embed = discord.Embed(title="Class - Fighter  Pg 1 / 6",
                               description=("\n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d10 per Fighter level`   \n"
@@ -945,15 +941,15 @@ async def Fighter(Subclass, Data):
                                            "• (a) a martial weapon and a Shield or (b) two Martial Weapons\n"
                                            "• (a) a Light Crossbow and 20 bolts or (b) two handaxes\n"
                                            "• (a) a Dungeoneer's Pack or (b) an Explorer's Pack\n"
-                                           "                                            "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Fighter  Pg 2 / 6",
-                              description="Table: The Fighter ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/647795178350051348/5.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Fighter  Pg 3 / 6",
+                                           "                                            "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Fighter  Pg 2 / 6",
+                              description="Table: The Fighter ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/647795178350051348/5.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Fighter  Pg 3 / 6",
                               description=("\n"
                                            "**Fighting Style**\n"
                                            "You adopt a particular style of fighting as your specialty. "
@@ -985,10 +981,10 @@ async def Fighter(Subclass, Data):
                                            "\n"
                                            "**Two-Weapon Fighting**\n"
                                            "When you engage in two-weapon fighting, you can add your "
-                                           "ability modifier to the damage of the second Attack.\n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Fighter  Pg 4 / 6",
+                                           "ability modifier to the damage of the second Attack.\n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Fighter  Pg 4 / 6",
                               description=("\n"
                                            "**Second Wind**\n"
                                            "You have a limited well of stamina that you can draw on "
@@ -1009,10 +1005,10 @@ async def Fighter(Subclass, Data):
                                            "Long Rest before you can use it again. Starting at 17th "
                                            "level, you can use it twice before a rest, but only once"
                                            " on the same turn. "),
-                              color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Fighter  Pg 5 / 6",
+                              color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Fighter  Pg 5 / 6",
                               description=("\n"
                                            "**Martial Archetype**\n"
                                            "At 3rd level, you choose an archetype that you strive"
@@ -1042,25 +1038,24 @@ async def Fighter(Subclass, Data):
                                            "\n"
                                            "You can use this feature twice between long rests starting at"
                                            " 13th level and three times between long rests starting at 17th level."),
-                              color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Fighter | Martial Archetypes | Pg 6 / 6",
+                              color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Fighter | Martial Archetypes | Pg 6 / 6",
                               description="""
                 `Champion`
                 `Gunslinger`     
                 `Rune Knight (UA)`                               
-                                            """, color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                            """, color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
-async def Monk(Subclass, Data):
-    global Colour
-    EmbedList = []
-    if not Subclass:
-        Embed = discord.Embed(title="Class - Monk  Pg 1 / 12",
+async def Monk(subclass):
+    embed_list = []
+    if not subclass:
+        embed = discord.Embed(title="Class - Monk  Pg 1 / 12",
                               description=("\n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d8 per monk level`\n"
@@ -1086,15 +1081,15 @@ async def Monk(Subclass, Data):
                                            "\n"
                                            "• (a) a Shortsword or (b) any simple weapon\n"
                                            "• (a) a Dungeoneer's Pack or (b) an Explorer's Pack\n"
-                                           "• 10 darts"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 2 / 12",
-                              description="Table: The Monk ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/647828547481894941/6.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 3 / 12",
+                                           "• 10 darts"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 2 / 12",
+                              description="Table: The Monk ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/647828547481894941/6.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 3 / 12",
                               description=("\n"
                                            "**Unarmored Defense**\n"
                                            "Beginning at 1st level, while you are wearing no armor and "
@@ -1130,10 +1125,10 @@ async def Monk(Subclass, Data):
                                            "shorter, straighter blade (called a kama). Whatever name you use "
                                            "for a monk weapon, you can use the game Statistics provided for "
                                            "the weapon.\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 4 / 12",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 4 / 12",
                               description=("\n"
                                            "**Ki**\n"
                                            "Starting at 2nd level, your Training allows you to "
@@ -1158,10 +1153,10 @@ async def Monk(Subclass, Data):
                                            "\n"
                                            "**Ki save DC** = `8 + your Proficiency Bonus + your Wisdom"
                                            " modifier`\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 5 / 12",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 5 / 12",
                               description=("\n"
                                            "**Flurry of Blows**\n"
                                            "Immediately after you take the Attack action on Your "
@@ -1176,10 +1171,10 @@ async def Monk(Subclass, Data):
                                            "You can spend 1 ki point to take the Disengage or Dash "
                                            "action as a Bonus Action on Your Turn, and your jump "
                                            "distance is doubled for the turn.\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 6 / 12",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 6 / 12",
                               description=("\n"
                                            "**Unarmored Movement**\n"
                                            "Starting at 2nd level, your speed increases by 10 feet "
@@ -1195,10 +1190,10 @@ async def Monk(Subclass, Data):
                                            "When you reach 3rd level, you commit yourself to a monastic "
                                            "tradition, such as the Way of the Open Hand. Your tradition "
                                            "grants you features at 3rd level and again at 6th, 11th, and 17th level.\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 7 / 12",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 7 / 12",
                               description=("\n"
                                            "**Deflect Missiles**\n"
                                            "Starting at 3rd level, you can use your Reaction to deflect or "
@@ -1214,10 +1209,10 @@ async def Monk(Subclass, Data):
                                            " same Reaction. You make this Attack with proficiency, regardless"
                                            " of your weapon Proficiencies, and the missile counts as a monk "
                                            "weapon for the Attack.\n"
-                                           "                        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 8 / 12",
+                                           "                        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 8 / 12",
                               description=("\n"
                                            "**Ability Score Improvement**\n"
                                            "When you reach 4th level, and again at 8th, 12th, 16th, and"
@@ -1234,10 +1229,10 @@ async def Monk(Subclass, Data):
                                            "**Extra Attack**\n"
                                            "Beginning at 5th level, you can Attack twice, instead of "
                                            "once, whenever you take the Attack action on Your Turn.\n"
-                                           "                        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 9 / 12",
+                                           "                        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 9 / 12",
                               description=("\n"
                                            "**Stunning Strike**\n"
                                            "Starting at 5th level, you can interfere with the flow "
@@ -1265,10 +1260,10 @@ async def Monk(Subclass, Data):
                                            "Dexterity saving throw to take only half damage, you "
                                            "instead take no damage if you succeed on the saving"
                                            " throw, and only half damage if you fail.\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 10 / 12",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 10 / 12",
                               description=("\n"
                                            "**Purity of Body**\n"
                                            "At 10th level, your mastery of the ki flowing through you "
@@ -1293,10 +1288,10 @@ async def Monk(Subclass, Data):
                                            " magically. You can still die of old age, however. In "
                                            "addition, you no longer need food or water.\n"
                                            "\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk  Pg 11 / 12",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk  Pg 11 / 12",
                               description=("\n"
                                            "**Empty Body**\n"
                                            "Beginning at 18th level, you can use your action"
@@ -1313,25 +1308,24 @@ async def Monk(Subclass, Data):
                                            "At 20th level, when you roll for Initiative an"
                                            "d have no ki points remaining, you regain 4 ki points.\n"
                                            "\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Monk | Monastic Traditions | Pg 12 / 12",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Monk | Monastic Traditions | Pg 12 / 12",
                               description="""
                         `Way of the Shadow`
                         `Way of the Open Hand`     
                         `Way of the Kensei`                               
-                                                    """, color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                                    """, color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
-async def Paladin(Subclass, Data):
-    global Colour
-    EmbedList = []
-    if not Subclass:
-        Embed = discord.Embed(title="Class - Paladin  Pg 1 / 14",
+async def Paladin(subclass):
+    embed_list = []
+    if not subclass:
+        embed = discord.Embed(title="Class - Paladin  Pg 1 / 14",
                               description=("        \n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d10 per Paladin level`\n"
@@ -1360,15 +1354,15 @@ async def Paladin(Subclass, Data):
                                            "• Chain Mail and a holy Symbol\n"
                                            "\n"
                                            "Alternatively, you may start with 5d4 x 10 gp to "
-                                           "buy your own Equipment."), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 2 / 14",
-                              description="Table: The Paladin ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/649721165266550814/7.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 3 / 14",
+                                           "buy your own Equipment."), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 2 / 14",
+                              description="Table: The Paladin ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/649721165266550814/7.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 3 / 14",
                               description=("\n"
                                            "**Divine Sense**\n"
                                            "The presence of strong evil registers on your Senses like a "
@@ -1402,10 +1396,10 @@ async def Paladin(Subclass, Data):
                                            "Poisons with a single use of Lay on Hands, expending Hit Points "
                                            "separately for each one.\n"
                                            "\n"
-                                           "This feature has no effect on Undead and constructs."), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 4 / 14",
+                                           "This feature has no effect on Undead and constructs."), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 4 / 14",
                               description=("\n"
                                            "**Fighting Style**\n"
                                            "At 2nd level, you adopt a style of fighting as your "
@@ -1432,10 +1426,10 @@ async def Paladin(Subclass, Data):
                                            "you that is within 5 feet of you, you can use your reaction"
                                            " to impose disadvantage on the Attack roll. You must be"
                                            " wielding a Shield.\n"
-                                           "                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 5 / 14",
+                                           "                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 5 / 14",
                               description=("\n"
                                            "**Divine Smite**\n"
                                            "Starting at 2nd level, when you hit a creature with a "
@@ -1445,10 +1439,10 @@ async def Paladin(Subclass, Data):
                                            "1st-level spell slot, plus 1d8 for each Spell Level "
                                            "higher than 1st, to a maximum of 5d8. The damage "
                                            "increases by 1d8 if the target is an Undead or a fiend.\n"
-                                           "                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 6 / 14",
+                                           "                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 6 / 14",
                               description=("\n"
                                            "        **Unarmored Movement**\n"
                                            "        Starting at 2nd level, your speed increases by 10 "
@@ -1465,10 +1459,10 @@ async def Paladin(Subclass, Data):
                                            " a monastic tradition, such as the Way of the Open Hand."
                                            " Your tradition grants you features at 3rd level and again "
                                            "at 6th, 11th, and 17th level.\n"
-                                           "                        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 7 / 14",
+                                           "                        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 7 / 14",
                               description=("\n"
                                            "        **Deflect Missiles**\n"
                                            "        Starting at 3rd level, you can use your Reaction to deflect"
@@ -1490,10 +1484,10 @@ async def Paladin(Subclass, Data):
                                            "meditation and prayer to cast Spells as a Cleric does. See chapter"
                                            " 10 for the general rules of Spellcasting and chapter 11"
                                            " for the Paladin spell list.\n"
-                                           "                    "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin | Spell Casting Continued | Pg 8 / 14",
+                                           "                    "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin | Spell Casting Continued | Pg 8 / 14",
                               description=("\n"
                                            "**Preparing and Casting Spells**\n"
                                            "\n"
@@ -1523,10 +1517,10 @@ async def Paladin(Subclass, Data):
                                            "requires time spent in prayer and meditation: at least "
                                            "1 minute per Spell Level for each spell on your list.\n"
                                            "\n"
-                                           "                                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin | Spell Casting Continued | Pg 9 / 14",
+                                           "                                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin | Spell Casting Continued | Pg 9 / 14",
                               description=("\n"
                                            "**Spellcasting Ability**\n"
                                            "\n"
@@ -1546,10 +1540,10 @@ async def Paladin(Subclass, Data):
                                            "**Spellcasting Focus**\n"
                                            "\n"
                                            "You can use a holy Symbol as a Spellcasting focus for"
-                                           " your Paladin Spells. "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 10 / 14",
+                                           " your Paladin Spells. "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 10 / 14",
                               description=("\n"
                                            "**Divine Health**\n"
                                            "By 3rd level, the Divine Magic flowing through you makes you"
@@ -1573,10 +1567,10 @@ async def Paladin(Subclass, Data):
                                            "prepare each day.\n"
                                            "If you gain an oath spell that doesn’t appear on the Paladin"
                                            "spell list, the spell is nonetheless a Paladin spell for you. \n"
-                                           "\n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 11 / 14",
+                                           "\n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 11 / 14",
                               description=("\n"
                                            "**Channel Divinity**\n"
                                            "Your oath allows you to channel divine energy to"
@@ -1603,10 +1597,10 @@ async def Paladin(Subclass, Data):
                                            "twice, instead of once, whenever you take the Attack action "
                                            "on Your Turn.\n"
                                            "\n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 12 / 14",
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 12 / 14",
                               description=("\n"
                                            "**Aura of Protection**\n"
                                            "Starting at 6th level, whenever you or a friendly creature"
@@ -1622,10 +1616,10 @@ async def Paladin(Subclass, Data):
                                            "of you can't be Frightened while you are conscious.\n"
                                            "\n"
                                            "At 18th level, the range of this aura increases to 30 feet.\n"
-                                           "            "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin  Pg 13 / 14",
+                                           "            "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin  Pg 13 / 14",
                               description=("\n"
                                            "**Improved Divine Smite**\n"
                                            "By 11th level, you are so suffused with righteous might that all "
@@ -1651,25 +1645,24 @@ async def Paladin(Subclass, Data):
                                            " reached 3rd level and made this oath. For others, the actual "
                                            "swearing of the oath is a formality, an official stamp on what "
                                            "has always been true in the paladin’s heart.\n"
-                                           "                    "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Paladin | Oaths | Pg 14 / 14",
+                                           "                    "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Paladin | Oaths | Pg 14 / 14",
                               description="""
                                 `Oath of Devotion`
                                 `Oath Breaker`     
                                 `Oath of the Aegis`                               
-                                                            """, color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                                            """, color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
-async def Ranger(Subclass, Data):
-    global Colour
-    EmbedList = []
-    if not Subclass:
-        Embed = discord.Embed(title="Class - Ranger  Pg 1 / 12",
+async def Ranger(subclass):
+    embed_list = []
+    if not subclass:
+        embed = discord.Embed(title="Class - Ranger  Pg 1 / 12",
                               description=("        \n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d10 per Ranger level`\n"
@@ -1695,15 +1688,15 @@ async def Ranger(Subclass, Data):
                                            "• (a) Scale Mail or (b) Leather Armor\n"
                                            "• (a) two shortswords or (b) two simple Melee Weapons\n"
                                            "• (a) a Dungeoneer's Pack or (b) an Explorer's Pack\n"
-                                           "• A Longbow and a Quiver of 20 Arrows\n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 2 / 12",
-                              description="Table: The Ranger ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/649733141308768291/8.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 3 / 12",
+                                           "• A Longbow and a Quiver of 20 Arrows\n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 2 / 12",
+                              description="Table: The Ranger ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/649733141308768291/8.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 3 / 12",
                               description=("\n"
                                            "**Favored Enemy**\n"
                                            "Beginning at 1st level, you have significant experience "
@@ -1726,10 +1719,10 @@ async def Ranger(Subclass, Data):
                                            "You choose one additional Favored Enemy, as well as an "
                                            "associated language, at 6th and 14th level. As you gain levels, "
                                            "your choices should reflect the types of Monsters you have "
-                                           "encountered on your Adventures.\n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 4 / 12",
+                                           "encountered on your Adventures.\n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 4 / 12",
                               description=("\n"
                                            "**Natural Explorer**\n"
                                            "You are particularly familiar with one type of natural Environment"
@@ -1754,10 +1747,10 @@ async def Ranger(Subclass, Data):
                                            " number, their sizes, and how long ago they passed through the area.\n"
                                            "\n"
                                            "You choose additional favored terrain types at 6th and 10th level.\n"
-                                           "                        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 5 / 12",
+                                           "                        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 5 / 12",
                               description=("\n"
                                            "**Spellcasting**\n"
                                            "By the time you reach 2nd level, you have learned to use the "
@@ -1772,10 +1765,10 @@ async def Ranger(Subclass, Data):
                                            "\n"
                                            "For example, if you know the 1st-level spell Animal Friendship "
                                            "and have a 1st-level and a 2nd-level spell slot available, you "
-                                           "can cast Animal Friendship using either slot. \n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 6 / 12",
+                                           "can cast Animal Friendship using either slot. \n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 6 / 12",
                               description=("\n"
                                            "**Spells Known of 1st Level and Higher**\n"
                                            "\n"
@@ -1803,10 +1796,10 @@ async def Ranger(Subclass, Data):
                                            "\n"
                                            "Spell save DC = 8 + your Proficiency Bonus + your Wisdom modifier\n"
                                            "Spell Attack modifier = your Proficiency Bonus + your Wisdom modifier\n"
-                                           " "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 7 / 12",
+                                           " "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 7 / 12",
                               description=("\n"
                                            "**Fighting Style**\n"
                                            "At 2nd level, you adopt a particular style of "
@@ -1828,10 +1821,10 @@ async def Ranger(Subclass, Data):
                                            "`Two-Weapon Fighting`\n"
                                            "When you engage in two-weapon fighting, you can add your "
                                            "ability modifier to the damage of the second Attack.\n"
-                                           "\n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 8 / 12",
+                                           "\n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 8 / 12",
                               description=("\n"
                                            "**Ranger Archetype**\n"
                                            "At 3rd level, you choose an archetype that you strive to emulate, "
@@ -1853,10 +1846,10 @@ async def Ranger(Subclass, Data):
                                            " you can increase one ability score of your choice by 2, or you can increase "
                                            "two Ability Scores of your choice by 1. As normal, you can’t increase an"
                                            " ability score above 20 using this feature.\n"
-                                           "                                        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 9 / 12",
+                                           "                                        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 9 / 12",
                               description=("\n"
                                            "**Extra Attack**\n"
                                            "Beginning at 5th level, you can Attack twice, instead of once,"
@@ -1871,10 +1864,10 @@ async def Ranger(Subclass, Data):
                                            "In addition, you have advantage on Saving Throws against Plants that are"
                                            " magically created or manipulated to impede Movement, such those created "
                                            "by the Entangle spell.\n"
-                                           " "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 10 / 12",
+                                           " "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 10 / 12",
                               description=("\n"
                                            "**Hide in Plain Sight**\n"
                                            "Starting at 10th level, you can spend 1 minute creating camouflage "
@@ -1902,10 +1895,10 @@ async def Ranger(Subclass, Data):
                                            "Invisible creature within 30 feet of you, provided that the creature "
                                            "isn't hidden from you and you aren't Blinded or Deafened.\n"
                                            "\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger  Pg 11 / 12",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger  Pg 11 / 12",
                               description=("\n"
                                            "**Foe Slayer**\n"
                                            "At 20th level, you become an unparalleled Hunter of your enemies."
@@ -1917,23 +1910,22 @@ async def Ranger(Subclass, Data):
                                            "\n"
                                            "**Ranger Archetypes**\n"
                                            "A classic expression of the Ranger ideal is the Hunter.\n"
-                                           "                                                        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Ranger | Archetypes | Pg 12 / 12",
+                                           "                                                        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Ranger | Archetypes | Pg 12 / 12",
                               description="""
                                         `Hunter`                             
-                                                                    """, color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                                                    """, color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
-async def Rogue(Subclass, Data):
-    global Colour
-    EmbedList = []
-    if not Subclass:
-        Embed = discord.Embed(title="Class - Rogue  Pg 1 / 8",
+async def Rogue(subclass):
+    embed_list = []
+    if not subclass:
+        embed = discord.Embed(title="Class - Rogue  Pg 1 / 8",
                               description=("        \n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d8 per rogue level`\n"
@@ -1963,15 +1955,15 @@ async def Rogue(Subclass, Data):
                                            "• (a) a Burglar's Pack, (b) a Dungeoneer's Pack, or (c) an"
                                            " Explorer's Pack\n"
                                            "• Leather Armor, two daggers, and Thieves' Tools\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Rouge  Pg 2 / 8",
-                              description="Table: The Rouge ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/649740830768365582/9.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Rogue  Pg 3 / 8",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Rouge  Pg 2 / 8",
+                              description="Table: The Rouge ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/649740830768365582/9.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Rogue  Pg 3 / 8",
                               description=("\n"
                                            "**Expertise**\n"
                                            "At 1st level, choose two of your skill "
@@ -1998,10 +1990,10 @@ async def Rogue(Subclass, Data):
                                            "\n"
                                            "The amount of the extra damage increases as "
                                            "you gain levels in this class, as shown in the Sneak "
-                                           "Attack column of the Rogue table.\n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Rogue  Pg 4 / 8",
+                                           "Attack column of the Rogue table.\n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Rogue  Pg 4 / 8",
                               description=("\n"
                                            "**Thieves' Cant**\n"
                                            "During your rogue Training you learned thieves'"
@@ -2025,10 +2017,10 @@ async def Rogue(Subclass, Data):
                                            " a Bonus Action on each of your turns in Combat. This "
                                            "action can be used only to take the Dash, Disengage, or Hide action.\n"
                                            "\n"
-                                           "                                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Rogue  Pg 5 / 8",
+                                           "                                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Rogue  Pg 5 / 8",
                               description=("\n"
                                            "**Roguish Archetype**\n"
                                            "At 3rd level, you choose an archetype that you "
@@ -2047,10 +2039,10 @@ async def Rogue(Subclass, Data):
                                            "Starting at 5th level, when an attacker that you can "
                                            "see hits you with an Attack, you can use your Reaction "
                                            "to halve the attack's damage against you.\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Rogue  Pg 6 / 8",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Rogue  Pg 6 / 8",
                               description=("\n"
                                            "**Evasion**\n"
                                            "Beginning at 7th level, you can nimbly dodge out of the "
@@ -2074,10 +2066,10 @@ async def Rogue(Subclass, Data):
                                            "**Slippery Mind**\n"
                                            "By 15th level, you have acquired greater mental Strength. "
                                            "You gain proficiency in Wisdom Saving Throws.\n"
-                                           "         "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Rogue  Pg 7 / 8",
+                                           "         "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Rogue  Pg 7 / 8",
                               description=("\n"
                                            "**Elusive**\n"
                                            "Beginning at 18th level, you are so evasive that attackers"
@@ -2103,22 +2095,22 @@ async def Rogue(Subclass, Data):
                                            "necessarily an indication of your chosen profession, but "
                                            "a description of your preferred Techniques.\n"
                                            "\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Rogue | Archetypes | Pg 8 / 8", description="""
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Rogue | Archetypes | Pg 8 / 8", description="""
             `Theif`
             `Assasin`
-            `Arcane Trickster`             """, color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+            `Arcane Trickster`             """, color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
 async def Sorcerer(subclass):
-    EmbedList = []
+    embed_list = []
     if not subclass:
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 1 / 10",
+        embed = discord.Embed(title="Class - Sorcerer  Pg 1 / 10",
                               description=("        \n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d6 per Sorcerer level`\n"
@@ -2146,15 +2138,15 @@ async def Sorcerer(subclass):
                                            "• (a) a Component pouch or (b) an arcane focus\n"
                                            "• (a) a Dungeoneer's Pack or (b) an Explorer's Pack\n"
                                            "• Two daggers\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 2 / 10",
-                              description="Table: The Sorcerer ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/650102719490555950/10.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 3 / 10",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer  Pg 2 / 10",
+                              description="Table: The Sorcerer ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/650102719490555950/10.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer  Pg 3 / 10",
                               description=("\n"
                                            "**Spellcasting**\n"
                                            "An event in your past, or in the life of a parent or ancestor,"
@@ -2181,10 +2173,10 @@ async def Sorcerer(subclass):
                                            "Hands and have a 1st-level and a 2nd-level spell slot "
                                            "available, you can cast Burning Hands using either slot.\n"
                                            "\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 4 / 10",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer  Pg 4 / 10",
                               description=("\n"
                                            "**Spells Known of 1st Level and Higher**\n"
                                            "\n"
@@ -2223,10 +2215,10 @@ async def Sorcerer(subclass):
                                            "\n"
                                            "You can use an arcane focus as a Spellcasting "
                                            "focus for your Sorcerer Spells.\n"
-                                           "                                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 5 / 10",
+                                           "                                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer  Pg 5 / 10",
                               description=("\n"
                                            "**Sorcerous Origin**\n"
                                            "Choose a sorcerous Origin, which describes "
@@ -2241,10 +2233,10 @@ async def Sorcerer(subclass):
                                            " within yourself. This wellspring is represented by "
                                            "sorcery points, which allow you to create a variety "
                                            "of magical Effects.\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 6 / 10",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer  Pg 6 / 10",
                               description=("\n"
                                            "**Sorcery Points**\n"
                                            "You have 2 sorcery points, and you gain one additional "
@@ -2279,10 +2271,10 @@ async def Sorcerer(subclass):
                                            " As a Bonus Action on Your Turn, you can "
                                            "expend one spell slot and gain a number"
                                            " of sorcery points equal to the slot's level.\n"
-                                           "         "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 7 / 10",
+                                           "         "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer  Pg 7 / 10",
                               description=("\n"
                                            "**Metamagic**\n"
                                            "At 3rd level, you gain the ability to twist "
@@ -2325,10 +2317,10 @@ async def Sorcerer(subclass):
                                            "When you Cast a Spell that has a Duration of 1"
                                            " minute or longer, you can spend 1 sorcery point to double"
                                            " its Duration, to a maximum Duration of 24 hours.\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 8 / 10",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer  Pg 8 / 10",
                               description=("\n"
                                            "**Heightened Spell**\n"
                                            "When you Cast a Spell that forces a creature to make "
@@ -2355,10 +2347,10 @@ async def Sorcerer(subclass):
                                            "To be eligible, a spell must be incapable of targeting "
                                            "more than one creature at the spell’s current level. For"
                                            " example, Magic Missile and Scorching Ray aren’t eligible, "
-                                           "but Ray of Frost is.\n"), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer  Pg 9 / 10",
+                                           "but Ray of Frost is.\n"), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer  Pg 9 / 10",
                               description=("\n"
                                            "**Ability Score Improvement**\n"
                                            "When you reach 4th level, and again at"
@@ -2375,24 +2367,24 @@ async def Sorcerer(subclass):
                                            "**Sorcerous Origins**\n"
                                            "Different sorcerers claim different"
                                            " Origins for their innate magic, such as a Draconic Bloodline.\n"
-                                           "         "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Sorcerer | Sorcerous Origins | Pg 10 / 10",
+                                           "         "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Sorcerer | Sorcerous Origins | Pg 10 / 10",
                               description=('\n'
                                            '`Draconic Blood line`\n'
                                            '`Wild Magic`\n'
                                            '`Shadow Magic`\n'
-                                           ''), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                           ''), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
 async def Warlock(subclass):
-    EmbedList = []
+    embed_list = []
     if not subclass:
-        Embed = discord.Embed(title="Class - Warlock  Pg 1 / 15",
+        embed = discord.Embed(title="Class - Warlock  Pg 1 / 15",
                               description=("        \n"
                                            "**Hit Points**\n"
                                            "Hit Dice: `1d8 per Warlock level`\n"
@@ -2419,15 +2411,15 @@ async def Warlock(subclass):
                                            "• (a) a Component pouch or (b) an arcane focus\n"
                                            "• (a) a Scholar's Pack or (b) a Dungeoneer's Pack\n"
                                            "• Leather Armor, any simple weapon, and two daggers\n"
-                                           "                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 2 / 15",
-                              description="Table: The Warlock ", color=Colour)
-        Embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/650107654399590420/11.png")
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 3 / 15",
+                                           "                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 2 / 15",
+                              description="Table: The Warlock ", color=colour)
+        embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/650107654399590420/11.png")
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 3 / 15",
                               description=("\n"
                                            "**Otherworldly Patron**\n"
                                            "At 1st level, you have struck a bargain with an otherworldly "
@@ -2446,10 +2438,10 @@ async def Warlock(subclass):
                                            "list. You learn additional Warlock Cantrips of your choice at"
                                            " higher levels, as shown in the Cantrips Known column of the"
                                            " Warlock table.\n"
-                                           "                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 4 / 15",
+                                           "                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 4 / 15",
                               description=("\n"
                                            "**Spell Slots**\n"
                                            "\n"
@@ -2497,10 +2489,10 @@ async def Warlock(subclass):
                                            "\n"
                                            "You can use an arcane focus as a Spellcasting focus for your"
                                            " Warlock Spells.\n"
-                                           "                                        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 5 / 15",
+                                           "                                        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 5 / 15",
                               description=("\n"
                                            "**Eldritch Invocations**\n"
                                            "In your study of occult lore, you have unearthed Eldritch "
@@ -2522,10 +2514,10 @@ async def Warlock(subclass):
                                            "At 3rd level, your otherworldly patron bestows a gift upon "
                                            "you for your loyal service. You gain one of the following "
                                            "features of your choice.\n"
-                                           "                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 6 / 15",
+                                           "                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 6 / 15",
                               description=("\n"
                                            "**Pact of the Chain**\n"
                                            "You learn the Find Familiar spell and can cast it "
@@ -2578,10 +2570,10 @@ async def Warlock(subclass):
                                            " Ceremony to receive a replacement from your patron. This Ceremony "
                                            "can be performed during a short or Long Rest, and it destroys the "
                                            "previous book. The book turns to ash when you die.\n"
-                                           "                 "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 7 / 15",
+                                           "                 "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 7 / 15",
                               description=("\n"
                                            "**Ability Score Improvement**\n"
                                            "When you reach 4th level, and again at 8th, 12th, 16th, and "
@@ -2610,10 +2602,10 @@ async def Warlock(subclass):
                                            "all your expended Spell Slots from your Pact Magic feature. Once "
                                            "you regain Spell Slots with this feature, you must finish a Long Rest "
                                            "before you can do so again.\n"
-                                           "                "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 8 / 15",
+                                           "                "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 8 / 15",
                               description=("\n"
                                            "**Eldritch Invocations**\n"
                                            "If an eldritch invocation has Prerequisites, "
@@ -2642,10 +2634,10 @@ async def Warlock(subclass):
                                            "\n"
                                            "**Beguiling Influence**\n"
                                            "You gain proficiency in the Deception and Persuasion Skills.\n"
-                                           "        "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 9 / 15",
+                                           "        "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 9 / 15",
                               description=("\n"
                                            "**Bewitching Whispers**\n"
                                            "Prerequisite: 7th level\n"
@@ -2680,10 +2672,10 @@ async def Warlock(subclass):
                                            " You must finish a Long Rest before you can use this invocation on the "
                                            "same creature again.\n"
                                            "\n"
-                                           "                 "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 10 / 15",
+                                           "                 "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 10 / 15",
                               description=("\n"
                                            "**Devil’s Sight**\n"
                                            "You can see normally in Darkness, both magical and nonmagical, to a"
@@ -2705,10 +2697,10 @@ async def Warlock(subclass):
                                            "\n"
                                            "**Eyes of the Rune Keeper**\n"
                                            "You can read all writing.\n"
-                                           "                         "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 11 / 15",
+                                           "                         "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 11 / 15",
                               description=('\n'
                                            '**Fiendish Vigor**\n'
                                            'You can cast False Life on yourself at will as a 1st-level spell,'
@@ -2732,10 +2724,10 @@ async def Warlock(subclass):
                                            '**Mask of Many Faces**\n'
                                            'You can cast Disguise Self at will, without expending a spell slot.\n'
                                            '\n'
-                                           '                         '), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 12 / 15",
+                                           '                         '), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 12 / 15",
                               description=("\n"
                                            "**Master of Myriad Forms**\n"
                                            "Prerequisite: 15th level\n"
@@ -2769,10 +2761,10 @@ async def Warlock(subclass):
                                            "\n"
                                            "You can cast jump on yourself at will, without expending a spell slot or "
                                            "material Components.\n "
-                                           "                                 "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 13 / 15",
+                                           "                                 "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 13 / 15",
                               description=("\n"
                                            "**Repelling Blast**\n"
                                            "Prerequisite: Eldritch Blast cantrip\n"
@@ -2801,10 +2793,10 @@ async def Warlock(subclass):
                                            "\n"
                                            "You can Attack with your pact weapon twice, instead of once, whenever you "
                                            "take the Attack action on Your Turn.\n "
-                                           "                                         "), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock  Pg 14 / 15",
+                                           "                                         "), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock  Pg 14 / 15",
                               description=('\n'
                                            '**Visions of Distant Realms**\n'
                                            'Prerequisite: 15th level\n'
@@ -2833,10 +2825,10 @@ async def Warlock(subclass):
                                            'You can see the true form of any Shapechanger or creature concealed by '
                                            'Illusion or Transmutation magic while the creature is within 30 feet of '
                                            'you and within line of sight.\n '
-                                           '                                                 '), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        Embed = discord.Embed(title="Class - Warlock | Warlock Packs | Pg 15 / 15",
+                                           '                                                 '), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        embed = discord.Embed(title="Class - Warlock | Warlock Packs | Pg 15 / 15",
                               description=("\n"
                                            "**Otherworldly Patrons**\n"
                                            "The beings that serve as Patrons for warlocks are mighty inhabitants of "
@@ -2852,10 +2844,10 @@ async def Warlock(subclass):
                                            "\n"
                                            "`Hex Blade`\n"
                                            "`The Fiend`                            \n"
-                                           ""), color=Colour)
-        Embed.set_footer(text=footer)
-        EmbedList.append(Embed)
-        return EmbedList
+                                           ""), color=colour)
+        embed.set_footer(text=footer)
+        embed_list.append(embed)
+        return embed_list
 
 
 async def wizard(subclass):
@@ -2890,11 +2882,11 @@ async def wizard(subclass):
                                            "• (a) a Scholar's Pack or (b) an Explorer's Pack\n"
                                            "• A Spellbook\n"
                                            "\n"
-                                           "                "), color=Colour)
+                                           "                "), color=colour)
         embed.set_footer(text=footer)
         embed_list.append(embed)
         embed = discord.Embed(title="Class - Wizard  Pg 2 / 7",
-                              description="Table: The Wizard ", color=Colour)
+                              description="Table: The Wizard ", color=colour)
         embed.set_image(url="https://cdn.discordapp.com/attachments/638140888949719080/650111455823265803/12.png")
         embed.set_footer(text=footer)
         embed_list.append(embed)
@@ -2917,7 +2909,7 @@ async def wizard(subclass):
                                            "Wizard Spells of your choice. Your Spellbook is the repository "
                                            "of the Wizard Spells you know, except your Cantrips, which are "
                                            "fixed in your mind.\n"
-                                           "                "), color=Colour)
+                                           "                "), color=colour)
         embed.set_footer(text=footer)
         embed_list.append(embed)
         embed = discord.Embed(title="Class - Wizard  Pg 4 / 7",
@@ -2960,7 +2952,7 @@ async def wizard(subclass):
                                            "Bonus + your Intelligence modifier\n"
                                            "Spell Attack modifier = your Proficiency "
                                            "Bonus + your Intelligence modifier\n"
-                                           "                                        "), color=Colour)
+                                           "                                        "), color=colour)
         embed.set_footer(text=footer)
         embed_list.append(embed)
         embed = discord.Embed(title="Class - Wizard  Pg 5 / 7",
@@ -3002,7 +2994,7 @@ async def wizard(subclass):
                                            "shaping your practice of magic through one of eight schools, "
                                            "such as Evocation. Your choice grants you features at 2nd "
                                            "level and again at 6th, 10th, and 14th level.\n"
-                                           "                "), color=Colour)
+                                           "                "), color=colour)
         embed.set_footer(text=footer)
         embed_list.append(embed)
         embed = discord.Embed(title="Class - Wizard  Pg 6 / 7",
@@ -3037,7 +3029,7 @@ async def wizard(subclass):
                                            "\n"
                                            "If you want to cast either spell at a higher level, you must expend "
                                            "a spell slot as normal.\n"
-                                           "\n"), color=Colour)
+                                           "\n"), color=colour)
         embed.set_footer(text=footer)
         embed_list.append(embed)
         embed = discord.Embed(title="Class - Sorcerer | Wizard Subclasses | Pg 7 / 7",
@@ -3061,7 +3053,7 @@ async def wizard(subclass):
                                            "\n"
                                            "`School of Evocation`\n"
                                            "`Onomancy (UA)`\n"
-                                           ""), color=Colour)
+                                           ""), color=colour)
         embed.set_footer(text=footer)
         embed_list.append(embed)
         return embed_list
