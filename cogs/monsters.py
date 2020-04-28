@@ -5,7 +5,7 @@ import pandas as pd
 import discord
 
 
-class GetSpells:
+class GetMonster:
     with open('./resources/monsters.json', 'r') as file:
         monsters = json.load(file)
     monsters_data_frame = pd.DataFrame(monsters, columns=['name', 'url'])
@@ -73,16 +73,16 @@ class Monsters(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def spell(self, ctx, spell: str):
+    async def monster(self, ctx, monster: str):
         """ Gets a class_ either from database or site """
 
-        if not spell.isalpha():
+        if not monster.isalpha():
             embed = discord.Embed(color=self.bot.colour)
             embed.set_author(name="Oops! I cant search for things that are not words or letters.",
                              icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
             return await ctx.send(embed=embed)
 
-        monster_data = await GetSpells.get_monster(spell.capitalize())
+        monster_data = await GetMonster.get_monster(monster.capitalize())
 
         if not isinstance(monster_data, dict):
             monster_data.color = self.bot.colour
