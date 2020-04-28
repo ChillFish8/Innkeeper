@@ -22,6 +22,7 @@ class Innkeeper(commands.AutoShardedBot):
     def __init__(self, command_prefix, **options):
         super().__init__(command_prefix, **options)
         self.owner_ids = DEVELOPER_IDS
+        self.colour = 0x3deaf5
 
     def startup(self):
         """

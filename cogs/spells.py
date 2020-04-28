@@ -1,34 +1,57 @@
 from discord.ext import commands
-import bs4
 import aiohttp
-import re
+import json
 import pandas as pd
-
-dict_of_spells = [['test', 'https://k-is-geyh.com/'],
-                  ['lol', 'https://k-is-geyh.com/'],
-                  ['k', 'https://k-is-geyh.com/'],
-                  ['gayyy', 'https://k-is-geyh.com/']]
+import discord
 
 
 class GetSpells:
-    spells_data_frame = pd.DataFrame(dict_of_spells, columns=['name', 'url'])
+    with open('./resources/spells.json', 'r') as file:
+        spells = json.load(file)
+    spells_data_frame = pd.DataFrame(spells, columns=['name', 'url'])
 
     @classmethod
     async def _get_request(cls, url):
+        """ Sends a request for the html """
+
+        url += "/"  # needed for trailing /
         async with aiohttp.ClientSession() as sess:
             async with sess.get(url) as resp:
-                if resp != 200:
+                if resp.status != 200:
+                    print(resp.status)
                     return False
                 else:
-                    return await resp.text()
+                    return await resp.json()
 
     @classmethod
-    async def _search_list(cls, keywords: list):
-        pass
+    def _search_list(cls, search: str):
+        """ The heavy lifter, pandas searches the frame for matches """
+        results: pd.DataFrame = cls.spells_data_frame[
+            cls.spells_data_frame['name'].str.contains(search)]
+        data: dict = results.to_dict(orient='index')
+        return list(data.values())
+
+    @staticmethod
+    def _filter_exact(spell_exact, results):
+        """ Filter the result if it has an exact match """
+        for spell in results:
+            if spell['name'] == spell_exact:
+                return spell
+        return None
 
     @classmethod
-    async def get_spell(cls, keywords: list):
-        pass
+    async def get_spell(cls, search: str):
+        """ Search and filter out a spell from the list """
+        results: list = cls._search_list(search)
+        if len(results) != 0:
+            exact = cls._filter_exact(search, results)
+            if exact is not None:
+                data = exact
+            else:
+                data = results[0]
+            return await cls._get_request(data['url'])
+        else:
+            return None
 
 
 class Spells(commands.Cog):
@@ -36,10 +59,34 @@ class Spells(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def spell(self, ctx, args: list):
+    async def spell(self, ctx, spell: str):
         """ Gets a spell either from database or site """
 
-        await ctx.send(f"K man gay also his spell is: {args}")
+        spell_data = await GetSpells.get_spell(spell.capitalize())
+
+        embed = discord.Embed(title=spell_data['name'], color=self.bot.colour)
+        embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)
+
+        stats = f"**Level:** `{spell_data['level']}`\n" \
+                f"**Range:** `{spell_data['range']}`\n" \
+                f"**Duration:** `{spell_data['duration']}`\n" \
+                f"**Components:** `{','.join(spell_data['components'])}`\n" \
+                f"**Casting time:** `{spell_data['casting_time']}`\n" \
+                f"**Concentration:** `{'yes' if spell_data['concentration'] else 'no'}`\n" \
+                f"**Ritual:** `{'yes' if spell_data['ritual'] else 'no'}`\n"
+        classes = f"**School:** `{spell_data['school']['name']}`\n" \
+                  f"**Classes:**\n"
+        for class_ in spell_data['classes']:
+            classes += f"`{class_['name']}`\n"
+        embed.add_field(name="Stats:", value=stats, inline=True)
+        embed.add_field(name="More:", value=classes, inline=True)
+
+        embed.add_field(name="Description", value=spell_data['desc'][0], inline=False)
+        for extra in spell_data['desc'][1:]:
+            embed.add_field(name="\u200b", value=extra, inline=False)
+        embed.add_field(name="At higher levels:", value="\n".join(spell_data['higher_level']), inline=False)
+        embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
+        await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(Spells(bot))
