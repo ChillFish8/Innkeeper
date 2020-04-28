@@ -8,7 +8,7 @@ import discord
 class GetRace:
     with open('./resources/races.json', 'r') as file:
         races = json.load(file)
-    races_data_frame = pd.DataFrame(races, columns=['name', 'url'])
+    spells_data_frame = pd.DataFrame(races, columns=['name', 'url'])
 
     @classmethod
     async def _get_request(cls, url):
@@ -25,8 +25,8 @@ class GetRace:
     @classmethod
     def _search_list(cls, search: str):
         """ The heavy lifter, pandas searches the frame for matches """
-        results: pd.DataFrame = cls.races_data_frame[
-            cls.races_data_frame['name'].str.contains(search)]
+        results: pd.DataFrame = cls.spells_data_frame[
+            cls.spells_data_frame['name'].str.contains(search)]
         data: dict = results.to_dict(orient='index')
         return list(data.values())
 

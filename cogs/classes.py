@@ -11,7 +11,7 @@ from modules import paginator
 class GetClass:
     with open('./resources/classes.json', 'r') as file:
         classes = json.load(file)
-    classes_data_frame = pd.DataFrame(classes, columns=['name', 'id'])
+    spells_data_frame = pd.DataFrame(classes, columns=['name', 'id'])
     base_classes = [
         classes_srd.Barbarian,
         classes_srd.Bard,
@@ -42,8 +42,8 @@ class GetClass:
     @classmethod
     def _search_list(cls, search: str):
         """ The heavy lifter, pandas searches the frame for matches """
-        results: pd.DataFrame = cls.classes_data_frame[
-            cls.classes_data_frame['name'].str.contains(search)]
+        results: pd.DataFrame = cls.spells_data_frame[
+            cls.spells_data_frame['name'].str.contains(search)]
         data: dict = results.to_dict(orient='index')
         return list(data.values())
 
