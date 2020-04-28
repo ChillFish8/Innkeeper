@@ -5,14 +5,14 @@ import pandas as pd
 import discord
 
 
-class GetSpells:
-    with open('./resources/spells.json', 'r') as file:
+class GetClass:
+    with open('./resources/classes.json', 'r') as file:
         spells = json.load(file)
     spells_data_frame = pd.DataFrame(spells, columns=['name', 'url'])
 
     @classmethod
     async def _get_request(cls, url):
-        """ Sends a request for the html """
+        """ Sends a request for the json """
 
         url += "/"  # needed for trailing /
         async with aiohttp.ClientSession() as sess:
@@ -40,7 +40,7 @@ class GetSpells:
         return None
 
     @classmethod
-    async def get_spell(cls, search: str):
+    async def get_class(cls, search: str):
         """ Search and filter out a class_ from the list """
         results: list = cls._search_list(search)
         if len(results) != 0:
@@ -54,39 +54,21 @@ class GetSpells:
             return None
 
 
-class Spells(commands.Cog):
+class Classes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command()
-    async def spell(self, ctx, spell: str):
+    async def classes(self, ctx, class_: str):
         """ Gets a class_ either from database or site """
 
-        spell_data = await GetSpells.get_spell(spell.capitalize())
+        class_data = await GetClass.get_class(class_.capitalize())
 
-        embed = discord.Embed(title=spell_data['name'], color=self.bot.colour)
+        embed = discord.Embed(title=class_data['name'], color=self.bot.colour)
         embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)
 
-        stats = f"**Level:** `{spell_data['level']}`\n" \
-                f"**Range:** `{spell_data['range']}`\n" \
-                f"**Duration:** `{spell_data['duration']}`\n" \
-                f"**Components:** `{','.join(spell_data['components'])}`\n" \
-                f"**Casting time:** `{spell_data['casting_time']}`\n" \
-                f"**Concentration:** `{'yes' if spell_data['concentration'] else 'no'}`\n" \
-                f"**Ritual:** `{'yes' if spell_data['ritual'] else 'no'}`\n"
-        classes = f"**School:** `{spell_data['school']['name']}`\n" \
-                  f"**Classes:**\n"
-        for class_ in spell_data['classes']:
-            classes += f"`{class_['name']}`\n"
-        embed.add_field(name="Stats:", value=stats, inline=True)
-        embed.add_field(name="More:", value=classes, inline=True)
-
-        embed.add_field(name="Description", value=spell_data['desc'][0], inline=False)
-        for extra in spell_data['desc'][1:]:
-            embed.add_field(name="\u200b", value=extra, inline=False)
-        embed.add_field(name="At higher levels:", value="\n".join(spell_data['higher_level']), inline=False)
         embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
         await ctx.send(embed=embed)
 
 def setup(bot):
-    bot.add_cog(Spells(bot))
+    bot.add_cog(Classes(bot))
