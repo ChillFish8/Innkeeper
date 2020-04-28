@@ -91,6 +91,37 @@ class Monsters(commands.Cog):
         embed = discord.Embed(title=monster_data['name'], color=self.bot.colour)
         embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)
 
+        # Quick stats
+        text = f"**Size:** `{monster_data['size']}`\n" \
+               f"**Alignment:** `{monster_data['alignment']}`\n" \
+               f"**Armor class:** `{monster_data['armor_class']}`\n" \
+               f"**Hit points:** `{monster_data['hit_points']}`\n"
+        text += "**Speed:**" + ','.join([f"{key} {value}" for key, value in monster_data['speed'].items()])
+        embed.add_field(name="Quick Stats", value=text, inline=True)
+
+        # Ability Scores
+        text = f"**STR:** `{monster_data['strength']}`\n" \
+               f"**DEX:** `{monster_data['dexterity']}`\n" \
+               f"**CON:** `{monster_data['constitution']}`\n" \
+               f"**INT:** `{monster_data['intelligence']}`\n" \
+               f"**WIS:** `{monster_data['wisdom']}`\n"\
+               f"**CHA:** `{monster_data['charisma']}`\n"
+        embed.add_field(name="Ability Score", value=text, inline=True)
+
+        # Profs
+        text = '\n'.join([f"**{dic['name']}** `+{dic['value']}`" for dic in monster_data['proficiencies']])
+        embed.add_field(name="Proficiencies", value=text, inline=True)
+
+        # Senses and Langs
+        text = f"**Senses:**" + ",".join([f"`{key_} {value}`" for key_, value in monster_data['senses'].items()])
+        text += f"\n**Languages:** `{monster_data['languages']}`\n" \
+                f"**Challenge rating:** `{monster_data['challenge_rating']}`\n"
+        embed.add_field(name="Details", value=text, inline=False)
+
+        # Abilities
+        for ability in monster_data['special_abilities'][:3]:
+            embed.add_field(name=f"{ability['name']}", value=f"{ability['desc']}", inline=False)
+
         embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
         await ctx.send(embed=embed)
 
