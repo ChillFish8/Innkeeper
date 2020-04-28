@@ -49,7 +49,7 @@ class GetRace:
             return data
         else:
             text = f"**Here are the races i can bring up:**\n"
-            text += '\n'.join([f"• `{item['name']}`" for item in cls.races])
+            text += '\n'.join([f"**•** `{item['name']}`" for item in cls.races])
             embed = discord.Embed()
             embed.set_author(name="Oops! I cant find anything with that search term.",
                              icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
@@ -73,6 +73,7 @@ class Classes(commands.Cog):
 
         race_data: (str, dict) = await GetRace.get_race(race.capitalize())
         if not isinstance(race_data, dict):
+            race_data.color = self.bot.colour
             return await ctx.send(embed=race_data)
         else:
             embed = discord.Embed(title=f"Race - {race_data['name']}", color=self.bot.colour)
