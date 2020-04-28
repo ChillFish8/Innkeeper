@@ -51,7 +51,16 @@ class GetSpells:
                 data = results[0]
             return await cls._get_request(data['url'])
         else:
-            return None
+            attempt_2: list = cls._search_list(search[0])  # lets get the first term and see
+            if len(attempt_2) > 0:
+                text = f"<:wellfuck:704784002166554776> " \
+                       f"**Oops! I cant find anything with that search term.**\n" \
+                       f"Maybe you were looking for:\n"
+                text += '\n'.join([f"• `{item['name']}`" for item in attempt_2])
+            else:
+                text = f"<:wellfuck:704784002166554776> " \
+                       f"**Oops! I cant find any results relating to your search.**\n"
+            return text
 
 
 class Spells(commands.Cog):
@@ -67,6 +76,9 @@ class Spells(commands.Cog):
                 "<:wellfuck:704784002166554776> **Oops! I cant search for things that are not words or letters.**")
 
         spell_data = await GetSpells.get_spell(spell.capitalize())
+
+        if not isinstance(spell_data, dict):
+            return await ctx.send(spell_data)
 
         embed = discord.Embed(title=spell_data['name'], color=self.bot.colour)
         embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)

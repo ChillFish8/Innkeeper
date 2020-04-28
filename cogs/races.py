@@ -2,6 +2,7 @@ from discord.ext import commands
 import aiohttp
 import json
 import pandas as pd
+import discord
 
 
 class GetRace:
@@ -45,10 +46,10 @@ class GetRace:
             data = cls._filter_exact(search, results)
             if data is None:
                 data = results[0]
-
+            return data
         else:
             text = f"<:wellfuck:704784002166554776> **Oops! I could not find anything matching that search!**\n" \
-                   f"Here are the classes i can bring up:\n"
+                   f"Here are the races i can bring up:\n"
             text += '\n'.join([f"• `{item['name']}`" for item in cls.races])
             return text
 
@@ -58,15 +59,32 @@ class Classes(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def classes(self, ctx, race: str):
+    async def race(self, ctx, race: str):
         """ Gets a class_ either from database or site """
 
         if race.isalpha():
-            race_data = await GetRace.get_race(race.capitalize())
+            race_data: (str, dict) = await GetRace.get_race(race.capitalize())
+            if not isinstance(race_data, dict):
+                return await ctx.send(race_data)
+            else:
+                embed = discord.Embed(title=f"Race - {race_data['name']}", color=self.bot.colour)
+                embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)
+                embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
 
+                desc_1 = f"**Speed:** `{race_data['speed']}ft`\n" \
+                         f"**Ability Bonuses:** " \
+                         f"`{','.join([item['name'] for item in race_data['ability_bonuses']])}`\n" \
+                         f"**Size:** {race_data['size']}\n"
+                embed.description = desc_1
 
+                embed.add_field(name='Alignment', value=race_data['alignment'], inline=False)
+                embed.add_field(name='Age', value=race_data['age'], inline=False)
+                embed.add_field(name='Size description', value=race_data['size_description'], inline=False)
+                embed.add_field(name='Language description', value=race_data['language_desc'], inline=False)
+
+                return await ctx.send(embed=embed)
         else:
-            await ctx.send(
+            return await ctx.send(
                 "<:wellfuck:704784002166554776> **Oops! I cant search for things that are not words or letters.**")
 
 def setup(bot):
