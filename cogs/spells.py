@@ -65,7 +65,6 @@ class GetSpells:
                 embed = discord.Embed()
                 embed.set_author(name="Oops! I cant find any results relating to your search.",
                                  icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
-
             return embed
 
 
