@@ -57,13 +57,53 @@ class Innkeeper(commands.AutoShardedBot):
 
     async def on_command_error(self, ctx, exception):
         """ Any errors that happen in the bot will get sent here """
-        if isinstance(exception, commands.CommandNotFound):
+        await ErrorProcessor.process_error(ctx, exception)
+
+
+class ErrorProcessor:
+    @classmethod
+    async def process_error(cls, ctx: commands.Context, exception):
+        """ This handles the errors and sends them to different area of the handler"""
+        if isinstance(exception, commands.CommandNotFound):     # When the right prefix is used but wrong command
             pass
-        elif isinstance(exception, commands.MissingRequiredArgument):
-            await ctx.send("<:wellfuck:704784002166554776> **You didnt give me anything to work with.**")
+
+        elif isinstance(exception, commands.MissingRequiredArgument):   # When a user doesnt give it something
+            await ctx.send(cls.missing_args())
+
+        elif isinstance(exception, discord.Forbidden):  # If its not allowed to do something
+            await ctx.send(cls.missing_perms(ctx.message.channel))
+
+        elif isinstance(exception, discord.NotFound):   # If it cant find something
+            pass
+
+        elif isinstance(exception, commands.CheckFailure):  # We used a check deco and it went no
+            await ctx.send(cls.load_check_msg(ctx))
+
+        elif isinstance(exception, commands.NoPrivateMessage):
+            await ctx.send(cls.guild_only())
+
         else:
-            await ctx.send(exception)
-            raise exception
+            text = exception
+
+
+    @staticmethod
+    def missing_args():
+        return "<:wellfuck:704784002166554776> **You didnt give me anything to work with.**"
+
+    @staticmethod
+    def missing_perms(channel):
+        return f"<:wellfuck:704784002166554776> **Oops! Looks like i dont have permission todo that in {channel}.**"
+
+    @staticmethod
+    def load_check_msg(ctx):
+        check_name = ctx.command.checks[0].__qualname__
+        return f"<:wellfuck:704784002166554776> **Oops! **"
+
+    @staticmethod
+    def guild_only():
+        return f"<:wellfuck:704784002166554776> " \
+               f"**Sorry, You can only run this command " \
+               f"in a server, not private message.**"
 
 
 if __name__ == "__main__":
