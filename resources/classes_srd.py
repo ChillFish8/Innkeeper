@@ -2115,10 +2115,9 @@ async def Rogue(Subclass, Data):
         return EmbedList
 
 
-async def Sorcerer(Subclass, Data):
-    global Colour
+async def Sorcerer(subclass):
     EmbedList = []
-    if not Subclass:
+    if not subclass:
         Embed = discord.Embed(title="Class - Sorcerer  Pg 1 / 10",
                               description=("        \n"
                                            "**Hit Points**\n"
@@ -2390,10 +2389,9 @@ async def Sorcerer(Subclass, Data):
         return EmbedList
 
 
-async def Warlock(Subclass, Data):
-    global Colour
+async def Warlock(subclass):
     EmbedList = []
-    if not Subclass:
+    if not subclass:
         Embed = discord.Embed(title="Class - Warlock  Pg 1 / 15",
                               description=("        \n"
                                            "**Hit Points**\n"
