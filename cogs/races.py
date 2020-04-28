@@ -48,10 +48,13 @@ class GetRace:
                 data = results[0]
             return data
         else:
-            text = f"<:wellfuck:704784002166554776> **Oops! I could not find anything matching that search!**\n" \
-                   f"Here are the races i can bring up:\n"
+            text = f"**Here are the races i can bring up:**\n"
             text += '\n'.join([f"• `{item['name']}`" for item in cls.races])
-            return text
+            embed = discord.Embed()
+            embed.set_author(name="Oops! I cant find anything with that search term.",
+                             icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
+            embed.description = text
+            return embed
 
 
 class Classes(commands.Cog):
@@ -62,30 +65,33 @@ class Classes(commands.Cog):
     async def race(self, ctx, race: str):
         """ Gets a class_ either from database or site """
 
-        if race.isalpha():
-            race_data: (str, dict) = await GetRace.get_race(race.capitalize())
-            if not isinstance(race_data, dict):
-                return await ctx.send(race_data)
-            else:
-                embed = discord.Embed(title=f"Race - {race_data['name']}", color=self.bot.colour)
-                embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)
-                embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
+        if not race.isalpha():
+            embed = discord.Embed(color=self.bot.colour)
+            embed.set_author(name="Oops! I cant search for things that are not words or letters.",
+                             icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
+            return await ctx.send(embed=embed)
 
-                desc_1 = f"**Speed:** `{race_data['speed']}ft`\n" \
-                         f"**Ability Bonuses:** " \
-                         f"`{','.join([item['name'] for item in race_data['ability_bonuses']])}`\n" \
-                         f"**Size:** {race_data['size']}\n"
-                embed.description = desc_1
-
-                embed.add_field(name='Alignment', value=race_data['alignment'], inline=False)
-                embed.add_field(name='Age', value=race_data['age'], inline=False)
-                embed.add_field(name='Size description', value=race_data['size_description'], inline=False)
-                embed.add_field(name='Language description', value=race_data['language_desc'], inline=False)
-
-                return await ctx.send(embed=embed)
+        race_data: (str, dict) = await GetRace.get_race(race.capitalize())
+        if not isinstance(race_data, dict):
+            return await ctx.send(embed=race_data)
         else:
-            return await ctx.send(
-                "<:wellfuck:704784002166554776> **Oops! I cant search for things that are not words or letters.**")
+            embed = discord.Embed(title=f"Race - {race_data['name']}", color=self.bot.colour)
+            embed.set_author(name=f"{ctx.message.author.name}", icon_url=ctx.message.author.avatar_url)
+            embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
+
+            desc_1 = f"**Speed:** `{race_data['speed']}ft`\n" \
+                     f"**Ability Bonuses:** " \
+                     f"`{','.join([item['name'] for item in race_data['ability_bonuses']])}`\n" \
+                     f"**Size:** {race_data['size']}\n"
+            embed.description = desc_1
+
+            embed.add_field(name='Alignment', value=race_data['alignment'], inline=False)
+            embed.add_field(name='Age', value=race_data['age'], inline=False)
+            embed.add_field(name='Size description', value=race_data['size_description'], inline=False)
+            embed.add_field(name='Language description', value=race_data['language_desc'], inline=False)
+
+            return await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Classes(bot))
