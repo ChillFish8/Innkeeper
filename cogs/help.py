@@ -11,8 +11,9 @@ class HelpCommand(commands.Cog):
         """ The main help command of The Innkeeper"""
 
         embed = discord.Embed(color=self.bot.colour)
-        embed.set_author(name="The Innkeeper help page", icon_url=self.bot.user.avatar_url)
+        embed.set_author(name="The Innkeeper help page", icon_url=ctx.message.author.avatar_url)
         embed.set_footer(text="The Innkeeper, Powered by CF8, ran by the community.")
+        embed.set_thumbnail(url=self.bot.user.avatar_url)
 
         # General Commands
         desc_1 = f"<:discord:642859572524220427>  **General Commands**  <:discord:642859572524220427>\n" \
