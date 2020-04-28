@@ -23,6 +23,7 @@ class Innkeeper(commands.AutoShardedBot):
         super().__init__(command_prefix, **options)
         self.owner_ids = DEVELOPER_IDS
         self.colour = 0x3deaf5
+        self.icon = "https://cdn.discordapp.com/attachments/638140888949719080/704697130576511056/OrcPubLogo.png"
 
     def startup(self):
         """
