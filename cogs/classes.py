@@ -49,7 +49,33 @@ class GetClass:
                 data = exact
             else:
                 data = results[0]
-            return await cls._get_request(data['url'])
+
+            if data['url'].startswith('http://dnd5eapi.co/api/'):
+                output = {}
+                base_class = await cls._get_request(data['url'])
+
+                # stuff that can just get copied over from api
+                output['name'] = base_class['name']
+                output['hit_die'] = base_class['hit_die']
+                output['proficiency_choices'] = {
+                    'choose': base_class['proficiency_choices'][0]['choose'],
+                    'from': base_class['proficiency_choices'][0]['from'],
+                }
+                output['proficiencies'] = base_class['proficiencies']
+                output['saving_throws'] = base_class['saving_throws']
+
+                # starting equipment
+                data = await cls._get_request(f"http://dnd5eapi.co{base_class['starting_equipment']['url']}")
+                start_equip = [f"{item['item']['name']} x {item['quantity']}" for item in data['starting_equipment']]
+                output['starting_equipment'] = start_equip
+
+                # class levels
+                data = await cls._get_request(f"http://dnd5eapi.co{base_class['class_levels']['url']}")
+
+
+
+
+            return
         else:
             return None
 
