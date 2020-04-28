@@ -170,9 +170,9 @@ async def Barbarian(subclass):
                                            ""), color=colour)
         embed.set_footer(text=footer)
         embed_list.append(embed)
-        embed = discord.Embed(title="Barbarian | Sub-Classes | Pg 8",
+        embed = discord.Embed(title="Barbarian | Sub-Races | Pg 8",
                               description="""
-**Sub-Classes**
+**Sub-Races**
 `Path of the Berserker`
                                       """, color=colour)
         embed.set_footer(text=footer)

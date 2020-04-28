@@ -57,7 +57,7 @@ class GetRace:
             return embed
 
 
-class Classes(commands.Cog):
+class Races(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -95,4 +95,4 @@ class Classes(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Classes(bot))
+    bot.add_cog(Races(bot))
