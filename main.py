@@ -6,10 +6,11 @@ import json
 with open('config.json', 'r') as file:
     config = json.load(file)
 
-DEFAULT_PREFIX = ['?', '']
+DEFAULT_PREFIX = ['?']
 TOKEN = config['token']
 DEVELOPER_IDS = config['dev_ids']
 SHARD_COUNT = config['shard_count']
+
 
 class Innkeeper(commands.AutoShardedBot):
     """
@@ -79,7 +80,7 @@ class ErrorProcessor:
         elif isinstance(exception, commands.CheckFailure):  # We used a check deco and it went no
             await ctx.send(cls.load_check_msg(ctx))
 
-        elif isinstance(exception, commands.NoPrivateMessage):
+        elif isinstance(exception, commands.NoPrivateMessage):  # the command is guild only
             await ctx.send(cls.guild_only())
 
         else:
