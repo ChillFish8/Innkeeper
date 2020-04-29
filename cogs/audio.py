@@ -16,12 +16,13 @@ class Track:
     def __init__(self, id_, name):
         self.id = id_
         self.name = name
-        self.url = None
         self.playing = False
         self.length = -1
         self.position = 0
         self.pos_index = 0
         self.looping = False
+        self.url = None
+        self.audio_url = None
 
     def __str__(self):
         return self.name
@@ -34,6 +35,12 @@ class Track:
 
     def __bool__(self):
         return self.playing
+
+    def load_details(self, pafy_obj: pafy.new, url):
+        self.url = url
+        self.audio_url = pafy_obj.getbestaudio().url
+        self.name = pafy_obj.title
+        self.length = timedelta(seconds=pafy_obj.length)
 
 
 class DeckPlayer:
@@ -101,7 +108,10 @@ class DeckPlayer:
         for i, track in enumerate(self._tracks):
             text = "<:index:705013516850954290>  \u200b" if i == self._index else ""
             text += f"{track}"
-            text += f"<a:8104LoadingEmote:661571011434643486>" if track.playing else ""
+            if track.playing:
+                text += f"\u200b **- [ Active ]** <a:8104LoadingEmote:661571011434643486>"
+            elif self._voice_client.is_paused() and track.id == self._now_playing.id:
+                text += f"\u200b **- [ Paused ]**"
             embed.add_field(name="\u200b", value=text, inline=False)
         return embed
 
@@ -176,14 +186,26 @@ class DeckPlayer:
 
     def end_of_track(self, error=None):
         self._source.cleanup()
+        self._now_playing.playing = False
+
+    async def check_end(self):
+        running = True
+        while running:
+            if not self._voice_client.is_playing() and not self._voice_client.is_paused():
+                self._now_playing.playing = False
+                await self.update_deck()
+                running = False
+            await asyncio.sleep(2)
 
     async def play_pause_track(self, type_='add'):
         if self._voice_client.is_playing():
             if self._tracks[self._index].id == self._now_playing.id:
+                self._now_playing.playing = False
                 self._voice_client.pause()
-                return
+                return await self.update_deck()
             else:
                 if type_ == "add":
+                    self._now_playing.playing = False
                     self._voice_client.stop()
                     self._source.cleanup()
                 else:
@@ -191,25 +213,28 @@ class DeckPlayer:
 
         elif self._voice_client.is_paused():
             if self._tracks[self._index].id == self._now_playing.id:
+                self._now_playing.playing = True
                 self._voice_client.resume()
-                return
+                return await self.update_deck()
             else:
                 if type_ == "add":
+                    self._now_playing.playing = False
                     self._voice_client.stop()
                     self._source.cleanup()
                 else:
                     return
 
-        url = await Youtube.get_info('https://www.youtube.com/watch?v=jb4ybTQwcdw')
-
         track = self._tracks[self._index]
         self._source = discord.PCMVolumeTransformer(
             discord.FFmpegPCMAudio(executable=self.FFMPEG_EXE,
-                                   source=url.getbestaudio().url
+                                   source=track.url
                                    ),
             volume=self.volume / 100)
         self._now_playing = track
+        self._now_playing.playing = True
         self._voice_client.play(self._source, after=self.end_of_track)
+        await self.update_deck()
+        asyncio.get_event_loop().create_task(self.check_end())
 
 
 class Audio(commands.Cog):
@@ -318,7 +343,7 @@ class Audio(commands.Cog):
             elif pos == 5:
                 await player.play_pause_track(type_="remove")
             elif pos == 6:
-                await player.toggle_loop()  # Loop / Unloop
+                await player.toggle_loop()  # Loop / Un-loop
 
     @commands.Cog.listener()
     async def on_voice_state_update(self,
@@ -355,6 +380,9 @@ class Audio(commands.Cog):
             This will get used for managing which tracks
             are in what section and binded to the relevant reaction.
         """
+
+        if '&list=' in track:
+
 
 
 class Youtube:
