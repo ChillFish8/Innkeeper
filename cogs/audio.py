@@ -21,6 +21,7 @@ class Track:
         self.length = -1
         self.position = 0
         self.pos_index = 0
+        self.looping = False
 
     def __str__(self):
         return self.name
@@ -82,6 +83,8 @@ class DeckPlayer:
                f"> **Now Playing:** `{self._now_playing.name if self._now_playing.playing else None}`\n" \
                f"> **Length:** `{self._now_playing.length if self._now_playing.playing else 0}`\n" \
                f"> **Volume:** `{self.volume}%`\n" \
+               f"> **Repeat:**  " \
+               f"{'<:online:705030764437438565> True' if self._now_playing.looping else '<:offline:705030763950899241> False'}\n" \
                f"> **Status:** "
 
         if self._now_playing.playing:
@@ -145,6 +148,10 @@ class DeckPlayer:
         else:
             self.volume += offset
             await self.update_deck()
+
+    async def toggle_loop(self):
+        self._now_playing.looping = not self._now_playing.looping
+        await self.update_deck()
 
 class Audio(commands.Cog):
     """
