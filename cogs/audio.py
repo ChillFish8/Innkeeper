@@ -17,10 +17,12 @@ class DeckPlayer:
     def __init__(self, ctx):
         self.guild = ctx.message.guild
         self.deck_message = None
+        self.author = ctx.message.author
         self.creator_id = ctx.message.author.id
+        self.channel = ctx.message.channel
         self._id = uuid.uuid4()
-        self._voice_client = None
-        self._voice_channel = None
+        self._voice_client = self.guild.voice_client
+        self._voice_channel = self.author.voice.channel
         self._active = False
         self._initial_start = True
         self._track_1 = None
@@ -39,12 +41,25 @@ class DeckPlayer:
 
     async def _connect(self):
         """ Connects to the voice call and loads the voice channel and client """
-        pass
+        if self._voice_channel is not None:
+            if self._voice_client is not None:
+                if self._voice_channel and self._voice_client.is_connected():
+                    await self._voice_client.move_to(self._voice_channel)
+                else:
+                    self._voice_client = await self._voice_channel.connect()
+            else:
+                self._voice_client = await self._voice_channel.connect()
+            return True, ""
+        else:
+            return False, "<:wellfuck:704784002166554776> **I cant join a channel if you are not in one either.**"
 
     async def run_player(self):
         """ Starts the deck listening for commands etc... """
         if self._initial_start:
-            await self._connect()
+            result, info = await self._connect()
+            if not result:
+                await self.channel.send(info)
+                return False
 
 
 class Audio(commands.Cog):
@@ -129,9 +144,14 @@ class Audio(commands.Cog):
             This will get used for managing which tracks
             are in what section and binded to the relevant reaction.
         """
+        player = DeckPlayer(ctx)
+        result = await player.run_player()
+        if not result:
+            return
+        self.active_players[ctx.guild.id] = player
 
     @commands.command()
-    async def setup(self, ctx: commands.Context):
+    async def addtrack(self, ctx: commands.Context, track: str):
         """
         + This spawns a embed which acts as the 'deck'
             This will get used for managing which tracks

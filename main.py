@@ -85,6 +85,8 @@ class ErrorProcessor:
 
         else:
             text = exception
+            await ctx.send(text)
+            raise exception
 
 
     @staticmethod
