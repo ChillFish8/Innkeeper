@@ -53,11 +53,6 @@ class DeckPlayer:
         self.max_tacks = 5
 
         self._id = uuid.uuid4()
-        self._voice_client = self.guild.voice_client
-        self._voice_channel = self.author.voice.channel if self.author.voice is not None else None
-
-        self._source = None
-
         self._active = False
         self._initial_start = True
         self._index = 0
@@ -122,11 +117,10 @@ class DeckPlayer:
         await self.deck_message.edit(embed=embed)
         if volume:
             player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
-            if self._source is not None:
-                if self.muted:
-                    await player.set_volume(0)
-                else:
-                    await player.set_volume(self.volume)
+            if self.muted:
+                await player.set_volume(0)
+            else:
+                await player.set_volume(self.volume)
 
     async def shift_index(self, offset: int):
         if offset == -1 and not self._index:
