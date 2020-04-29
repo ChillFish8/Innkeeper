@@ -43,6 +43,7 @@ class Innkeeper(commands.AutoShardedBot):
                 self.load_extension(f"cogs.{cog.replace('.py', '')}")
             except Exception as e:
                 print(f"Failed to load cog {cog}, Error: {e}")
+                raise e
 
     async def on_ready(self):
         print("Bot connected")

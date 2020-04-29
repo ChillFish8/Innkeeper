@@ -76,6 +76,7 @@ class DeckPlayer:
 
     def _get_embed(self):
         """ Loads and generates the description markdown """
+        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
 
         embed = discord.Embed(color=self.bot.colour)
         embed.set_author(name="Audio Deck", icon_url="https://cdn.discordapp.com/emojis/642858638116913202.png?v=1")
@@ -105,29 +106,14 @@ class DeckPlayer:
                 text += f"{track}"
             if track.playing:
                 text += f"\u200b **- [ Active ]** <a:8104LoadingEmote:661571011434643486>"
-            elif self._voice_client.is_paused() and track.id == self._now_playing.id:
+            elif player.paused and track.id == self._now_playing.id:
                 text += f"\u200b **- [ Paused ]**"
             embed.add_field(name="\u200b", value=text, inline=False)
         return embed
 
-    async def _connect(self):
-        """ Connects to the voice call and loads the voice channel and client """
-        if self._voice_channel is not None:
-            if self._voice_client is not None:
-                if self._voice_channel and self._voice_client.is_connected():
-                    await self._voice_client.move_to(self._voice_channel)
-                else:
-                    self._voice_client = await self._voice_channel.connect()
-            else:
-                self._voice_client = await self._voice_channel.connect()
-            return True, ""
-        else:
-            return False, "<:wellfuck:704784002166554776> **I cant join a channel if you are not in one either.**"
-
     async def run_player(self):
         """ Starts the deck listening for commands etc... """
         if self._initial_start:
-            result, info = await self._connect()
             if not result:
                 await self.channel.send(info)
                 return False
@@ -191,20 +177,13 @@ class DeckPlayer:
                 running = False
             await asyncio.sleep(2)
 
-    def _play_audio(self, url):
+    def _play_audio(self):
         self._now_playing.playing = True
         asyncio.get_event_loop().create_task(self.check_end())
 
     async def play_pause_track(self, type_='add'):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
-        if player.is_playing:
-            if type_ == 'add':
-                await player.play()
-            else:
-                await player.set_pause(not player.paused)
-        else:
-            if type_ == 'add':
-                await player.play()
+        # todo fill
 
     async def add_track(self, ctx, track):
         """ Searches and plays a song from a given track. """
@@ -228,12 +207,20 @@ class DeckPlayer:
         if results['loadType'] == 'PLAYLIST_LOADED':
             tracks = results['tracks']
             for track in tracks:
-                # Add all of the tracks from the playlist to the queue.
                 player.add(requester=ctx.author.id, track=track)
         else:
             track = results['tracks'][0]
             track = lavalink.models.AudioTrack(track, ctx.author.id, recommended=True)
             player.add(requester=ctx.author.id, track=track)
+
+            slotted_track = self._tracks[self._index]
+            slotted_track.name = track['title']
+            slotted_track.url = track['uri']
+            #slotted_track.length = lavalink.format_time(track['length'])
+            self._tracks[self._index] = slotted_track
+        await self.update_deck()
+        return await ctx.send(
+            f'<:gelati_cute:704784002355036190> **Added track to slot {self._index}**')
 
 
 class Audio(commands.Cog):
@@ -272,14 +259,18 @@ class Audio(commands.Cog):
     VALID_EMOJIS = ['🔼', '🔽', '🔇', '🔈', '🔊', '⏯️', '🔁', ]
     active_players = {}  # Dictionary relating to guild Ids
 
-    def __init__(self, bot):
+    def __init__(self, bot: commands.AutoShardedBot):
         self.bot = bot  # Discord AutoShardedBot
 
-        if not hasattr(bot, 'lavalink'):  # This ensures the client isn't overwritten during cog reloads.
-            bot.lavalink = lavalink.Client(bot.user.id)
-            bot.lavalink.add_node('127.0.0.1', 2333, 'youshallnotpass', 'eu',
-                                  'default-node')  # Host, Port, Password, Region, Name
-            bot.add_listener(bot.lavalink.voice_update_handler, 'on_socket_response')
+        if not hasattr(self.bot, 'lavalink'):  # This ensures the client isn't overwritten during cog reloads.
+            self.bot.lavalink = lavalink.Client(641381762785607698)
+            self.bot.lavalink.add_node(
+                '127.0.0.1',
+                2333,
+                'youshallnotpass',
+                'eu',
+                'default-node')  # Host, Port, Password, Region, Name
+            self.bot.add_listener(self.bot.lavalink.voice_update_handler, 'on_socket_response')
 
         lavalink.add_event_hook(self.track_hook)
 
@@ -422,7 +413,8 @@ class Audio(commands.Cog):
         """
 
         if ctx.guild.id in self.active_players:
-            await self.active_players[ctx.guild.id].addtrack(ctx, track)
+            player: DeckPlayer = self.active_players[ctx.guild.id]
+            await player.add_track(ctx, track)
         else:
             try:
                 await ctx.message.delete()
