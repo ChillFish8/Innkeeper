@@ -1,7 +1,6 @@
 from discord.ext import commands
 import discord
 import uuid
-import pafy
 import asyncio
 from datetime import timedelta
 import lavalink
@@ -14,21 +13,16 @@ class Track:
     def __init__(self, id_, name, guild_id):
         self.id = id_
         self.name = name
-        self.playing = False
-        self.length = -1
-        self.position = 0
-        self.pos_index = 0
-        self.looping = False
-        self.url = None
         self.guild_id = guild_id
-        self.track = None
+        self.playing = False
+        self.track: lavalink.AudioTrack = None
 
     def __str__(self):
         return self.name
 
     def __repr__(self):
-        if self.url is not None:
-            return f"**{self.id} - [{self.name}]({self.url})**"
+        if self.track is not None:
+            return f"**{self.id} - [{self.name}]({self.track.uri})**"
         else:
             return f"**{self.id} - {self.name}**"
 
@@ -84,13 +78,13 @@ class DeckPlayer:
 
         desc = f"" \
                f"> **Now Playing:** `{self._now_playing.name if self._now_playing.playing else None}`\n" \
-               f"> **Length:** `{self._now_playing.length if self._now_playing.playing else 0}`\n" \
+               f"> **Length:** `{self._now_playing.track.duration if self._now_playing.playing else 0}`\n" \
                f"> **Volume:** `{self.volume if not self.muted else 0}%`\n" \
                f"> **Repeat:**  " \
-               f"{'<:online:705030764437438565> True' if self._now_playing.looping else '<:offline:705030763950899241> False'}\n" \
+               f"{'<:online:705030764437438565> True' if player.repeat else '<:offline:705030763950899241> False'}\n" \
                f"> **Status:** "
 
-        if self._now_playing.playing:
+        if player.is_playing:
             desc += f"<:online:705030764437438565> Playing\n"
         else:
             desc += f"<:offline:705030763950899241> Stopped\n"
@@ -100,11 +94,11 @@ class DeckPlayer:
 
         for i, track in enumerate(self._tracks):
             text = "<:index:705013516850954290>  \u200b" if i == self._index else ""
-            if track.url is not None:
-                text += f"[{track}]({track.url})"
+            if track.track is not None:
+                text += f"[{track}]({track.track.uri})"
             else:
                 text += f"{track}"
-            if track.playing:
+            if player.is_playing:
                 text += f"\u200b **- [ Active ]** <a:8104LoadingEmote:661571011434643486>"
             elif player.paused and track.id == self._now_playing.id:
                 text += f"\u200b **- [ Paused ]**"
@@ -114,13 +108,14 @@ class DeckPlayer:
     async def run_player(self):
         """ Starts the deck listening for commands etc... """
         if self._initial_start:
-            embed = self._get_embed()
-            self.deck_message = await self.channel.send(embed=embed)
-
-            for emoji in self.VALID_EMOJIS:
-                await self.deck_message.add_reaction(emoji)
-                await asyncio.sleep(0.1)
-            return self
+            player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
+            if player.is_connected:
+                embed = self._get_embed()
+                self.deck_message = await self.channel.send(embed=embed)
+                for emoji in self.VALID_EMOJIS:
+                    await self.deck_message.add_reaction(emoji)
+                    await asyncio.sleep(0.1)
+                return self
 
     async def update_deck(self, volume=False):
         embed = self._get_embed()
@@ -176,6 +171,8 @@ class DeckPlayer:
             else:
                 await player.stop()
                 await player.play(self._tracks[self._index].track)
+        else:
+            await player.play(self._tracks[self._index].track)
 
     async def add_track(self, ctx, track):
         """ Searches and plays a song from a given track. """
@@ -198,18 +195,11 @@ class DeckPlayer:
         #   LOAD_FAILED     - most likely, the video encountered an exception during loading.
         if results['loadType'] == 'PLAYLIST_LOADED':
             tracks = results['tracks']
-            for track in tracks:
-                player.add(requester=ctx.author.id, track=track)
+            self._tracks[self._index].track = tracks
         else:
             track = results['tracks'][0]
             track = lavalink.models.AudioTrack(track, ctx.author.id, recommended=True)
-            player.add(requester=ctx.author.id, track=track)
-
-            slotted_track = self._tracks[self._index]
-            slotted_track.name = track['title']
-            slotted_track.url = track['uri']
-            #slotted_track.length = lavalink.format_time(track['length'])
-            self._tracks[self._index] = slotted_track
+            self._tracks[self._index].track = track
         await self.update_deck()
         return await ctx.send(
             f'<:gelati_cute:704784002355036190> **Added track to slot {self._index}**')
@@ -251,18 +241,13 @@ class Audio(commands.Cog):
     VALID_EMOJIS = ['🔼', '🔽', '🔇', '🔈', '🔊', '⏯️', '🔁', ]
     active_players = {}  # Dictionary relating to guild Ids
 
-    def __init__(self, bot: commands.AutoShardedBot):
-        self.bot = bot  # Discord AutoShardedBot
+    def __init__(self, bot):
+        self.bot = bot
 
-        if not hasattr(self.bot, 'lavalink'):  # This ensures the client isn't overwritten during cog reloads.
-            self.bot.lavalink = lavalink.Client(641381762785607698)
-            self.bot.lavalink.add_node(
-                '127.0.0.1',
-                2333,
-                'youshallnotpass',
-                'eu',
-                'default-node')  # Host, Port, Password, Region, Name
-            self.bot.add_listener(self.bot.lavalink.voice_update_handler, 'on_socket_response')
+        if not hasattr(bot, 'lavalink'):  # This ensures the client isn't overwritten during cog reloads.
+            bot.lavalink = lavalink.Client(641381762785607698)
+            bot.lavalink.add_node('127.0.0.1', 2333, 'youshallnotpass', 'eu', 'default-node')  # Host, Port, Password, Region, Name
+            bot.add_listener(bot.lavalink.voice_update_handler, 'on_socket_response')
 
         lavalink.add_event_hook(self.track_hook)
 
@@ -363,6 +348,16 @@ class Audio(commands.Cog):
             return
         self.active_players[ctx.guild.id] = player
 
+    async def track_hook(self, event):
+        if isinstance(event, lavalink.events.QueueEndEvent):
+            guild_id = int(event.player.guild_id)
+            await self.connect_to(guild_id, None)
+
+    async def connect_to(self, guild_id: int, channel_id: str):
+        """ Connects to the given voicechannel ID. A channel_id of `None` means disconnect. """
+        ws = self.bot._connection._get_websocket(guild_id)
+        await ws.voice_state(str(guild_id), channel_id)
+
     def cog_unload(self):
         """ Cog unload handler. This removes any event hooks that were registered. """
         self.bot.lavalink._event_hooks.clear()
@@ -370,31 +365,33 @@ class Audio(commands.Cog):
     async def cog_before_invoke(self, ctx):
         """ Command before-invoke handler. """
         guild_check = ctx.guild is not None
+
         if guild_check:
             await self.ensure_voice(ctx)
         return guild_check
 
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, commands.CommandInvokeError):
+            await ctx.send(error.original)
+
     async def ensure_voice(self, ctx):
         """ This check ensures that the bot and command author are in the same voicechannel. """
         player = self.bot.lavalink.player_manager.create(ctx.guild.id, endpoint=str(ctx.guild.region))
+
+        if not ctx.author.voice or not ctx.author.voice.channel:
+            raise commands.CommandInvokeError('Join a voicechannel first.')
+
         if not player.is_connected:
             permissions = ctx.author.voice.channel.permissions_for(ctx.me)
-            if not permissions.connect or not permissions.speak:
-                await ctx.send(
-                    "<:wellfuck:704784002166554776> **Oops! Im missing permissions.\n"
-                    "Please make sure i have the** `CONNECT` **and** `SPEAK` permissions.")
+
+            if not permissions.connect or not permissions.speak:  # Check user limit too?
+                raise commands.CommandInvokeError('I need the `CONNECT` and `SPEAK` permissions.')
+
             player.store('channel', ctx.channel.id)
             await self.connect_to(ctx.guild.id, str(ctx.author.voice.channel.id))
-
-    async def track_hook(self, event):
-        if isinstance(event, lavalink.events.QueueEndEvent):
-            guild_id = int(event.player.guild_id)
-            await self.connect_to(guild_id, None)
-
-    async def connect_to(self, guild_id: int, channel_id: str):
-        """ Connects to the given voicechannel ID. None -> yeet that dude"""
-        ws = self.bot._connection._get_websocket(guild_id)
-        await ws.voice_state(str(guild_id), channel_id)
+        else:
+            if int(player.channel_id) != ctx.author.voice.channel.id:
+                raise commands.CommandInvokeError('You need to be in my voicechannel.')
 
     @commands.command(aliases=['at', 'p'])
     async def addtrack(self, ctx: commands.Context, track: str):
