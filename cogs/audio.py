@@ -1,6 +1,52 @@
 from discord.ext import commands
 import discord
 import uuid
+import urllib.parse
+import aiohttp
+import json
+from bs4 import BeautifulSoup
+
+
+class YoutubeSearch:
+    """ Web scrapes youtube - Fast """
+    def __init__(self, search_terms: str, max_results=10):
+        self.search_terms = search_terms
+        self.max_results = max_results
+        self.videos = None
+
+    async def search(self):
+        """ Sends the request to get the html """
+        encoded_search = urllib.parse.quote(self.search_terms)
+        BASE_URL = "https://youtube.com"
+        url = f"{BASE_URL}/results?search_query={encoded_search}&pbj=1"
+        async with aiohttp.ClientSession() as sess:
+            async with sess.get(url) as resp:
+                html = await resp.text()
+                response = BeautifulSoup(html, "lxml")
+                results = self.parse_html(response)
+        self.videos = results
+
+    def parse_html(self, soup):
+        """ Uses lxml (for speed) ideally only wants first option for max speed """
+        results = []
+        for index, video in enumerate(soup.select(".yt-uix-tile-link")):
+            if index < self.max_results:
+                if video["href"].startswith("/watch?v="):
+                    video_info = {
+                        "title": video["title"],
+                        "link": video["href"],
+                        "id": video["href"][video["href"].index("=")+1:]
+                    }
+                    results.append(video_info)
+            else:
+                return results
+        return results
+
+    def to_dict(self):
+        return self.videos
+
+    def to_json(self):
+        return json.dumps({"videos": self.videos})
 
 
 class DeckPlayer:
@@ -11,7 +57,7 @@ class DeckPlayer:
         self.deck_message = None
         self.creator_id = ctx.message.author.id
         self._id = uuid.uuid4()
-        self._voice_state = None
+        self._voice_client = None
         self._voice_channel = None
         self._active = False
         self._initial_start = True
@@ -30,6 +76,7 @@ class DeckPlayer:
         pass
 
     async def _connect(self):
+        """ Connects to the voice call and loads the voice channel and client """
         pass
 
     async def run_player(self):
