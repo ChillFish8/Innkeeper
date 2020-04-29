@@ -1,6 +1,6 @@
 Django
 bs4
 diceroller
-discord.py
+discord.py[voice]
 lxml
 pandas
