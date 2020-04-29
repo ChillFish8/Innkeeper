@@ -56,6 +56,7 @@ class DeckPlayer:
         self.creator_id = ctx.message.author.id
         self.channel = ctx.message.channel
         self.volume = 100
+        self.muted = False
         self.max_tacks = 5
 
         self._id = uuid.uuid4()
@@ -83,7 +84,7 @@ class DeckPlayer:
         desc = f"" \
                f"> **Now Playing:** `{self._now_playing.name if self._now_playing.playing else None}`\n" \
                f"> **Length:** `{self._now_playing.length if self._now_playing.playing else 0}`\n" \
-               f"> **Volume:** `{self.volume}%`\n" \
+               f"> **Volume:** `{self.volume if not self.muted else 0}%`\n" \
                f"> **Repeat:**  " \
                f"{'<:online:705030764437438565> True' if self._now_playing.looping else '<:offline:705030763950899241> False'}\n" \
                f"> **Status:** "
@@ -131,6 +132,7 @@ class DeckPlayer:
                 for emoji in self.VALID_EMOJIS:
                     await self.deck_message.add_reaction(emoji)
                     await asyncio.sleep(0.1)
+                return self
 
     async def update_deck(self):
         embed = self._get_embed()
@@ -139,20 +141,27 @@ class DeckPlayer:
     async def shift_index(self, offset: int):
         if offset == -1 and not self._index:
             return
-        elif offset == 1 and self._index == self.max_tacks:
+        elif offset == 1 and self._index == (self.max_tacks - 1):
             return
         else:
             self._index += offset
             await self.update_deck()
 
     async def change_vol(self, offset: int):
-        if offset == -10 and not self.volume:
+        if offset == -10 and not self.muted and not self.volume:
             return
-        elif offset == 10 and self.volume == 100:
+        elif offset == 10 and not self.muted and self.volume == 100:
             return
-        else:
-            self.volume += offset
+        elif offset == 0 and not self.muted:
+            self.muted = True
             await self.update_deck()
+        elif offset == 1 and self.muted:
+            self.muted = False
+            await self.update_deck()
+        else:
+            if not self.muted:
+                self.volume += offset
+                await self.update_deck()
 
     async def toggle_loop(self):
         self._now_playing.looping = not self._now_playing.looping
@@ -230,7 +239,23 @@ class Audio(commands.Cog):
                 and go from there.
         """
         if await self.filter_payload(payload=payload):
-            print("Ye")
+            pos = self.VALID_EMOJIS.index(str(payload.emoji))
+            player: DeckPlayer = self.active_players[payload.guild_id]
+            print(pos)
+            if pos == 0:
+                await player.shift_index(-1)  # Shift up
+            elif pos == 1:
+                await player.shift_index(1)  # Shift down
+            elif pos == 2:
+                await player.change_vol(0)  # Mute
+            elif pos == 3:
+                await player.change_vol(-10)  # Lower Vol
+            elif pos == 4:
+                await player.change_vol(10)  # Raise Vol
+            elif pos == 5:
+                pass    # todo add Play Pause
+            elif pos == 6:
+                await player.toggle_loop()  # Loop / Unloop
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
@@ -243,7 +268,14 @@ class Audio(commands.Cog):
                and go from there.
         """
         if await self.filter_payload(payload=payload):
-            print("Ye")
+            pos = self.VALID_EMOJIS.index(str(payload.emoji))
+            player = self.active_players[payload.guild_id]
+            if pos == 2:
+                await player.change_vol(1)  # UnMute
+            elif pos == 5:
+                pass    # todo add Play Pause
+            elif pos == 6:
+                await player.toggle_loop()  # Loop / Unloop
 
     @commands.Cog.listener()
     async def on_voice_state_update(self,
