@@ -27,7 +27,7 @@ class Track:
 
     def __repr__(self):
         if self.url is not None:
-                return f"**{self.id} - [{self.name}]({self.url})**"
+            return f"**{self.id} - [{self.name}]({self.url})**"
         else:
             return f"**{self.id} - {self.name}**"
 
@@ -44,7 +44,6 @@ class DeckPlayer:
     - Manages generating and updating the deck embed
 
     """
-    FFMPEG_EXE = r"ffmpeg/bin/ffmpeg.exe"
 
     def __init__(self, ctx: commands.Context, bot, valid_emojis):
         self.VALID_EMOJIS = valid_emojis
@@ -114,27 +113,24 @@ class DeckPlayer:
     async def run_player(self):
         """ Starts the deck listening for commands etc... """
         if self._initial_start:
-            if not result:
-                await self.channel.send(info)
-                return False
-            else:
-                embed = self._get_embed()
-                self.deck_message = await self.channel.send(embed=embed)
+            embed = self._get_embed()
+            self.deck_message = await self.channel.send(embed=embed)
 
-                for emoji in self.VALID_EMOJIS:
-                    await self.deck_message.add_reaction(emoji)
-                    await asyncio.sleep(0.1)
-                return self
+            for emoji in self.VALID_EMOJIS:
+                await self.deck_message.add_reaction(emoji)
+                await asyncio.sleep(0.1)
+            return self
 
     async def update_deck(self, volume=False):
         embed = self._get_embed()
         await self.deck_message.edit(embed=embed)
         if volume:
+            player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
             if self._source is not None:
                 if self.muted:
-                    self._source.volume = 0
+                    await player.set_volume(0)
                 else:
-                    self._source.volume = self.volume / 100
+                    await player.set_volume(self.volume)
 
     async def shift_index(self, offset: int):
         if offset == -1 and not self._index:
@@ -168,18 +164,8 @@ class DeckPlayer:
         player.repeat = True
 
     async def check_end(self):
-        running = True
-        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
-        while running:
-            if not player.is_playing and not player.paused:
-                self._now_playing.playing = False
-                await self.update_deck()
-                running = False
-            await asyncio.sleep(2)
-
-    def _play_audio(self):
-        self._now_playing.playing = True
-        asyncio.get_event_loop().create_task(self.check_end())
+        # todo do i even need this?
+        pass
 
     async def play_pause_track(self, type_='add'):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
