@@ -1,18 +1,13 @@
 from discord.ext import commands
 import discord
 import uuid
-import urllib.parse
-import aiohttp
-import json
-from bs4 import BeautifulSoup
 import pafy
 import asyncio
-import urllib
-import concurrent.futures
-import shutil
-from datetime import datetime, timedelta
-import os
-import urllib.error
+from datetime import timedelta
+import lavalink
+import re
+
+url_rx = re.compile(r'https?://(?:www\.)?.+')
 
 
 class Track:
@@ -25,18 +20,13 @@ class Track:
         self.pos_index = 0
         self.looping = False
         self.url = None
-        self.audio = None
         self.guild_id = guild_id
-        self.audio_url = None
 
     def __str__(self):
         return self.name
 
     def __repr__(self):
         if self.url is not None:
-            if self.audio_url == -1:
-                return f"**{self.id} -‼️ [{self.name}]({self.url}) ‼️Error Playing**"
-            else:
                 return f"**{self.id} - [{self.name}]({self.url})**"
         else:
             return f"**{self.id} - {self.name}**"
@@ -44,16 +34,6 @@ class Track:
     def __bool__(self):
         return self.playing
 
-    def load_details(self, pafy_obj: pafy.new, url):
-        self.url = url
-        self.audio = pafy_obj
-        self.name = pafy_obj.title
-        self.length = timedelta(seconds=pafy_obj.length)
-
-    async def download(self):
-        path = await Youtube.download_audio(self.audio, id_=str(self.guild_id), path='audio_tracks')
-        self.audio_url = path
-        return path
 
 class DeckPlayer:
     """
@@ -119,7 +99,10 @@ class DeckPlayer:
 
         for i, track in enumerate(self._tracks):
             text = "<:index:705013516850954290>  \u200b" if i == self._index else ""
-            text += f"{track}"
+            if track.url is not None:
+                text += f"[{track}]({track.url})"
+            else:
+                text += f"{track}"
             if track.playing:
                 text += f"\u200b **- [ Active ]** <a:8104LoadingEmote:661571011434643486>"
             elif self._voice_client.is_paused() and track.id == self._now_playing.id:
@@ -193,85 +176,64 @@ class DeckPlayer:
                 await self.update_deck(volume=True)
 
     async def toggle_loop(self):
+        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         self._now_playing.looping = not self._now_playing.looping
         await self.update_deck()
-
-    def end_of_track(self, error=None):
-        self._source.cleanup()
-        self._now_playing.playing = False
+        player.repeat = True
 
     async def check_end(self):
         running = True
+        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         while running:
-            if not self._voice_client.is_playing() and not self._voice_client.is_paused():
+            if not player.is_playing and not player.paused:
                 self._now_playing.playing = False
                 await self.update_deck()
                 running = False
-                if self._now_playing.looping:
-                    self._play_audio(self._now_playing.audio_url)
             await asyncio.sleep(2)
 
     def _play_audio(self, url):
-        self._source = discord.PCMVolumeTransformer(
-            discord.FFmpegPCMAudio(executable=self.FFMPEG_EXE,
-                                   source=url),
-            volume=self.volume / 100)
         self._now_playing.playing = True
-        self._voice_client.play(self._source, after=self.end_of_track)
         asyncio.get_event_loop().create_task(self.check_end())
 
     async def play_pause_track(self, type_='add'):
-        if self._voice_client.is_playing():
-            if self._tracks[self._index].id == self._now_playing.id and \
-                    self._tracks[self._index].url == self._now_playing.url:
-                self._now_playing.playing = False
-                self._voice_client.pause()
-                return await self.update_deck()
+        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
+        if player.is_playing:
+            if type_ == 'add':
+                await player.play()
             else:
-                if type_ == "add":
-                    self._now_playing.playing = False
-                    self._voice_client.stop()
-                    self._source.cleanup()
-                else:
-                    return
-
-        elif self._voice_client.is_paused():
-            if self._tracks[self._index].id == self._now_playing.id and \
-                    self._tracks[self._index].url == self._now_playing.url:
-                self._now_playing.playing = True
-                self._voice_client.resume()
-                return await self.update_deck()
-            else:
-                if type_ == "add":
-                    self._now_playing.playing = False
-                    self._voice_client.stop()
-                    self._source.cleanup()
-                else:
-                    return
-
-        track = self._tracks[self._index]
-        check = await track.download()
-        if check == -1:
-            return await self.update_deck()
-        self._now_playing = track
-        self._play_audio(track.audio_url)
-        return await self.update_deck()
-
-    async def add_track(self, url):
-        if url.startswith('https://www.youtube.com/'):
-            video = pafy.new(url)
+                await player.set_pause(not player.paused)
         else:
-            result = await Youtube.search(url, limit=1)
-            if len(result) < 1:
-                return "<:wellfuck:704784002166554776> **Sorry! I couldn't find anything with that search.**"
-            url = f"https://www.youtube.com{result[0]['link']}"
-            video = pafy.new(url)
-        if video.length < 1800:
-            self._tracks[self._index].load_details(video, url)
-            await self.update_deck()
-            return "<:gelati_cute:704784002355036190> **Track loaded!**"
+            if type_ == 'add':
+                await player.play()
+
+    async def add_track(self, ctx, track):
+        """ Searches and plays a song from a given track. """
+        player = self.bot.lavalink.player_manager.get(ctx.guild.id)
+        track = track.strip('<>')
+
+        if not url_rx.match(track):
+            track = f'ytsearch:{track}'
+
+        results = await player.node.get_tracks(track)
+
+        if not results or not results['tracks']:
+            return await ctx.send(
+                '<:wellfuck:704784002166554776> **Oops!  could not find anything that matches your search**')
+
+        #   TRACK_LOADED    - single video/direct URL)
+        #   PLAYLIST_LOADED - direct URL to playlist)
+        #   SEARCH_RESULT   - track prefixed with either ytsearch: or scsearch:.
+        #   NO_MATCHES      - track yielded no results
+        #   LOAD_FAILED     - most likely, the video encountered an exception during loading.
+        if results['loadType'] == 'PLAYLIST_LOADED':
+            tracks = results['tracks']
+            for track in tracks:
+                # Add all of the tracks from the playlist to the queue.
+                player.add(requester=ctx.author.id, track=track)
         else:
-            return "<:wellfuck:704784002166554776> **Sorry! I cant stream video over 30 minutes.**"
+            track = results['tracks'][0]
+            track = lavalink.models.AudioTrack(track, ctx.author.id, recommended=True)
+            player.add(requester=ctx.author.id, track=track)
 
 
 class Audio(commands.Cog):
@@ -312,6 +274,14 @@ class Audio(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot  # Discord AutoShardedBot
+
+        if not hasattr(bot, 'lavalink'):  # This ensures the client isn't overwritten during cog reloads.
+            bot.lavalink = lavalink.Client(bot.user.id)
+            bot.lavalink.add_node('127.0.0.1', 2333, 'youshallnotpass', 'eu',
+                                  'default-node')  # Host, Port, Password, Region, Name
+            bot.add_listener(bot.lavalink.voice_update_handler, 'on_socket_response')
+
+        lavalink.add_event_hook(self.track_hook)
 
     @classmethod
     def get_player_msg_ids(cls):
@@ -410,7 +380,40 @@ class Audio(commands.Cog):
             return
         self.active_players[ctx.guild.id] = player
 
-    @commands.command()
+    def cog_unload(self):
+        """ Cog unload handler. This removes any event hooks that were registered. """
+        self.bot.lavalink._event_hooks.clear()
+
+    async def cog_before_invoke(self, ctx):
+        """ Command before-invoke handler. """
+        guild_check = ctx.guild is not None
+        if guild_check:
+            await self.ensure_voice(ctx)
+        return guild_check
+
+    async def ensure_voice(self, ctx):
+        """ This check ensures that the bot and command author are in the same voicechannel. """
+        player = self.bot.lavalink.player_manager.create(ctx.guild.id, endpoint=str(ctx.guild.region))
+        if not player.is_connected:
+            permissions = ctx.author.voice.channel.permissions_for(ctx.me)
+            if not permissions.connect or not permissions.speak:
+                await ctx.send(
+                    "<:wellfuck:704784002166554776> **Oops! Im missing permissions.\n"
+                    "Please make sure i have the** `CONNECT` **and** `SPEAK` permissions.")
+            player.store('channel', ctx.channel.id)
+            await self.connect_to(ctx.guild.id, str(ctx.author.voice.channel.id))
+
+    async def track_hook(self, event):
+        if isinstance(event, lavalink.events.QueueEndEvent):
+            guild_id = int(event.player.guild_id)
+            await self.connect_to(guild_id, None)
+
+    async def connect_to(self, guild_id: int, channel_id: str):
+        """ Connects to the given voicechannel ID. None -> yeet that dude"""
+        ws = self.bot._connection._get_websocket(guild_id)
+        await ws.voice_state(str(guild_id), channel_id)
+
+    @commands.command(aliases=['at', 'p'])
     async def addtrack(self, ctx: commands.Context, track: str):
         """
         + This spawns a embed which acts as the 'deck'
@@ -419,21 +422,7 @@ class Audio(commands.Cog):
         """
 
         if ctx.guild.id in self.active_players:
-            if '&list=' in track:
-                try:
-                    await ctx.message.delete()
-                except discord.Forbidden:
-                    pass
-                return await ctx.send("<:wellfuck:704784002166554776> **Sorry! I dont support playlists.**")
-            else:
-                player: DeckPlayer = self.active_players[ctx.guild.id]
-                if player.creator_id == ctx.author.id:
-                    text = await player.add_track(track)
-                    try:
-                        await ctx.message.delete()
-                    except discord.Forbidden:
-                        pass
-                    await ctx.send(text)
+            await self.active_players[ctx.guild.id].addtrack(ctx, track)
         else:
             try:
                 await ctx.message.delete()
@@ -442,80 +431,6 @@ class Audio(commands.Cog):
             return await ctx.send("<:wellfuck:704784002166554776> "
                                   "**Oops! You cant add audio to something that doesnt exit!\n"
                                   "Make sure you run the** `setup` **command first**")
-
-
-class Youtube:
-    """ Handles Youtube downloading etc... """
-    opts = {'--hls-prefer-ffmpeg ': ''}
-
-    @staticmethod
-    async def search(terms, limit=10):
-        """ Searches yt, gets the results back """
-        data = YoutubeSearch(search_terms=terms, max_results=limit)
-        await data.search()
-        return data.videos
-
-    @classmethod
-    async def get_info(cls, url):
-        """ Gets info on the track / video"""
-        video = pafy.new(url, ydl_opts=cls.opts, basic=False)
-        return video
-
-    @staticmethod
-    async def download_audio(video, id_, path):
-        temp = video._title
-        video._title = id_
-        with concurrent.futures.ThreadPoolExecutor() as pool:
-            try:
-                await asyncio.get_event_loop().run_in_executor(pool, video.getbestaudio().download)
-            except urllib.error.HTTPError:
-                return -1
-        video._title = temp
-        shutil.move(f'./{id_}.webm', f"./{path}/{id_}.webm")
-        return f"./{path}/{id_}.webm"
-
-
-class YoutubeSearch:
-    """ Web scrapes youtube - Fast """
-
-    def __init__(self, search_terms: str, max_results=10):
-        self.search_terms = search_terms
-        self.max_results = max_results
-        self.videos = None
-
-    async def search(self):
-        """ Sends the request to get the html """
-        encoded_search = self.search_terms.replace(' ', '+')
-        BASE_URL = "https://youtube.com"
-        url = f"{BASE_URL}/results?search_query={encoded_search}&pbj=1"
-        async with aiohttp.ClientSession() as sess:
-            async with sess.get(url) as resp:
-                html = await resp.text()
-                response = BeautifulSoup(html, "lxml")
-                results = self.parse_html(response)
-        self.videos = results
-
-    def parse_html(self, soup):
-        """ Uses lxml (for speed) ideally only wants first option for max speed """
-        results = []
-        for index, video in enumerate(soup.select(".yt-uix-tile-link")):
-            if index < self.max_results:
-                if video["href"].startswith("/watch?v="):
-                    video_info = {
-                        "title": video["title"],
-                        "link": video["href"],
-                        "id": video["href"][video["href"].index("=") + 1:]
-                    }
-                    results.append(video_info)
-            else:
-                return results
-        return results
-
-    def to_dict(self):
-        return self.videos
-
-    def to_json(self):
-        return json.dumps({"videos": self.videos})
 
 
 def setup(bot):
