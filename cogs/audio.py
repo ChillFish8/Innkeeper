@@ -9,35 +9,95 @@ import pafy
 import asyncio
 import concurrent.futures
 import shutil
+from datetime import datetime, timedelta
+
+
+class Track:
+    def __init__(self, id_, name):
+        self.id = id_
+        self.name = name
+        self.url = None
+        self.playing = False
+        self.length = -1
+        self.position = 0
+        self.pos_index = 0
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        if self.url is not None:
+            return f"**{self.id} - [{self.name}]({self.url})**"
+        else:
+            return f"**{self.id} - {self.name}**"
+
+    def __bool__(self):
+        return self.playing
 
 
 class DeckPlayer:
+    """
+    **The Class that handles tracks and audio**
+
+    - Stores upto 5 tracks
+    - Connects to VC
+    - Manages generating and updating the deck embed
+
+    """
     FFMPEG_EXE = r"ffmpeg/bin/ffmpeg.exe"
 
-    def __init__(self, ctx):
+    def __init__(self, ctx, bot):
+        self.bot = bot
         self.guild = ctx.message.guild
         self.deck_message = None
         self.author = ctx.message.author
         self.creator_id = ctx.message.author.id
         self.channel = ctx.message.channel
+        self.volume = 100
+        self.max_tacks = 5
+
         self._id = uuid.uuid4()
+
         self._voice_client = self.guild.voice_client
-        self._voice_channel = self.author.voice.channel
+        self._voice_channel = self.author.voice.channel if self.author.voice is not None else None
+
         self._active = False
         self._initial_start = True
-        self._track_1 = None
-        self._track_2 = None
-        self._track_3 = None
-        self._track_4 = None
-        self._track_5 = None
+        self._index = 0
+        self._tracks = [Track(i+1, name="No Audio Loaded") for i in range(self.max_tacks)]
+        self._now_playing = self._tracks[0]
 
     def __repr__(self):
         """ Used for debugging """
         return f"Player - {self._id} - {self.guild.id}"
 
-    def _get_markdown(self):
+    def _get_embed(self):
         """ Loads and generates the description markdown """
-        pass
+
+        embed = discord.Embed(color=self.bot.colour)
+        embed.set_author(name="Audio Deck", icon_url="https://cdn.discordapp.com/emojis/642858638116913202.png?v=1")
+        embed.set_footer(text=f"Owner of deck: {self.author.name}", icon_url=self.author.avatar_url)
+
+        desc = f"" \
+               f"> **Now Playing:** `{self._now_playing.name if self._now_playing.playing else None}`\n" \
+               f"> **Length:** `{self._now_playing.length if self._now_playing.playing else 0}`\n" \
+               f"> **Volume:** `{self.volume}%`\n" \
+               f"> **Status:** "
+
+        if self._now_playing.playing:
+            desc += f"<:online:705030764437438565> Playing\n"
+        else:
+            desc += f"<:offline:705030763950899241> Stopped\n"
+
+        desc += "\n**" + "=" * 20 + " Tracks " + "=" * 20 + "**\n"
+        embed.description = desc
+
+        for i, track in enumerate(self._tracks):
+            text = "<:index:705013516850954290>  \u200b" if i == self._index else ""
+            text += f"{track}"
+            text += f"<a:8104LoadingEmote:661571011434643486>" if track.playing else ""
+            embed.add_field(name="\u200b", value=text, inline=False)
+        return embed
 
     async def _connect(self):
         """ Connects to the voice call and loads the voice channel and client """
@@ -60,7 +120,31 @@ class DeckPlayer:
             if not result:
                 await self.channel.send(info)
                 return False
+            else:
+                embed = self._get_embed()
+                self.deck_message = await self.channel.send(embed=embed)
 
+    async def update_deck(self):
+        embed = self._get_embed()
+        await self.deck_message.edit(embed=embed)
+
+    async def shift_index(self, offset: int):
+        if offset == -1 and not self._index:
+            return
+        elif offset == 1 and self._index == self.max_tacks:
+            return
+        else:
+            self._index += offset
+            await self.update_deck()
+
+    async def change_vol(self, offset: int):
+        if offset == -10 and not self.volume:
+            return
+        elif offset == 10 and self.volume == 100:
+            return
+        else:
+            self.volume += offset
+            await self.update_deck()
 
 class Audio(commands.Cog):
     """
@@ -144,9 +228,9 @@ class Audio(commands.Cog):
             This will get used for managing which tracks
             are in what section and binded to the relevant reaction.
         """
-        player = DeckPlayer(ctx)
-        result = await player.run_player()
-        if not result:
+        player = DeckPlayer(ctx, self.bot)
+        player = await player.run_player()
+        if not player:
             return
         self.active_players[ctx.guild.id] = player
 
