@@ -7,10 +7,12 @@ import json
 from bs4 import BeautifulSoup
 import pafy
 import asyncio
+import urllib
 import concurrent.futures
 import shutil
 from datetime import datetime, timedelta
 import os
+import urllib.error
 
 
 class Track:
@@ -25,13 +27,17 @@ class Track:
         self.url = None
         self.audio = None
         self.guild_id = guild_id
+        self.audio_url = None
 
     def __str__(self):
         return self.name
 
     def __repr__(self):
         if self.url is not None:
-            return f"**{self.id} - [{self.name}]({self.url})**"
+            if self.audio_url == -1:
+                return f"**{self.id} -‼️ [{self.name}]({self.url}) ‼️Error Playing**"
+            else:
+                return f"**{self.id} - [{self.name}]({self.url})**"
         else:
             return f"**{self.id} - {self.name}**"
 
@@ -45,8 +51,9 @@ class Track:
         self.length = timedelta(seconds=pafy_obj.length)
 
     async def download(self):
-        await Youtube.download_audio(self.audio, id_=str(self.guild_id), path=os.getcwd())
-
+        path = await Youtube.download_audio(self.audio, id_=str(self.guild_id), path='audio_tracks')
+        self.audio_url = path
+        return path
 
 class DeckPlayer:
     """
@@ -59,7 +66,7 @@ class DeckPlayer:
     """
     FFMPEG_EXE = r"ffmpeg/bin/ffmpeg.exe"
 
-    def __init__(self, ctx, bot, valid_emojis):
+    def __init__(self, ctx: commands.Context, bot, valid_emojis):
         self.VALID_EMOJIS = valid_emojis
         self.bot = bot
         self.guild = ctx.message.guild
@@ -80,7 +87,7 @@ class DeckPlayer:
         self._active = False
         self._initial_start = True
         self._index = 0
-        self._tracks = [Track(i + 1, name="No Audio Loaded") for i in range(self.max_tacks)]
+        self._tracks = [Track(i + 1, name="No Audio Loaded", guild_id=ctx.guild.id) for i in range(self.max_tacks)]
         self._now_playing = self._tracks[0]
 
     def __repr__(self):
@@ -215,7 +222,8 @@ class DeckPlayer:
 
     async def play_pause_track(self, type_='add'):
         if self._voice_client.is_playing():
-            if self._tracks[self._index].id == self._now_playing.id:
+            if self._tracks[self._index].id == self._now_playing.id and \
+                    self._tracks[self._index].url == self._now_playing.url:
                 self._now_playing.playing = False
                 self._voice_client.pause()
                 return await self.update_deck()
@@ -228,7 +236,8 @@ class DeckPlayer:
                     return
 
         elif self._voice_client.is_paused():
-            if self._tracks[self._index].id == self._now_playing.id:
+            if self._tracks[self._index].id == self._now_playing.id and \
+                    self._tracks[self._index].url == self._now_playing.url:
                 self._now_playing.playing = True
                 self._voice_client.resume()
                 return await self.update_deck()
@@ -241,18 +250,28 @@ class DeckPlayer:
                     return
 
         track = self._tracks[self._index]
+        check = await track.download()
+        if check == -1:
+            return await self.update_deck()
         self._now_playing = track
         self._play_audio(track.audio_url)
-        await self.update_deck()
+        return await self.update_deck()
 
     async def add_track(self, url):
         if url.startswith('https://www.youtube.com/'):
             video = pafy.new(url)
         else:
             result = await Youtube.search(url, limit=1)
-            video = pafy.new(result[0]['link'])
-            url = result[0]['link']
-        self._tracks[self._index].load_details(video, url)
+            if len(result) < 1:
+                return "<:wellfuck:704784002166554776> **Sorry! I couldn't find anything with that search.**"
+            url = f"https://www.youtube.com{result[0]['link']}"
+            video = pafy.new(url)
+        if video.length < 1800:
+            self._tracks[self._index].load_details(video, url)
+            await self.update_deck()
+            return "<:gelati_cute:704784002355036190> **Track loaded!**"
+        else:
+            return "<:wellfuck:704784002166554776> **Sorry! I cant stream video over 30 minutes.**"
 
 
 class Audio(commands.Cog):
@@ -401,15 +420,27 @@ class Audio(commands.Cog):
 
         if ctx.guild.id in self.active_players:
             if '&list=' in track:
+                try:
+                    await ctx.message.delete()
+                except discord.Forbidden:
+                    pass
                 return await ctx.send("<:wellfuck:704784002166554776> **Sorry! I dont support playlists.**")
             else:
                 player: DeckPlayer = self.active_players[ctx.guild.id]
                 if player.creator_id == ctx.author.id:
                     text = await player.add_track(track)
+                    try:
+                        await ctx.message.delete()
+                    except discord.Forbidden:
+                        pass
                     await ctx.send(text)
         else:
+            try:
+                await ctx.message.delete()
+            except discord.Forbidden:
+                pass
             return await ctx.send("<:wellfuck:704784002166554776> "
-                                  "**Oops! You cant add audio to something that doesnt exit! "
+                                  "**Oops! You cant add audio to something that doesnt exit!\n"
                                   "Make sure you run the** `setup` **command first**")
 
 
@@ -435,7 +466,10 @@ class Youtube:
         temp = video._title
         video._title = id_
         with concurrent.futures.ThreadPoolExecutor() as pool:
-            await asyncio.get_event_loop().run_in_executor(pool, video.getbestaudio().download)
+            try:
+                await asyncio.get_event_loop().run_in_executor(pool, video.getbestaudio().download)
+            except urllib.error.HTTPError:
+                return -1
         video._title = temp
         shutil.move(f'./{id_}.webm', f"./{path}/{id_}.webm")
         return f"./{path}/{id_}.webm"
@@ -451,7 +485,7 @@ class YoutubeSearch:
 
     async def search(self):
         """ Sends the request to get the html """
-        encoded_search = urllib.parse.quote(self.search_terms)
+        encoded_search = self.search_terms.replace(' ', '+')
         BASE_URL = "https://youtube.com"
         url = f"{BASE_URL}/results?search_query={encoded_search}&pbj=1"
         async with aiohttp.ClientSession() as sess:
