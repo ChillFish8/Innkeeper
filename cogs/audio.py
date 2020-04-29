@@ -47,7 +47,8 @@ class DeckPlayer:
     """
     FFMPEG_EXE = r"ffmpeg/bin/ffmpeg.exe"
 
-    def __init__(self, ctx, bot):
+    def __init__(self, ctx, bot, valid_emojis):
+        self.VALID_EMOJIS = valid_emojis
         self.bot = bot
         self.guild = ctx.message.guild
         self.deck_message = None
@@ -65,7 +66,7 @@ class DeckPlayer:
         self._active = False
         self._initial_start = True
         self._index = 0
-        self._tracks = [Track(i+1, name="No Audio Loaded") for i in range(self.max_tacks)]
+        self._tracks = [Track(i + 1, name="No Audio Loaded") for i in range(self.max_tacks)]
         self._now_playing = self._tracks[0]
 
     def __repr__(self):
@@ -127,6 +128,10 @@ class DeckPlayer:
                 embed = self._get_embed()
                 self.deck_message = await self.channel.send(embed=embed)
 
+                for emoji in self.VALID_EMOJIS:
+                    await self.deck_message.add_reaction(emoji)
+                    await asyncio.sleep(0.1)
+
     async def update_deck(self):
         embed = self._get_embed()
         await self.deck_message.edit(embed=embed)
@@ -152,6 +157,7 @@ class DeckPlayer:
     async def toggle_loop(self):
         self._now_playing.looping = not self._now_playing.looping
         await self.update_deck()
+
 
 class Audio(commands.Cog):
     """
@@ -185,12 +191,36 @@ class Audio(commands.Cog):
         **Links to:**
             - Setup (Command) / object
     """
+
+    VALID_EMOJIS = ['🔼', '🔽', '🔇', '🔈', '🔊', '⏯️', '🔁', ]
+    active_players = {}  # Dictionary relating to guild Ids
+
     def __init__(self, bot):
         self.bot = bot  # Discord AutoShardedBot
-        self.active_players = {}   # Dictionary relating to guild Ids
+
+    @classmethod
+    def get_player_msg_ids(cls):
+        return [player.deck_message.id for player in cls.active_players.values()]
+
+    @classmethod
+    def get_player_user_ids(cls):
+        return [player.creator_id for player in cls.active_players.values()]
+
+    @classmethod
+    async def filter_payload(cls, payload):
+        if payload.guild_id not in cls.active_players:
+            return False
+        elif str(payload.emoji) not in cls.VALID_EMOJIS:
+            return False
+        elif payload.user_id not in cls.get_player_user_ids():
+            return False
+        elif payload.message_id not in cls.get_player_msg_ids():
+            return False
+        else:
+            return True
 
     @commands.Cog.listener()
-    async def on_raw_reaction_add(self, payload):
+    async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
         """
         + WHEN A REACTION GETS ADDED
                 This returns a set of Ids essentially,
@@ -199,7 +229,8 @@ class Audio(commands.Cog):
                 We take the Ids then fetch the message object
                 and go from there.
         """
-        pass
+        if await self.filter_payload(payload=payload):
+            print("Ye")
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
@@ -211,7 +242,8 @@ class Audio(commands.Cog):
                We take the Ids then fetch the message object
                and go from there.
         """
-        pass
+        if await self.filter_payload(payload=payload):
+            print("Ye")
 
     @commands.Cog.listener()
     async def on_voice_state_update(self,
@@ -235,7 +267,7 @@ class Audio(commands.Cog):
             This will get used for managing which tracks
             are in what section and binded to the relevant reaction.
         """
-        player = DeckPlayer(ctx, self.bot)
+        player = DeckPlayer(ctx, self.bot, self.VALID_EMOJIS)
         player = await player.run_player()
         if not player:
             return
@@ -280,6 +312,7 @@ class Youtube:
 
 class YoutubeSearch:
     """ Web scrapes youtube - Fast """
+
     def __init__(self, search_terms: str, max_results=10):
         self.search_terms = search_terms
         self.max_results = max_results
@@ -306,7 +339,7 @@ class YoutubeSearch:
                     video_info = {
                         "title": video["title"],
                         "link": video["href"],
-                        "id": video["href"][video["href"].index("=")+1:]
+                        "id": video["href"][video["href"].index("=") + 1:]
                     }
                     results.append(video_info)
             else:
