@@ -62,7 +62,10 @@ class Audio(commands.Cog):
         pass
 
     @commands.Cog.listener()
-    async def on_raw_reaction_remove(self, payload):
+    async def on_voice_state_update(self,
+                                    member: discord.Member,
+                                    before: discord.VoiceState,
+                                    after: discord.VoiceState):
         """
         + WHEN A REACTION GETS REMOVED
                This returns a set of Ids essentially,
@@ -74,7 +77,15 @@ class Audio(commands.Cog):
         pass
 
     @commands.command()
-    async def setup(self, ctx, spell: str):
+    async def setup(self, ctx: commands.Context):
+        """
+        + This spawns a embed which acts as the 'deck'
+            This will get used for managing which tracks
+            are in what section and binded to the relevant reaction.
+        """
+
+    @commands.command()
+    async def setup(self, ctx: commands.Context):
         """
         + This spawns a embed which acts as the 'deck'
             This will get used for managing which tracks
