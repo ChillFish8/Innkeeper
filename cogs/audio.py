@@ -167,6 +167,22 @@ class Audio(commands.Cog):
 
         lavalink.add_event_hook(self.track_hook)
 
+    @commands.command(aliases=['at', 'p'])
+    async def addtrack(self, ctx: commands.Context, track: str):
+        """
+        + This spawns a embed which acts as the 'deck'
+            This will get used for managing which tracks
+            are in what section and binded to the relevant reaction.
+        """
+
+    @commands.command()
+    async def setup(self, ctx: commands.Context):
+        """
+        + This spawns a embed which acts as the 'deck'
+            This will get used for managing which tracks
+            are in what section and binded to the relevant reaction.
+        """
+
     @classmethod
     def get_player_msg_ids(cls):
         return [player.deck_message.id for player in cls.active_players.values()]
@@ -216,7 +232,6 @@ class Audio(commands.Cog):
             pos = self.VALID_EMOJIS.index(str(payload.emoji))
             player = self.active_players[payload.guild_id]
 
-
     @commands.Cog.listener()
     async def on_voice_state_update(self,
                                     member: discord.Member,
@@ -231,14 +246,6 @@ class Audio(commands.Cog):
                and go from there.
         """
         pass
-
-    @commands.command()
-    async def setup(self, ctx: commands.Context):
-        """
-        + This spawns a embed which acts as the 'deck'
-            This will get used for managing which tracks
-            are in what section and binded to the relevant reaction.
-        """
 
     async def track_hook(self, event):
         if isinstance(event, lavalink.events.QueueEndEvent):
@@ -283,26 +290,6 @@ class Audio(commands.Cog):
         else:
             if int(player.channel_id) != ctx.author.voice.channel.id:
                 raise commands.CommandInvokeError('You need to be in my voicechannel.')
-
-    @commands.command(aliases=['at', 'p'])
-    async def addtrack(self, ctx: commands.Context, track: str):
-        """
-        + This spawns a embed which acts as the 'deck'
-            This will get used for managing which tracks
-            are in what section and binded to the relevant reaction.
-        """
-
-        if ctx.guild.id in self.active_players:
-            player: DeckPlayer = self.active_players[ctx.guild.id]
-            await player.add_track(ctx, track)
-        else:
-            try:
-                await ctx.message.delete()
-            except discord.Forbidden:
-                pass
-            return await ctx.send("<:wellfuck:704784002166554776> "
-                                  "**Oops! You cant add audio to something that doesnt exit!\n"
-                                  "Make sure you run the** `setup` **command first**")
 
 
 def setup(bot):
