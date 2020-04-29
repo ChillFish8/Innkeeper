@@ -186,6 +186,7 @@ class DeckPlayer:
         #   LOAD_FAILED     - most likely, the video encountered an exception during loading.
         if results['loadType'] == 'PLAYLIST_LOADED':
             tracks = results['tracks']
+            print(results)
             self._tracks[self._index].track = tracks
         else:
             track = results['tracks'][0]
