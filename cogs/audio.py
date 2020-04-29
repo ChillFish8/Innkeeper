@@ -10,10 +10,11 @@ import asyncio
 import concurrent.futures
 import shutil
 from datetime import datetime, timedelta
+import os
 
 
 class Track:
-    def __init__(self, id_, name):
+    def __init__(self, id_, name, guild_id):
         self.id = id_
         self.name = name
         self.playing = False
@@ -22,7 +23,8 @@ class Track:
         self.pos_index = 0
         self.looping = False
         self.url = None
-        self.audio_url = None
+        self.audio = None
+        self.guild_id = guild_id
 
     def __str__(self):
         return self.name
@@ -38,9 +40,12 @@ class Track:
 
     def load_details(self, pafy_obj: pafy.new, url):
         self.url = url
-        self.audio_url = pafy_obj.getbestaudio().url
+        self.audio = pafy_obj
         self.name = pafy_obj.title
         self.length = timedelta(seconds=pafy_obj.length)
+
+    async def download(self):
+        await Youtube.download_audio(self.audio, id_=str(self.guild_id), path=os.getcwd())
 
 
 class DeckPlayer:
@@ -195,7 +200,18 @@ class DeckPlayer:
                 self._now_playing.playing = False
                 await self.update_deck()
                 running = False
+                if self._now_playing.looping:
+                    self._play_audio(self._now_playing.audio_url)
             await asyncio.sleep(2)
+
+    def _play_audio(self, url):
+        self._source = discord.PCMVolumeTransformer(
+            discord.FFmpegPCMAudio(executable=self.FFMPEG_EXE,
+                                   source=url),
+            volume=self.volume / 100)
+        self._now_playing.playing = True
+        self._voice_client.play(self._source, after=self.end_of_track)
+        asyncio.get_event_loop().create_task(self.check_end())
 
     async def play_pause_track(self, type_='add'):
         if self._voice_client.is_playing():
@@ -225,16 +241,18 @@ class DeckPlayer:
                     return
 
         track = self._tracks[self._index]
-        self._source = discord.PCMVolumeTransformer(
-            discord.FFmpegPCMAudio(executable=self.FFMPEG_EXE,
-                                   source=track.url
-                                   ),
-            volume=self.volume / 100)
         self._now_playing = track
-        self._now_playing.playing = True
-        self._voice_client.play(self._source, after=self.end_of_track)
+        self._play_audio(track.audio_url)
         await self.update_deck()
-        asyncio.get_event_loop().create_task(self.check_end())
+
+    async def add_track(self, url):
+        if url.startswith('https://www.youtube.com/'):
+            video = pafy.new(url)
+        else:
+            result = await Youtube.search(url, limit=1)
+            video = pafy.new(result[0]['link'])
+            url = result[0]['link']
+        self._tracks[self._index].load_details(video, url)
 
 
 class Audio(commands.Cog):
@@ -381,8 +399,18 @@ class Audio(commands.Cog):
             are in what section and binded to the relevant reaction.
         """
 
-        if '&list=' in track:
-
+        if ctx.guild.id in self.active_players:
+            if '&list=' in track:
+                return await ctx.send("<:wellfuck:704784002166554776> **Sorry! I dont support playlists.**")
+            else:
+                player: DeckPlayer = self.active_players[ctx.guild.id]
+                if player.creator_id == ctx.author.id:
+                    text = await player.add_track(track)
+                    await ctx.send(text)
+        else:
+            return await ctx.send("<:wellfuck:704784002166554776> "
+                                  "**Oops! You cant add audio to something that doesnt exit! "
+                                  "Make sure you run the** `setup` **command first**")
 
 
 class Youtube:
