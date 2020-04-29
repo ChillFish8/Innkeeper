@@ -159,10 +159,6 @@ class DeckPlayer:
         await self.update_deck()
         player.repeat = True
 
-    async def check_end(self):
-        # todo do i even need this?
-        pass
-
     async def play_pause_track(self, type_='add'):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         if player.is_playing:
@@ -172,7 +168,8 @@ class DeckPlayer:
                 await player.stop()
                 await player.play(self._tracks[self._index].track)
         else:
-            await player.play(self._tracks[self._index].track)
+            if self._tracks[self._index].track is not None:
+                await player.play(self._tracks[self._index].track)
 
     async def add_track(self, ctx, track):
         """ Searches and plays a song from a given track. """
