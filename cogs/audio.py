@@ -5,48 +5,10 @@ import urllib.parse
 import aiohttp
 import json
 from bs4 import BeautifulSoup
-
-
-class YoutubeSearch:
-    """ Web scrapes youtube - Fast """
-    def __init__(self, search_terms: str, max_results=10):
-        self.search_terms = search_terms
-        self.max_results = max_results
-        self.videos = None
-
-    async def search(self):
-        """ Sends the request to get the html """
-        encoded_search = urllib.parse.quote(self.search_terms)
-        BASE_URL = "https://youtube.com"
-        url = f"{BASE_URL}/results?search_query={encoded_search}&pbj=1"
-        async with aiohttp.ClientSession() as sess:
-            async with sess.get(url) as resp:
-                html = await resp.text()
-                response = BeautifulSoup(html, "lxml")
-                results = self.parse_html(response)
-        self.videos = results
-
-    def parse_html(self, soup):
-        """ Uses lxml (for speed) ideally only wants first option for max speed """
-        results = []
-        for index, video in enumerate(soup.select(".yt-uix-tile-link")):
-            if index < self.max_results:
-                if video["href"].startswith("/watch?v="):
-                    video_info = {
-                        "title": video["title"],
-                        "link": video["href"],
-                        "id": video["href"][video["href"].index("=")+1:]
-                    }
-                    results.append(video_info)
-            else:
-                return results
-        return results
-
-    def to_dict(self):
-        return self.videos
-
-    def to_json(self):
-        return json.dumps({"videos": self.videos})
+import pafy
+import asyncio
+import concurrent.futures
+import shutil
 
 
 class DeckPlayer:
@@ -175,6 +137,76 @@ class Audio(commands.Cog):
             This will get used for managing which tracks
             are in what section and binded to the relevant reaction.
         """
+
+
+class Youtube:
+    """ Handles Youtube downloading etc... """
+    opts = {'--hls-prefer-ffmpeg ': ''}
+
+    @staticmethod
+    async def search(terms, limit=10):
+        """ Searches yt, gets the results back """
+        data = YoutubeSearch(search_terms=terms, max_results=limit)
+        await data.search()
+        return data.videos
+
+    @classmethod
+    async def get_info(cls, url):
+        """ Gets info on the track / video"""
+        video = pafy.new(url, ydl_opts=cls.opts, basic=False)
+        return video
+
+    @staticmethod
+    async def download_audio(video, id_, path):
+        temp = video._title
+        video._title = id_
+        with concurrent.futures.ThreadPoolExecutor() as pool:
+            await asyncio.get_event_loop().run_in_executor(pool, video.getbestaudio().download)
+        video._title = temp
+        shutil.move(f'./{id_}.webm', f"./{path}/{id_}.webm")
+        return f"./{path}/{id_}.webm"
+
+
+class YoutubeSearch:
+    """ Web scrapes youtube - Fast """
+    def __init__(self, search_terms: str, max_results=10):
+        self.search_terms = search_terms
+        self.max_results = max_results
+        self.videos = None
+
+    async def search(self):
+        """ Sends the request to get the html """
+        encoded_search = urllib.parse.quote(self.search_terms)
+        BASE_URL = "https://youtube.com"
+        url = f"{BASE_URL}/results?search_query={encoded_search}&pbj=1"
+        async with aiohttp.ClientSession() as sess:
+            async with sess.get(url) as resp:
+                html = await resp.text()
+                response = BeautifulSoup(html, "lxml")
+                results = self.parse_html(response)
+        self.videos = results
+
+    def parse_html(self, soup):
+        """ Uses lxml (for speed) ideally only wants first option for max speed """
+        results = []
+        for index, video in enumerate(soup.select(".yt-uix-tile-link")):
+            if index < self.max_results:
+                if video["href"].startswith("/watch?v="):
+                    video_info = {
+                        "title": video["title"],
+                        "link": video["href"],
+                        "id": video["href"][video["href"].index("=")+1:]
+                    }
+                    results.append(video_info)
+            else:
+                return results
+        return results
+
+    def to_dict(self):
+        return self.videos
+
+    def to_json(self):
+        return json.dumps({"videos": self.videos})
 
 
 def setup(bot):
