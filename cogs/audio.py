@@ -21,6 +21,7 @@ class Track:
         self.looping = False
         self.url = None
         self.guild_id = guild_id
+        self.track = None
 
     def __str__(self):
         return self.name
@@ -169,7 +170,12 @@ class DeckPlayer:
 
     async def play_pause_track(self, type_='add'):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
-        # todo fill
+        if player.is_playing:
+            if self._now_playing.id == self._tracks[self._index].id:
+                await player.set_pause(not player.paused)
+            else:
+                await player.stop()
+                await player.play(self._tracks[self._index].track)
 
     async def add_track(self, ctx, track):
         """ Searches and plays a song from a given track. """
