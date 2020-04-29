@@ -16,6 +16,7 @@ class Track:
         self.guild_id = guild_id
         self.playing = False
         self.track: lavalink.AudioTrack = None
+        self.paused = False
 
     def __str__(self):
         return self.name
@@ -93,24 +94,12 @@ class DeckPlayer:
                 text += f"[{track}]({track.track.uri})"
             else:
                 text += f"{track}"
-            if player.is_playing:
+            if track.playing:
                 text += f"\u200b **- [ Active ]** <a:8104LoadingEmote:661571011434643486>"
-            elif player.paused and track.id == self._now_playing.id:
+            elif track.paused and track.id == self._now_playing.id:
                 text += f"\u200b **- [ Paused ]**"
             embed.add_field(name="\u200b", value=text, inline=False)
         return embed
-
-    async def run_player(self):
-        """ Starts the deck listening for commands etc... """
-        if self._initial_start:
-            player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
-            if player.is_connected:
-                embed = self._get_embed()
-                self.deck_message = await self.channel.send(embed=embed)
-                for emoji in self.VALID_EMOJIS:
-                    await self.deck_message.add_reaction(emoji)
-                    await asyncio.sleep(0.1)
-                return self
 
     async def update_deck(self, volume=False):
         embed = self._get_embed()
@@ -130,71 +119,6 @@ class DeckPlayer:
         else:
             self._index += offset
             await self.update_deck()
-
-    async def change_vol(self, offset: int):
-        if offset == -10 and not self.muted and not self.volume:
-            return
-        elif offset == 10 and not self.muted and self.volume == 100:
-            return
-        elif offset == 0 and not self.muted:
-            self.muted = True
-            await self.update_deck(volume=True)
-        elif offset == 1 and self.muted:
-            self.muted = False
-            await self.update_deck(volume=True)
-        else:
-            if not self.muted:
-                self.volume += offset
-                await self.update_deck(volume=True)
-
-    async def toggle_loop(self):
-        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
-        self._now_playing.looping = not self._now_playing.looping
-        await self.update_deck()
-        player.repeat = True
-
-    async def play_pause_track(self, type_='add'):
-        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
-        if player.is_playing:
-            if self._now_playing.id == self._tracks[self._index].id:
-                await player.set_pause(not player.paused)
-            else:
-                await player.stop()
-                await player.play(self._tracks[self._index].track)
-        else:
-            if self._tracks[self._index].track is not None:
-                await player.play(self._tracks[self._index].track)
-
-    async def add_track(self, ctx, track):
-        """ Searches and plays a song from a given track. """
-        player = self.bot.lavalink.player_manager.get(ctx.guild.id)
-        track = track.strip('<>')
-
-        if not url_rx.match(track):
-            track = f'ytsearch:{track}'
-
-        results = await player.node.get_tracks(track)
-
-        if not results or not results['tracks']:
-            return await ctx.send(
-                '<:wellfuck:704784002166554776> **Oops!  could not find anything that matches your search**')
-
-        #   TRACK_LOADED    - single video/direct URL)
-        #   PLAYLIST_LOADED - direct URL to playlist)
-        #   SEARCH_RESULT   - track prefixed with either ytsearch: or scsearch:.
-        #   NO_MATCHES      - track yielded no results
-        #   LOAD_FAILED     - most likely, the video encountered an exception during loading.
-        if results['loadType'] == 'PLAYLIST_LOADED':
-            tracks = results['tracks']
-            print(results)
-            self._tracks[self._index].track = tracks
-        else:
-            track = results['tracks'][0]
-            track = lavalink.models.AudioTrack(track, ctx.author.id, recommended=True)
-            self._tracks[self._index].track = track
-        await self.update_deck()
-        return await ctx.send(
-            f'<:gelati_cute:704784002355036190> **Added track to slot {self._index}**')
 
 
 class Audio(commands.Cog):
@@ -277,20 +201,6 @@ class Audio(commands.Cog):
         if await self.filter_payload(payload=payload):
             pos = self.VALID_EMOJIS.index(str(payload.emoji))
             player: DeckPlayer = self.active_players[payload.guild_id]
-            if pos == 0:
-                await player.shift_index(-1)  # Shift up
-            elif pos == 1:
-                await player.shift_index(1)  # Shift down
-            elif pos == 2:
-                await player.change_vol(0)  # Mute
-            elif pos == 3:
-                await player.change_vol(-10)  # Lower Vol
-            elif pos == 4:
-                await player.change_vol(10)  # Raise Vol
-            elif pos == 5:
-                await player.play_pause_track()
-            elif pos == 6:
-                await player.toggle_loop()  # Loop / Unloop
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
@@ -305,12 +215,7 @@ class Audio(commands.Cog):
         if await self.filter_payload(payload=payload):
             pos = self.VALID_EMOJIS.index(str(payload.emoji))
             player = self.active_players[payload.guild_id]
-            if pos == 2:
-                await player.change_vol(1)  # UnMute
-            elif pos == 5:
-                await player.play_pause_track(type_="remove")
-            elif pos == 6:
-                await player.toggle_loop()  # Loop / Un-loop
+
 
     @commands.Cog.listener()
     async def on_voice_state_update(self,
@@ -334,16 +239,10 @@ class Audio(commands.Cog):
             This will get used for managing which tracks
             are in what section and binded to the relevant reaction.
         """
-        player = DeckPlayer(ctx, self.bot, self.VALID_EMOJIS)
-        player = await player.run_player()
-        if not player:
-            return
-        self.active_players[ctx.guild.id] = player
 
     async def track_hook(self, event):
         if isinstance(event, lavalink.events.QueueEndEvent):
-            guild_id = int(event.player.guild_id)
-            await self.connect_to(guild_id, None)
+            pass
 
     async def connect_to(self, guild_id: int, channel_id: str):
         """ Connects to the given voicechannel ID. A channel_id of `None` means disconnect. """
