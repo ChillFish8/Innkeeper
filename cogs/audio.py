@@ -60,9 +60,10 @@ class DeckPlayer:
         self.max_tacks = 5
 
         self._id = uuid.uuid4()
-
         self._voice_client = self.guild.voice_client
         self._voice_channel = self.author.voice.channel if self.author.voice is not None else None
+
+        self._source = None
 
         self._active = False
         self._initial_start = True
@@ -134,9 +135,15 @@ class DeckPlayer:
                     await asyncio.sleep(0.1)
                 return self
 
-    async def update_deck(self):
+    async def update_deck(self, volume=False):
         embed = self._get_embed()
         await self.deck_message.edit(embed=embed)
+        if volume:
+            if self._source is not None:
+                if self.muted:
+                    self._source.volume = 0
+                else:
+                    self._source.volume = self.volume / 100
 
     async def shift_index(self, offset: int):
         if offset == -1 and not self._index:
@@ -154,18 +161,55 @@ class DeckPlayer:
             return
         elif offset == 0 and not self.muted:
             self.muted = True
-            await self.update_deck()
+            await self.update_deck(volume=True)
         elif offset == 1 and self.muted:
             self.muted = False
-            await self.update_deck()
+            await self.update_deck(volume=True)
         else:
             if not self.muted:
                 self.volume += offset
-                await self.update_deck()
+                await self.update_deck(volume=True)
 
     async def toggle_loop(self):
         self._now_playing.looping = not self._now_playing.looping
         await self.update_deck()
+
+    def end_of_track(self, error=None):
+        self._source.cleanup()
+
+    async def play_pause_track(self, type_='add'):
+        if self._voice_client.is_playing():
+            if self._tracks[self._index].id == self._now_playing.id:
+                self._voice_client.pause()
+                return
+            else:
+                if type_ == "add":
+                    self._voice_client.stop()
+                    self._source.cleanup()
+                else:
+                    return
+
+        elif self._voice_client.is_paused():
+            if self._tracks[self._index].id == self._now_playing.id:
+                self._voice_client.resume()
+                return
+            else:
+                if type_ == "add":
+                    self._voice_client.stop()
+                    self._source.cleanup()
+                else:
+                    return
+
+        url = await Youtube.get_info('https://www.youtube.com/watch?v=jb4ybTQwcdw')
+
+        track = self._tracks[self._index]
+        self._source = discord.PCMVolumeTransformer(
+            discord.FFmpegPCMAudio(executable=self.FFMPEG_EXE,
+                                   source=url.getbestaudio().url
+                                   ),
+            volume=self.volume / 100)
+        self._now_playing = track
+        self._voice_client.play(self._source, after=self.end_of_track)
 
 
 class Audio(commands.Cog):
@@ -241,7 +285,6 @@ class Audio(commands.Cog):
         if await self.filter_payload(payload=payload):
             pos = self.VALID_EMOJIS.index(str(payload.emoji))
             player: DeckPlayer = self.active_players[payload.guild_id]
-            print(pos)
             if pos == 0:
                 await player.shift_index(-1)  # Shift up
             elif pos == 1:
@@ -253,7 +296,7 @@ class Audio(commands.Cog):
             elif pos == 4:
                 await player.change_vol(10)  # Raise Vol
             elif pos == 5:
-                pass    # todo add Play Pause
+                await player.play_pause_track()
             elif pos == 6:
                 await player.toggle_loop()  # Loop / Unloop
 
@@ -273,7 +316,7 @@ class Audio(commands.Cog):
             if pos == 2:
                 await player.change_vol(1)  # UnMute
             elif pos == 5:
-                pass    # todo add Play Pause
+                await player.play_pause_track(type_="remove")
             elif pos == 6:
                 await player.toggle_loop()  # Loop / Unloop
 
