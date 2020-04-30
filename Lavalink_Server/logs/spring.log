@@ -55,3 +55,17 @@
 2020-04-30 15:53:50.311  INFO 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "ca522d53aa748a87c15f3f6b4efca443", "event": {"token": "24af93c49881f4fa", "guild_id": "638139515760017448", "endpoint": "eu-central384.discord.media:80"}}
 2020-04-30 15:53:53.941  INFO 9968 --- [pool-3-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
 2020-04-30 15:54:45.687  INFO 9968 --- [pool-5-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 16:12:15.985  INFO 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:56881 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 16:12:16.663  INFO 9968 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:57234
+2020-04-30 16:12:16.668  INFO 9968 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:57234
+2020-04-30 16:12:16.668  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 16:12:21.384  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "a7e4ab698cd65cfd0bd0f7dbd1c97012", "event": {"token": "24af93c49881f4fa", "guild_id": "638139515760017448", "endpoint": "eu-central384.discord.media:80"}}
+2020-04-30 16:12:32.541  INFO 9968 --- [XNIO-1 task-5] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 16:12:33.243  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: crucher-p
+2020-04-30 16:12:51.826  INFO 9968 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 16:12:52.473  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : No matches found
+2020-04-30 16:13:01.912  INFO 9968 --- [XNIO-1 task-9] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 16:13:02.557  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: dont
+2020-04-30 16:13:15.986  INFO 9968 --- [pool-6-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 16:13:24.376  INFO 9968 --- [XNIO-1 task-11] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 16:13:25.076  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track ????????MV

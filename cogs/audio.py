@@ -171,6 +171,16 @@ class DeckPlayer:
                     self._tracks[self._index] = track
             await self.update_deck()
 
+    async def toggle_mute(self):
+        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
+        self.muted = not self.muted
+        if self.muted:
+            await player.set_volume(0)
+        else:
+            await player.set_volume(self.volume)
+
+
+
 class Audio(commands.Cog):
     """
     The Audio commands class, Using ffmpeg.
@@ -323,7 +333,13 @@ class Audio(commands.Cog):
         """
         if await self.filter_payload(payload=payload):
             pos = self.VALID_EMOJIS.index(str(payload.emoji))
-            player = self.active_players[payload.guild_id]
+            player: DeckPlayer = self.active_players[payload.guild_id]
+            if not pos:
+                await player.shift_index(1)
+            elif pos == 1:
+                await player.shift_index(-1)
+            elif pos == 2:
+                await player.
 
     @commands.Cog.listener()
     async def on_voice_state_update(self,
