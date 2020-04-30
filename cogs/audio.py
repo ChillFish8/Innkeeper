@@ -120,6 +120,22 @@ class DeckPlayer:
             self._index += offset
             await self.update_deck()
 
+    async def setup(self):
+        embed = self._get_embed()
+        self.deck_message = await self.channel.send(embed=embed)
+        for emoji in self.VALID_EMOJIS:
+            await self.deck_message.add_reaction(emoji)
+        return self
+
+    async def add_track(self, track: lavalink.AudioTrack):
+        slot = self._tracks[self._index]
+        slot.name = track.title
+        slot.playing = False
+        slot.paused = False
+        slot.track = track
+        self._tracks[self._index] = slot
+        return self
+
 
 class Audio(commands.Cog):
     """
@@ -154,7 +170,7 @@ class Audio(commands.Cog):
             - Setup (Command) / object
     """
 
-    VALID_EMOJIS = ['🔼', '🔽', '🔇', '🔈', '🔊', '⏯️', '🔁', ]
+    VALID_EMOJIS = ['🔼', '🔽', '🔇', '🔈', '🔊', '⏯️', '🔁', '<:TickNo:640187792911237131>']
     active_players = {}  # Dictionary relating to guild Ids
 
     def __init__(self, bot):
@@ -167,6 +183,20 @@ class Audio(commands.Cog):
 
         lavalink.add_event_hook(self.track_hook)
 
+    @commands.command()
+    async def setup(self, ctx: commands.Context):
+        """
+        + This spawns a embed which acts as the 'deck'
+            This will get used for managing which tracks
+            are in what section and binded to the relevant reaction.
+        """
+        if ctx.guild.id not in self.active_players:
+            deck = DeckPlayer(ctx, self.bot, self.VALID_EMOJIS)
+            self.active_players[ctx.guild.id] = await deck.setup()
+        else:
+            await ctx.send("<:wellfuck:704784002166554776> **You already have an active deck running."
+                           " Please close the existing deck first.**")
+
     @commands.command(aliases=['at', 'p'])
     async def addtrack(self, ctx: commands.Context, track: str):
         """
@@ -175,13 +205,7 @@ class Audio(commands.Cog):
             are in what section and binded to the relevant reaction.
         """
 
-    @commands.command()
-    async def setup(self, ctx: commands.Context):
-        """
-        + This spawns a embed which acts as the 'deck'
-            This will get used for managing which tracks
-            are in what section and binded to the relevant reaction.
-        """
+
 
     @classmethod
     def get_player_msg_ids(cls):
