@@ -188,8 +188,14 @@ class DeckPlayer:
                 await player.set_pause(True)
                 track.playing = False
                 track.paused = True
+                self._now_playing.playing = False
                 self._now_playing.paused = True
                 self._tracks[self._index] = track
+                await self.update_deck()
+            else:
+                await player.set_pause(False)
+                self._now_playing.playing = False
+                self._now_playing.paused = False
                 await self.update_deck()
         else:
             if player.is_playing and player.is_connected:
@@ -197,7 +203,14 @@ class DeckPlayer:
                     await player.set_pause(True)
                     track.playing = False
                     track.paused = True
+                    self._now_playing.playing = False
                     self._now_playing.paused = True
+                elif track.paused and not reaction_remove and self._now_playing.id == track.id:
+                    await player.set_pause(False)
+                    track.playing = True
+                    track.paused = False
+                    self._now_playing.playing = True
+                    self._now_playing.paused = False
                 elif track.paused and not reaction_remove and self._now_playing.id != track.id:
                     await player.play(track.track)
                     track.playing = True
