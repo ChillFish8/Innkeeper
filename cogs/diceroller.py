@@ -23,6 +23,10 @@ class DiceRoller(commands.Cog):
         """ Roll a set of dice """
         pass
 
+    async def cog_command_error(self, ctx, error):
+        if isinstance(error, commands.CommandInvokeError):
+            await ctx.send(error.original)
+
 
 class Roll:
 
