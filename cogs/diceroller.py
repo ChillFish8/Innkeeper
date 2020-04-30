@@ -16,7 +16,16 @@ class DiceRoller(commands.Cog):
     @commands.command()
     async def randstats(self, ctx):
         """ Roll a set of random stats ( 6 * 4d6kh3 ) """
-        pass
+
+        text = f"**Your rolls:** <:d20:642067624385183753> \n"
+        total_ = 0
+        for i in range(6):
+            dice, totstr, total = Roll.stats_roll('4d6kh3')
+            text += f"> **Roll {i + 1})** "
+            text += " (".join((totstr, dice)) + ")\n"
+            total_ += total
+        text += f"> **Total:** `{total_} (+{(total_ - 10) // 2})`"
+        await ctx.send(text)
 
     @commands.command()
     async def charroll(self, ctx, dice_str: str):
@@ -49,11 +58,36 @@ class Roll:
                 return e
 
             total += sum(roll) * neg
-            throws += f"{throw}: {' '.join([str(num) for num in roll])}\n"
+            throws += f"{throw}: `{', '.join([str(num) for num in roll])}` <:d20:642067624385183753>\n"
 
-        throws += f"Total: {total}"
+        throws += f"Roll: `{total}`"
 
         return throws
+
+    @classmethod
+    def stats_roll(cls, command: str):
+        command = Roll.format(command)
+        if type(command) == str:
+            return command
+
+        total = 0
+        throws = ""
+
+        for throw in command:
+            neg = -1 if (throw[0] == "-") else 1
+            rolls, dice_meta = cls.setup_command(throw.replace("-", ""))
+
+            try:
+                roll = RandDice(**dice_meta) * rolls
+            except ValueError as e:
+                return e
+
+            total += sum(roll) * neg
+            throws += f"{', '.join([str(num) for num in roll])}"
+        total_mod = (total - 10) // 2
+        if total_mod >= 0:
+            total_mod = "+" + str(total_mod)
+        return throws, f"`{total} ({total_mod})`", total
 
     @classmethod
     def setup_command(cls, dice_throw: str):
@@ -176,12 +210,12 @@ class RandDice:
 
         if kh and kl:
             raise commands.CommandInvokeError(
-                "<:wellfuck:704784002166554776> KH and KL cannot be specified on the same throw")
+                "<:wellfuck:704784002166554776> KH and KL cannot be specified on the same throw.")
 
         if dice_sides == 1 and exp == 1:
             raise commands.CommandInvokeError(
                 "<:wellfuck:704784002166554776> **Hold on there, you can't just go around "
-                "throwing infinite dice like you own the place**")
+                "throwing infinite dice like you own the place!**")
 
         if self.kh is None:
             self.kh = -1
@@ -193,7 +227,7 @@ class RandDice:
         if self.kh < 0 and self.kh != -1 or self.kl < 0 and self.kl != -1:
             raise commands.CommandInvokeError(
                 "<:wellfuck:704784002166554776> **I'm sorry but you can't keep a negative "
-                "number of dice, that just doesn't work does it**")
+                "number of dice, that just doesn't work does it.**")
 
     def __mul__(self, other):
         if other > self.max_rolls:
