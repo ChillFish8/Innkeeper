@@ -1,0 +1,295 @@
+2020-04-29 19:53:27.945  INFO 6584 --- [main] lavalink.server.Launcher                 : 
+
+[32m       .  [31m _                  _ _       _    [32m__ _ _
+[32m      /\\ [31m| | __ ___   ____ _| (_)_ __ | | __[32m\ \ \ \
+[32m     ( ( )[31m| |/ _` \ \ / / _` | | | '_ \| |/ /[32m \ \ \ \
+[32m      \\/ [31m| | (_| |\ V / (_| | | | | | |   < [32m  ) ) ) )
+[32m       '  [31m|_|\__,_| \_/ \__,_|_|_|_| |_|_|\_\[32m / / / /
+[0m    =========================================[32m/_/_/_/[0m
+
+	Version:        6b1a1f0fd486d49d9860275ed6797a8688485104-SNAPSHOT
+	Build:          1034
+	Build time:     27.04.2020 17:50:29 UTC
+	Branch          master
+	Commit:         6b1a1f0
+	Commit time:    27.04.2020 17:45:47 UTC
+	JVM:            11
+	Lavaplayer      1.3.38
+
+2020-04-29 19:53:28.003  INFO 6584 --- [main] lavalink.server.Launcher                 : Starting Launcher on DESKTOP-COTS216 with PID 6584 (F:\Innkeeper\Lavalink_Server\Lavalink.jar started by ChillFish8 in F:\Innkeeper\Lavalink_Server)
+2020-04-29 19:53:28.003  INFO 6584 --- [main] lavalink.server.Launcher                 : No active profile set, falling back to default profiles: default
+2020-04-29 19:53:28.040  WARN 6584 --- [background-preinit] o.s.h.c.j.Jackson2ObjectMapperBuilder    : For Jackson Kotlin classes support please add "com.fasterxml.jackson.module:jackson-module-kotlin" to the classpath
+2020-04-29 19:53:28.817  WARN 6584 --- [main] io.undertow.websockets.jsr               : UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2020-04-29 19:53:28.837  INFO 6584 --- [main] io.undertow.servlet                      : Initializing Spring embedded WebApplicationContext
+2020-04-29 19:53:28.838  INFO 6584 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 806 ms
+2020-04-29 19:53:29.050  WARN 6584 --- [main] l.server.config.SentryConfiguration      : Turning off sentry
+2020-04-29 19:53:29.056  INFO 6584 --- [main] l.s.c.AudioSendFactoryConfiguration      : OS: Windows 10, Arch: amd64
+2020-04-29 19:53:29.056  INFO 6584 --- [main] l.s.c.AudioSendFactoryConfiguration      : JDA-NAS supported system detected. Enabled native audio sending.
+2020-04-29 19:53:29.056  INFO 6584 --- [main] l.s.c.AudioSendFactoryConfiguration      : Setting buffer to 400ms
+2020-04-29 19:53:29.057  INFO 6584 --- [main] l.s.c.AudioSendFactoryConfiguration      : Setting playlist load limit to 6
+2020-04-29 19:53:29.317  INFO 6584 --- [main] c.s.d.l.tools.GarbageCollectionMonitor   : GC monitoring enabled, reporting results every 2 minutes.
+2020-04-29 19:53:29.534  INFO 6584 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-29 19:53:29.779  INFO 6584 --- [main] org.xnio                                 : XNIO version 3.3.8.Final
+2020-04-29 19:53:29.786  INFO 6584 --- [main] org.xnio.nio                             : XNIO NIO Implementation Version 3.3.8.Final
+2020-04-29 19:53:29.878  INFO 6584 --- [main] o.s.b.w.e.u.UndertowServletWebServer     : Undertow started on port(s) 2333 (http) with context path ''
+2020-04-29 19:53:29.883  INFO 6584 --- [main] lavalink.server.Launcher                 : Started Launcher in 2.333 seconds (JVM running for 2.736)
+2020-04-29 19:53:39.618  INFO 6584 --- [XNIO-1 task-1] io.undertow.servlet                      : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-29 19:59:05.714  INFO 6584 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-04-29 19:59:05.719  INFO 6584 --- [XNIO-1 task-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 5 ms
+2020-04-29 19:59:05.733  INFO 6584 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62489
+2020-04-29 19:59:05.733  INFO 6584 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62619
+2020-04-29 19:59:05.816  INFO 6584 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:62619
+2020-04-29 19:59:05.816  INFO 6584 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:62489
+2020-04-29 19:59:05.827  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:00:07.881  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "07c83c73c21b257d7bbcded6cd2af757", "event": {"token": "befbee16f921bc81", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:00:07.923  INFO 6584 --- [parallel-3] com.jcabi.manifests.Manifests            : 73 attributes loaded from 84 stream(s) in 24ms, 73 saved, 1240 ignored: ["Ant-Version", "Archiver-Version", "Automatic-Module-Name", "Bnd-LastModified", "Build-Jdk", "Build-Jdk-Spec", "Build-Time", "Built-By", "Bundle-ActivationPolicy", "Bundle-Activator", "Bundle-Category", "Bundle-Description", "Bundle-DocURL", "Bundle-License", "Bundle-ManifestVersion", "Bundle-Name", "Bundle-NativeCode", "Bundle-RequiredExecutionEnvironment", "Bundle-SymbolicName", "Bundle-Vendor", "Bundle-Version", "Copyright", "Created-By", "Export-Package", "Extension-Name", "Git-Revision", "Implementation-Build", "Implementation-Build-Date", "Implementation-Title", "Implementation-URL", "Implementation-Vendor", "Implementation-Vendor-Id", "Implementation-Version", "Import-Package", "Include-Resource", "JCabi-Build", "JCabi-Date", "JCabi-Version", "Jar-Name", "Jar-Version", "Java-Vendor", "Java-Version", "Kotlin-Runtime-Component", "Kotlin-Version", "Log4jReleaseKey", "Log4jReleaseManager", "Log4jReleaseVersion", "Magma-Version", "Main-Class", "Manifest-Version", "Multi-Release", "Originally-Created-By", "Os-Arch", "Os-Name", "Os-Version", "Private-Package", "Provide-Capability", "Require-Bundle", "Require-Capability", "Scm-Connection", "Scm-Revision", "Scm-Url", "Specification-Title", "Specification-Vendor", "Specification-Version", "Spring-Boot-Classes", "Spring-Boot-Lib", "Spring-Boot-Version", "Start-Class", "Tool", "X-Compile-Source-JDK", "X-Compile-Target-JDK", "url"]
+2020-04-29 20:00:08.963  INFO 6584 --- [parallel-5] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:00:08.964  INFO 6584 --- [parallel-5] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:00:09.158  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "07c83c73c21b257d7bbcded6cd2af757", "event": {"token": "a9c00b0b7172dd8f", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:00:10.517  INFO 6584 --- [parallel-12] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:00:10.518  INFO 6584 --- [parallel-12] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:00:10.714  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "07c83c73c21b257d7bbcded6cd2af757", "event": {"token": "adad72f5b5db6518", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:00:11.161  INFO 6584 --- [parallel-7] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4006 and reason Session is no longer valid.
+2020-04-29 20:00:11.162  WARN 6584 --- [parallel-7] s.n.m.impl.connections.AudioWebSocket    : Connection closed due to [4006 SESSION_NO_LONGER_VALID] Session is no longer valid.. This could indicate an issue with the magma library or your usage of it. Please get in touch. https://github.com/napstr/Magma/issues
+2020-04-29 20:00:11.162  INFO 6584 --- [parallel-7] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:00:22.381  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-29 20:01:02.833  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "07c83c73c21b257d7bbcded6cd2af757", "event": {"token": "a7e332845312d0c0", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:01:03.045  INFO 6584 --- [parallel-2] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4006 and reason Session is no longer valid.
+2020-04-29 20:01:03.045  WARN 6584 --- [parallel-2] s.n.m.impl.connections.AudioWebSocket    : Connection closed due to [4006 SESSION_NO_LONGER_VALID] Session is no longer valid.. This could indicate an issue with the magma library or your usage of it. Please get in touch. https://github.com/napstr/Magma/issues
+2020-04-29 20:01:03.046  INFO 6584 --- [parallel-2] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:01:58.784  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62619 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:01:59.829  INFO 6584 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62700
+2020-04-29 20:01:59.835  INFO 6584 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:62700
+2020-04-29 20:01:59.836  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:02:05.887  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "b9826b5c3c33e3c062781c8fa7178e7f", "event": {"token": "a7e332845312d0c0", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:02:08.725  INFO 6584 --- [parallel-11] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:02:08.725  INFO 6584 --- [parallel-11] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:02:08.922  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "b9826b5c3c33e3c062781c8fa7178e7f", "event": {"token": "297036b6a31849eb", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:02:09.797  INFO 6584 --- [parallel-6] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4006 and reason Session is no longer valid.
+2020-04-29 20:02:09.798  WARN 6584 --- [parallel-6] s.n.m.impl.connections.AudioWebSocket    : Connection closed due to [4006 SESSION_NO_LONGER_VALID] Session is no longer valid.. This could indicate an issue with the magma library or your usage of it. Please get in touch. https://github.com/napstr/Magma/issues
+2020-04-29 20:02:09.798  INFO 6584 --- [parallel-6] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:02:18.651  INFO 6584 --- [XNIO-1 task-4] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 20:02:19.382  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: crusher
+2020-04-29 20:02:58.784  INFO 6584 --- [pool-3-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:04:50.761  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62700 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:04:51.783  INFO 6584 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62764
+2020-04-29 20:04:51.787  INFO 6584 --- [XNIO-1 task-6] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:62764
+2020-04-29 20:04:51.788  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:05:50.761  INFO 6584 --- [pool-5-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:05:51.796  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "735f54898db592946e9752e41ed29add", "event": {"token": "297036b6a31849eb", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:06:02.762  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "735f54898db592946e9752e41ed29add", "event": {"token": "297036b6a31849eb", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:06:02.762  INFO 6584 --- [parallel-1] space.npstr.magma.impl.AudioStack        : Discarding received connection request because it is identical to the already existing connection. If you really want to reconnect, send a disconnect request first.
+2020-04-29 20:06:26.194  INFO 6584 --- [parallel-3] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:06:26.194  INFO 6584 --- [parallel-3] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:06:29.043  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "735f54898db592946e9752e41ed29add", "event": {"token": "c840ff31cc702635", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:06:30.407  INFO 6584 --- [parallel-10] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:06:30.407  INFO 6584 --- [parallel-10] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:06:30.601  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "735f54898db592946e9752e41ed29add", "event": {"token": "66b63f6b570dcb8a", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:06:30.811  INFO 6584 --- [parallel-5] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4006 and reason Session is no longer valid.
+2020-04-29 20:06:30.812  WARN 6584 --- [parallel-5] s.n.m.impl.connections.AudioWebSocket    : Connection closed due to [4006 SESSION_NO_LONGER_VALID] Session is no longer valid.. This could indicate an issue with the magma library or your usage of it. Please get in touch. https://github.com/napstr/Magma/issues
+2020-04-29 20:06:30.812  INFO 6584 --- [parallel-5] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:06:45.448  INFO 6584 --- [XNIO-1 task-7] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 20:06:46.228  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: crusher
+2020-04-29 20:10:55.492  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62764 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:10:56.601  INFO 6584 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62915
+2020-04-29 20:10:56.606  INFO 6584 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:62915
+2020-04-29 20:10:56.606  INFO 6584 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:11:29.401  INFO 6584 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "2d28b1e29a82e3ae8a9c5f27abcecb7d", "event": {"token": "5ce98ec6272c0810", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:11:30.279  INFO 6584 --- [parallel-2] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:11:30.279  INFO 6584 --- [parallel-2] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:11:30.472  INFO 6584 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "2d28b1e29a82e3ae8a9c5f27abcecb7d", "event": {"token": "e6b5ed25883536f5", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:11:30.699  INFO 6584 --- [parallel-9] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4006 and reason Session is no longer valid.
+2020-04-29 20:11:30.699  WARN 6584 --- [parallel-9] s.n.m.impl.connections.AudioWebSocket    : Connection closed due to [4006 SESSION_NO_LONGER_VALID] Session is no longer valid.. This could indicate an issue with the magma library or your usage of it. Please get in touch. https://github.com/napstr/Magma/issues
+2020-04-29 20:11:30.700  INFO 6584 --- [parallel-9] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:11:50.995  INFO 6584 --- [XNIO-1 task-10] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 20:11:51.599  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track ????????
+2020-04-29 20:11:55.493  INFO 6584 --- [pool-6-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:13:33.810  INFO 6584 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62915 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:13:34.809  INFO 6584 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:62986
+2020-04-29 20:13:34.812  INFO 6584 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:62986
+2020-04-29 20:13:34.813  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:13:38.209  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "e02265827ea7cb62c21495200bb582ab", "event": {"token": "e6b5ed25883536f5", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:13:39.611  INFO 6584 --- [parallel-6] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:13:39.612  INFO 6584 --- [parallel-6] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:13:39.812  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "e02265827ea7cb62c21495200bb582ab", "event": {"token": "8a11b04d3c820cb8", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:13:43.161  INFO 6584 --- [parallel-1] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:13:43.162  INFO 6584 --- [parallel-1] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:13:43.356  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "e02265827ea7cb62c21495200bb582ab", "event": {"token": "614a20790adfa5a1", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:13:48.718  INFO 6584 --- [parallel-8] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:13:48.719  INFO 6584 --- [parallel-8] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:13:48.911  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "e02265827ea7cb62c21495200bb582ab", "event": {"token": "2233a9fa1eee4cef", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:13:49.111  INFO 6584 --- [parallel-3] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4006 and reason Session is no longer valid.
+2020-04-29 20:13:49.111  WARN 6584 --- [parallel-3] s.n.m.impl.connections.AudioWebSocket    : Connection closed due to [4006 SESSION_NO_LONGER_VALID] Session is no longer valid.. This could indicate an issue with the magma library or your usage of it. Please get in touch. https://github.com/napstr/Magma/issues
+2020-04-29 20:13:49.111  INFO 6584 --- [parallel-3] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:14:33.810  INFO 6584 --- [pool-7-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:14:58.857  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:62986 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:14:59.850  INFO 6584 --- [XNIO-1 task-13] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63033
+2020-04-29 20:14:59.853  INFO 6584 --- [XNIO-1 task-13] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:63033
+2020-04-29 20:14:59.854  INFO 6584 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:15:03.939  INFO 6584 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "2856b4f14c28e35d714d98ba49564adc", "event": {"token": "2233a9fa1eee4cef", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:15:40.212  WARN 6584 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-29 20:15:40.212  INFO 6584 --- [XNIO-1 I/O-9] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:15:40.213  INFO 6584 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63033 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:15:41.266  INFO 6584 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63060
+2020-04-29 20:15:41.270  INFO 6584 --- [XNIO-1 task-14] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:63060
+2020-04-29 20:15:41.271  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:15:43.551  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "d0100d146ea280ec015bd74a0680c272", "event": {"token": "2233a9fa1eee4cef", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:15:55.839  WARN 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-29 20:15:55.839  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:15:55.840  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63060 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:15:56.824  INFO 6584 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63075
+2020-04-29 20:15:56.827  INFO 6584 --- [XNIO-1 task-15] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:63075
+2020-04-29 20:15:56.828  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:15:58.857  INFO 6584 --- [pool-8-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:16:00.790  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "31c5a59eaea154d1a7231d3f298cacda", "event": {"token": "2233a9fa1eee4cef", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:16:40.214  INFO 6584 --- [pool-9-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:16:46.062  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63075 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:16:47.056  INFO 6584 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63103
+2020-04-29 20:16:47.060  INFO 6584 --- [XNIO-1 task-16] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:63103
+2020-04-29 20:16:47.061  INFO 6584 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:16:49.779  INFO 6584 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "4ba86dea60069f85a96608a37dfe6eab", "event": {"token": "2233a9fa1eee4cef", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:16:55.841  INFO 6584 --- [pool-10-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:17:03.915  INFO 6584 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-29 20:17:04.090  INFO 6584 --- [parallel-10] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:17:04.090  INFO 6584 --- [parallel-10] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:17:33.196  INFO 6584 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-29 20:17:37.678  INFO 6584 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63103 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:17:38.668  INFO 6584 --- [XNIO-1 task-17] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63136
+2020-04-29 20:17:38.674  INFO 6584 --- [XNIO-1 task-17] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:63136
+2020-04-29 20:17:38.674  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:17:46.063  INFO 6584 --- [pool-11-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:17:47.668  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "7209b2f35e8b58e7f50131893d3ddfee", "event": {"token": "32794f1276e3118e", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:18:01.601  INFO 6584 --- [XNIO-1 task-18] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 20:18:02.223  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: crusher
+2020-04-29 20:18:05.653  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAogIAPVNocmVkZGluZyBDb2NhIENvbGEgV2l0aCBDb2xvdXJmdWwgQmFsb29ucyBBbWF6aW5nIEV4cGVyaW1lbnQAC1RoZSBDcnVzaGVyAAAAAAAJPzAAC1gtT0FCSTdFOFgwAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9WC1PQUJJN0U4WDAAB3lvdXR1YmUAAAAAAAAAAA=="}
+2020-04-29 20:18:08.628  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-29 20:18:09.768  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-29 20:18:09.903  INFO 6584 --- [parallel-9] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central513.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:18:09.903  INFO 6584 --- [parallel-9] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:18:37.678  INFO 6584 --- [pool-12-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:31:37.738  INFO 6584 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63136 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:31:38.796  INFO 6584 --- [XNIO-1 task-20] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:63558
+2020-04-29 20:31:38.800  INFO 6584 --- [XNIO-1 task-20] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:63558
+2020-04-29 20:31:38.800  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:32:10.602  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "407ab8439140be2596d2f2e15957cbc0", "event": {"token": "60341a8bc4cd62f6", "guild_id": "638139515760017448", "endpoint": "eu-central513.discord.media:80"}}
+2020-04-29 20:32:23.086  INFO 6584 --- [XNIO-1 task-21] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 20:32:23.858  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: no
+2020-04-29 20:32:37.739  INFO 6584 --- [pool-13-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:43:04.412  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:63558 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:43:05.102  INFO 6584 --- [XNIO-1 task-23] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64042
+2020-04-29 20:43:05.108  INFO 6584 --- [XNIO-1 task-23] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64042
+2020-04-29 20:43:05.109  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:44:04.414  INFO 6584 --- [pool-15-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:44:24.851  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64042 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:44:25.523  INFO 6584 --- [XNIO-1 task-24] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64085
+2020-04-29 20:44:25.527  INFO 6584 --- [XNIO-1 task-24] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64085
+2020-04-29 20:44:25.528  INFO 6584 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:45:24.851  INFO 6584 --- [pool-16-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:46:40.050  INFO 6584 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64085 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:46:50.246  INFO 6584 --- [XNIO-1 task-25] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64157
+2020-04-29 20:46:50.251  INFO 6584 --- [XNIO-1 task-25] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64157
+2020-04-29 20:46:50.252  INFO 6584 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:46:59.620  INFO 6584 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "4898d9feb0ec8e25d60a432ec8f3f6f2", "event": {"token": "82d21bde0080e2d6", "guild_id": "638139515760017448", "endpoint": "eu-central335.discord.media:80"}}
+2020-04-29 20:47:22.148  WARN 6584 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-29 20:47:22.148  INFO 6584 --- [XNIO-1 I/O-5] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:47:22.148  INFO 6584 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64157 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:47:22.812  INFO 6584 --- [XNIO-1 task-26] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64183
+2020-04-29 20:47:22.816  INFO 6584 --- [XNIO-1 task-26] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64183
+2020-04-29 20:47:22.816  INFO 6584 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:47:25.000  INFO 6584 --- [parallel-4] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central335.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:47:25.001  INFO 6584 --- [parallel-4] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:47:35.283  INFO 6584 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "185772e09faf635662761ef488f9a086", "event": {"token": "9e87e5a846eeaf23", "guild_id": "638139515760017448", "endpoint": "eu-west77.discord.media:80"}}
+2020-04-29 20:47:40.052  INFO 6584 --- [pool-17-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:47:52.937  INFO 6584 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64183 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:47:53.614  INFO 6584 --- [XNIO-1 task-27] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64203
+2020-04-29 20:47:53.618  INFO 6584 --- [XNIO-1 task-27] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64203
+2020-04-29 20:47:53.618  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:47:56.850  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "4068228bb2a670341bf1f3a14bfba0ca", "event": {"token": "9e87e5a846eeaf23", "guild_id": "638139515760017448", "endpoint": "eu-west77.discord.media:80"}}
+2020-04-29 20:48:22.149  INFO 6584 --- [pool-18-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:48:52.939  INFO 6584 --- [pool-19-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:49:16.168  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64203 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:49:16.839  INFO 6584 --- [XNIO-1 task-28] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64248
+2020-04-29 20:49:16.843  INFO 6584 --- [XNIO-1 task-28] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64248
+2020-04-29 20:49:16.844  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:49:19.777  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "76d282f0183a6f333e008e2b85d9d085", "event": {"token": "9e87e5a846eeaf23", "guild_id": "638139515760017448", "endpoint": "eu-west77.discord.media:80"}}
+2020-04-29 20:49:41.133  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-29 20:49:41.266  INFO 6584 --- [parallel-4] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-west77.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:49:41.267  INFO 6584 --- [parallel-4] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:50:16.169  INFO 6584 --- [pool-20-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:53:46.239  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64248 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:54:09.240  INFO 6584 --- [XNIO-1 task-29] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64439
+2020-04-29 20:54:09.245  INFO 6584 --- [XNIO-1 task-29] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64439
+2020-04-29 20:54:09.245  INFO 6584 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:54:46.241  INFO 6584 --- [pool-21-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:55:49.418  INFO 6584 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64439 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 20:55:50.110  INFO 6584 --- [XNIO-1 task-30] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64518
+2020-04-29 20:55:50.113  INFO 6584 --- [XNIO-1 task-30] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64518
+2020-04-29 20:55:50.114  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 20:55:55.270  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "c1b60f89d8260054a50bcbd191fe9d4f", "event": {"token": "b9d5460cd60b4424", "guild_id": "638139515760017448", "endpoint": "eu-central523.discord.media:80"}}
+2020-04-29 20:56:49.420  INFO 6584 --- [pool-22-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 20:57:17.062  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-29 20:57:17.173  INFO 6584 --- [parallel-3] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central523.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 20:57:17.173  INFO 6584 --- [parallel-3] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 20:57:17.598  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-29 21:05:22.973  INFO 6584 --- [XNIO-1 task-31] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 21:05:23.178  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "c1b60f89d8260054a50bcbd191fe9d4f", "event": {"token": "3320b9c3df478adb", "guild_id": "638139515760017448", "endpoint": "eu-central523.discord.media:80"}}
+2020-04-29 21:05:23.416  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: Hollowness
+2020-04-29 21:05:27.715  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAegIAGue+juazouOAjOODm+ODreODjeOCueOAjU1WAAbnvo7ms6IAAAAAAATl6AALSElSaWR1ek5MelEAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1ISVJpZHV6Tkx6UQAHeW91dHViZQAAAAAAAAAA"}
+2020-04-29 21:09:47.505  INFO 6584 --- [XNIO-1 task-33] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 21:09:48.224  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: best
+2020-04-29 21:10:47.716  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-29 21:10:47.957  INFO 6584 --- [parallel-10] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central523.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 21:10:47.958  INFO 6584 --- [parallel-10] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 21:11:39.484  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAjwIAH1RoZSBCZXN0IE9mIFRoZSBJbnRlcm5ldCAoMjAxOSkAFkRhaWx5IERvc2UgT2YgSW50ZXJuZXQAAAAAAAs3GAALOFhrY2JkU1JkTzAAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj04WGtjYmRTUmRPMAAHeW91dHViZQAAAAAAAAAA"}
+2020-04-29 21:11:40.059  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAjwIAH1RoZSBCZXN0IE9mIFRoZSBJbnRlcm5ldCAoMjAxOSkAFkRhaWx5IERvc2UgT2YgSW50ZXJuZXQAAAAAAAs3GAALOFhrY2JkU1JkTzAAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj04WGtjYmRTUmRPMAAHeW91dHViZQAAAAAAAAAA"}
+2020-04-29 21:11:41.593  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAjwIAH1RoZSBCZXN0IE9mIFRoZSBJbnRlcm5ldCAoMjAxOSkAFkRhaWx5IERvc2UgT2YgSW50ZXJuZXQAAAAAAAs3GAALOFhrY2JkU1JkTzAAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj04WGtjYmRTUmRPMAAHeW91dHViZQAAAAAAAAAA"}
+2020-04-29 21:11:42.470  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAjwIAH1RoZSBCZXN0IE9mIFRoZSBJbnRlcm5ldCAoMjAxOSkAFkRhaWx5IERvc2UgT2YgSW50ZXJuZXQAAAAAAAs3GAALOFhrY2JkU1JkTzAAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj04WGtjYmRTUmRPMAAHeW91dHViZQAAAAAAAAAA"}
+2020-04-29 21:11:43.509  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAjwIAH1RoZSBCZXN0IE9mIFRoZSBJbnRlcm5ldCAoMjAxOSkAFkRhaWx5IERvc2UgT2YgSW50ZXJuZXQAAAAAAAs3GAALOFhrY2JkU1JkTzAAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj04WGtjYmRTUmRPMAAHeW91dHViZQAAAAAAAAAA"}
+2020-04-29 21:11:55.263  INFO 6584 --- [XNIO-1 task-35] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 21:11:55.558  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "c1b60f89d8260054a50bcbd191fe9d4f", "event": {"token": "c51c5a2691082acc", "guild_id": "638139515760017448", "endpoint": "eu-central523.discord.media:80"}}
+2020-04-29 21:11:55.821  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: crying
+2020-04-29 21:12:03.245  INFO 6584 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64518 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 21:12:03.939  INFO 6584 --- [XNIO-1 task-37] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65016
+2020-04-29 21:12:03.943  INFO 6584 --- [XNIO-1 task-37] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65016
+2020-04-29 21:12:03.944  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 21:12:16.052  INFO 6584 --- [parallel-5] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central523.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 21:12:16.053  INFO 6584 --- [parallel-5] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-29 21:12:18.953  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "ede50c3c69945a6012170b47dd3102e3", "event": {"token": "6b33a794e850bfe3", "guild_id": "638139515760017448", "endpoint": "eu-central523.discord.media:80"}}
+2020-04-29 21:12:53.746  WARN 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-29 21:12:53.747  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketContext         : Shutting down 1 playing players.
+2020-04-29 21:12:53.750  INFO 6584 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65016 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 21:12:54.424  INFO 6584 --- [XNIO-1 task-38] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65041
+2020-04-29 21:12:54.428  INFO 6584 --- [XNIO-1 task-38] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65041
+2020-04-29 21:12:54.429  INFO 6584 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 21:12:59.322  INFO 6584 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "2f72b2b4f93a9191120583154268461c", "event": {"token": "6b33a794e850bfe3", "guild_id": "638139515760017448", "endpoint": "eu-central523.discord.media:80"}}
+2020-04-29 21:13:03.245  INFO 6584 --- [pool-23-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 21:13:53.752  INFO 6584 --- [pool-24-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 21:14:41.604  INFO 6584 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65041 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 21:14:42.315  INFO 6584 --- [XNIO-1 task-39] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65115
+2020-04-29 21:14:42.320  INFO 6584 --- [XNIO-1 task-39] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65115
+2020-04-29 21:14:42.320  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 21:14:46.702  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "212bda37bb2c73be5dca1222596d3246", "event": {"token": "6b33a794e850bfe3", "guild_id": "638139515760017448", "endpoint": "eu-central523.discord.media:80"}}
+2020-04-29 21:15:00.815  WARN 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-29 21:15:00.815  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 21:15:00.816  INFO 6584 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65115 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-29 21:15:01.481  INFO 6584 --- [XNIO-1 task-40] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65134
+2020-04-29 21:15:01.485  INFO 6584 --- [XNIO-1 task-40] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65134
+2020-04-29 21:15:01.486  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-29 21:15:19.626  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "537e8bab72749a8ff9f183632bc7b894", "event": {"token": "6b33a794e850bfe3", "guild_id": "638139515760017448", "endpoint": "eu-central523.discord.media:80"}}
+2020-04-29 21:15:27.439  INFO 6584 --- [XNIO-1 task-41] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-29 21:15:28.030  INFO 6584 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded playlist Search results for: we
+2020-04-29 21:15:31.303  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAlgIAMkNyYXp5IEZyb2cgLSBXZSBBcmUgVGhlIENoYW1waW9ucyAoT2ZmaWNpYWwgVmlkZW8pAApDcmF6eSBGcm9nAAAAAAACwwgAC1NfSUFxd3J2RXVVAAEAK2h0dHBzOi8vd3d3LnlvdXR1YmUuY29tL3dhdGNoP3Y9U19JQXF3cnZFdVUAB3lvdXR1YmUAAAAAAAAAAA=="}
+2020-04-29 21:15:36.677  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "638139515760017448", "volume": 90}
+2020-04-29 21:15:36.703  INFO 6584 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library libmpg123-0: loading with filter com.sedmelluq.discord.lavaplayer.natives.ConnectorNativeLibLoader$$Lambda$647/0x0000000800827440@3ce92129
+2020-04-29 21:15:36.739  INFO 6584 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library libmpg123-0: successfully loaded.
+2020-04-29 21:15:36.739  INFO 6584 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library connector: loading with filter null
+2020-04-29 21:15:36.785  INFO 6584 --- [lava-daemon-pool-playback-1-thread-1] c.s.l.c.natives.NativeLibraryLoader      : Native library connector: successfully loaded.
+2020-04-29 21:15:40.449  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-29 21:15:41.188  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
+2020-04-29 21:15:41.605  INFO 6584 --- [pool-25-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 21:15:42.360  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-29 21:15:47.594  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
+2020-04-29 21:15:51.809  INFO 6584 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-29 21:16:00.818  INFO 6584 --- [pool-26-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-29 21:19:37.552  INFO 6584 --- [parallel-1] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central523.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-29 21:19:37.553  INFO 6584 --- [parallel-1] s.n.m.impl.connections.AudioWebSocket    : Closing
