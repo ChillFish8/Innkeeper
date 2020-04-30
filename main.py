@@ -92,8 +92,6 @@ class ErrorProcessor:
             await ctx.send(text)
             raise exception
 
-
-
     @staticmethod
     def missing_args():
         return "<:wellfuck:704784002166554776> **You didnt give me anything to work with.**"
