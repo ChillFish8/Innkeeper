@@ -200,11 +200,10 @@ class DeckPlayer:
         elif self._now_playing.playing:
             await player.set_pause(True)
             self._update_track(pause=True)
-
         else:
-            await player.play(track.track)
-            self._update_track(play=True)
-
+            if not reaction_remove:
+                await player.play(track.track)
+                self._update_track(play=True)
         await self.update_deck()
 
     async def replay(self):
@@ -241,6 +240,7 @@ class DeckPlayer:
         self._now_playing.paused = False
         self._tracks[self._now_playing.id - 1].playing = False
         self._tracks[self._now_playing.id - 1].paused = False
+        await self.update_deck()
 
     @property
     def looping(self):
