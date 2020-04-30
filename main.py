@@ -67,27 +67,31 @@ class ErrorProcessor:
     async def process_error(cls, ctx: commands.Context, exception):
         """ This handles the errors and sends them to different area of the handler"""
         if isinstance(exception, commands.CommandNotFound):     # When the right prefix is used but wrong command
-            pass
+            return
 
         elif isinstance(exception, commands.MissingRequiredArgument):   # When a user doesnt give it something
-            await ctx.send(cls.missing_args())
+            return await ctx.send(cls.missing_args())
 
         elif isinstance(exception, discord.Forbidden):  # If its not allowed to do something
-            await ctx.send(cls.missing_perms(ctx.message.channel))
+            return await ctx.send(cls.missing_perms(ctx.message.channel))
 
         elif isinstance(exception, discord.NotFound):   # If it cant find something
-            pass
+            return
 
         elif isinstance(exception, commands.CheckFailure):  # We used a check deco and it went no
-            await ctx.send(cls.load_check_msg(ctx))
+            return await ctx.send(cls.load_check_msg(ctx))
 
         elif isinstance(exception, commands.NoPrivateMessage):  # the command is guild only
-            await ctx.send(cls.guild_only())
+            return await ctx.send(cls.guild_only())
 
         elif ctx.command.name in ("roll", ):
+            return
+
+        else:
             text = exception
             await ctx.send(text)
             raise exception
+
 
 
     @staticmethod
