@@ -199,3 +199,59 @@
 2020-04-30 18:31:27.587  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
 2020-04-30 18:31:32.307  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
 2020-04-30 18:31:35.568  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
+2020-04-30 18:33:12.931  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-30 18:33:14.438  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
+2020-04-30 18:33:22.050  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-30 18:33:24.857  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
+2020-04-30 18:36:20.831  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-30 18:37:31.830  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60179 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 18:37:32.851  INFO 9968 --- [XNIO-1 task-53] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60419
+2020-04-30 18:37:32.868  INFO 9968 --- [XNIO-1 task-53] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:60419
+2020-04-30 18:37:32.871  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 18:37:39.595  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "1b6bf6ce25371e7e5508f2329018ecc3", "event": {"token": "26932e15778d85f7", "guild_id": "638139515760017448", "endpoint": "eu-central606.discord.media:80"}}
+2020-04-30 18:37:59.936  INFO 9968 --- [XNIO-1 task-54] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 18:38:00.703  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track ????????MV
+2020-04-30 18:38:17.735  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAegIAGue+juazouOAjOODm+ODreODjeOCueOAjU1WAAbnvo7ms6IAAAAAAATiAAALSElSaWR1ek5MelEAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1ISVJpZHV6Tkx6UQAHeW91dHViZQAAAAAAAAAA"}
+2020-04-30 18:38:31.830  INFO 9968 --- [pool-22-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 18:39:46.123  WARN 9968 --- [lava-daemon-pool-manager-3-thread-1] c.s.d.l.tools.GarbageCollectionMonitor   : Suspicious GC results for the last 2 minutes: [Bucket 0 = 0] [Bucket 20 = 0] [Bucket 50 = 0] [Bucket 200 = 1] [Bucket 500 = 0] [Bucket 2000 = 0] 
+2020-04-30 18:43:37.811  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-30 18:43:37.811  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAegIAGue+juazouOAjOODm+ODreODjeOCueOAjU1WAAbnvo7ms6IAAAAAAATiAAALSElSaWR1ek5MelEAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1ISVJpZHV6Tkx6UQAHeW91dHViZQAAAAAAAAAA"}
+2020-04-30 18:44:01.391  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-30 18:44:23.059  INFO 9968 --- [XNIO-1 task-56] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 18:44:23.628  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track D&D Beyond Official Theme
+2020-04-30 18:44:46.556  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
+2020-04-30 18:45:16.803  INFO 9968 --- [parallel-7] s.n.m.impl.connections.AudioWebSocket    : Websocket to wss://eu-central606.discord.media/?v=4 closed with code 4014 and reason Disconnected.
+2020-04-30 18:45:16.803  INFO 9968 --- [parallel-7] s.n.m.impl.connections.AudioWebSocket    : Closing
+2020-04-30 18:45:31.272  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60419 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 18:45:32.158  INFO 9968 --- [XNIO-1 task-58] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60641
+2020-04-30 18:45:32.166  INFO 9968 --- [XNIO-1 task-58] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:60641
+2020-04-30 18:45:32.168  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 18:45:45.205  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "2ef36053809fdb2646f20c25b7105849", "event": {"token": "9815fc23012b21a2", "guild_id": "638139515760017448", "endpoint": "eu-central606.discord.media:80"}}
+2020-04-30 18:46:28.259  INFO 9968 --- [XNIO-1 task-59] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 18:46:28.969  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Hooked (Addicted You Might Say)
+2020-04-30 18:46:31.273  INFO 9968 --- [pool-23-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 18:46:33.998  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAjgIAH0hvb2tlZCAoQWRkaWN0ZWQgWW91IE1pZ2h0IFNheSkAFUVsZWlzaGEgRWFnbGUgLSBUb3BpYwAAAAAAA1d4AAswaGt2bEVyNmI0WQABACtodHRwczovL3d3dy55b3V0dWJlLmNvbS93YXRjaD92PTBoa3ZsRXI2YjRZAAd5b3V0dWJlAAAAAAAAAAA="}
+2020-04-30 18:47:29.066  INFO 9968 --- [XNIO-1 task-61] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 18:47:29.879  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track Curses
+2020-04-30 18:47:40.671  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-30 18:47:58.377  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "638139515760017448", "volume": 90}
+2020-04-30 18:48:00.931  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "638139515760017448", "volume": 100}
+2020-04-30 18:48:12.350  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
+2020-04-30 18:50:43.668  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "stop", "guildId": "638139515760017448"}
+2020-04-30 18:50:51.856  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "play", "guildId": "638139515760017448", "track": "QAAAdwIABkN1cnNlcwAXVGhlIENyYW5lIFdpdmVzIC0gVG9waWMAAAAAAAN+iAALOEdvcGc4MFZYd2MAAQAraHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj04R29wZzgwVlh3YwAHeW91dHViZQAAAAAAAAAA"}
+2020-04-30 18:52:44.251  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-30 18:53:08.990  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": false}
+2020-04-30 18:53:27.898  INFO 9968 --- [XNIO-1 task-63] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 18:53:28.587  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track At Least I Have Nothing
+2020-04-30 18:53:38.657  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "pause", "guildId": "638139515760017448", "pause": true}
+2020-04-30 18:53:58.433  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "638139515760017448", "volume": 0}
+2020-04-30 18:54:01.819  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "volume", "guildId": "638139515760017448", "volume": 100}
+2020-04-30 18:56:27.042  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60641 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 18:56:27.767  INFO 9968 --- [XNIO-1 task-65] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:60917
+2020-04-30 18:56:27.771  INFO 9968 --- [XNIO-1 task-65] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:60917
+2020-04-30 18:56:27.772  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 18:56:31.372  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "voiceUpdate", "guildId": "638139515760017448", "sessionId": "6652448edac3ca5aa0ea6accec413c5f", "event": {"token": "9815fc23012b21a2", "guild_id": "638139515760017448", "endpoint": "eu-central606.discord.media:80"}}
+2020-04-30 18:56:36.102  INFO 9968 --- [XNIO-1 task-66] l.server.player.AudioLoaderRestHandler   : GET /loadtracks
+2020-04-30 18:56:36.895  INFO 9968 --- [lava-daemon-pool-info-loader-2-thread-1] lavalink.server.player.AudioLoader       : Loaded track ?Vocaloid Original?Copycat?GUMI English?
+2020-04-30 18:57:27.044  INFO 9968 --- [pool-24-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 19:00:09.682  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:60917 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
