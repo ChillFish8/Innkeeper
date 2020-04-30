@@ -184,11 +184,24 @@ class DeckPlayer:
         track = self._tracks[self._index]
         if track.track is not None:
             if player.is_playing:
-                await player.set_pause(not player.paused)
-                self._now_playing.playing = not self._now_playing.playing
-                self._now_playing.paused = not self._now_playing.paused
+                if reaction_remove:
+                    await player.set_pause(not player.paused)
+                    self._now_playing.playing = not self._now_playing.playing
+                    self._now_playing.paused = not self._now_playing.paused
+                else:
+                    self._tracks[self._now_playing.id - 1].playing = False
+                    self._tracks[self._now_playing.id - 1].paused = False
+                    await player.play(track.track)
+                    self._tracks[self._index].playing = True
+                    self._tracks[self._index].paused = False
+                    self._now_playing.playing = True
+                    self._now_playing.paused = False
             else:
+                self._tracks[self._now_playing.id - 1].playing = False
+                self._tracks[self._now_playing.id - 1].paused = False
                 await player.play(track.track)
+                self._tracks[self._index].playing = True
+                self._tracks[self._index].paused = False
                 self._now_playing.playing = True
                 self._now_playing.paused = False
         else:
@@ -225,6 +238,12 @@ class DeckPlayer:
     async def toggle_loop(self):
         self._looping = not self._looping
         await self.update_deck()
+
+    async def on_track_end(self):
+        self._now_playing.playing = False
+        self._now_playing.paused = False
+        self._tracks[self._now_playing.id - 1].playing = False
+        self._tracks[self._now_playing.id - 1].paused = False
 
     @property
     def looping(self):
@@ -438,6 +457,8 @@ class Audio(commands.Cog):
             deck: DeckPlayer = self.active_players[int(player.guild_id)]
             if deck.looping:
                 await deck.replay()
+            else:
+                await deck.on_track_end()
 
     def cog_unload(self):
         """ Cog unload handler. This removes any event hooks that were registered. """
