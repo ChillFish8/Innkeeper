@@ -105,21 +105,20 @@ class DeckPlayer:
 
     def _get_embed(self):
         """ Loads and generates the description markdown """
-        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
 
         embed = discord.Embed(color=self.bot.colour)
         embed.set_author(name="Audio Deck", icon_url="https://cdn.discordapp.com/emojis/642858638116913202.png?v=1")
         embed.set_footer(text=f"Owner of deck: {self.author.name}", icon_url=self.author.avatar_url)
 
         desc = f"" \
-               f"> **Now Playing:** `{self._now_playing.name if self._now_playing.playing else None}`\n" \
-               f"> **Length:** `{self._now_playing.track.duration if self._now_playing.playing else 0}`\n" \
+               f"> **Now Playing:** `{self._now_playing.name}`\n" \
+               f"> **Length:** `{self._now_playing.track.duration if self._now_playing.track is not None else 0}`\n" \
                f"> **Volume:** `{self.volume if not self.muted else 0}%`\n" \
                f"> **Repeat:**  " \
                f"{'<:online:705030764437438565> True' if self._looping else '<:offline:705030763950899241> False'}\n" \
                f"> **Status:** "
 
-        if player.is_playing:
+        if self._now_playing.playing:
             desc += f"<:online:705030764437438565> Playing\n"
         else:
             desc += f"<:offline:705030763950899241> Stopped\n"
@@ -184,19 +183,19 @@ class DeckPlayer:
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         track = self._tracks[self._index]
         if track.track is not None:
-            await player.set_pause(not player.paused)
-            self._now_playing.playing = not self._now_playing.playing
-            self._now_playing.paused = not self._now_playing.paused
-        else:
-            if not reaction_remove:
-                await player.play(track.track)
-                self._now_playing.track = track
-                self._now_playing.playing = True
-                self._now_playing.paused = False
-            else:
+            if player.is_playing:
                 await player.set_pause(not player.paused)
                 self._now_playing.playing = not self._now_playing.playing
                 self._now_playing.paused = not self._now_playing.paused
+            else:
+                await player.play(track.track)
+                self._now_playing.playing = True
+                self._now_playing.paused = False
+        else:
+            await player.set_pause(not player.paused)
+            self._now_playing.playing = not self._now_playing.playing
+            self._now_playing.paused = not self._now_playing.paused
+        await self.update_deck()
 
     async def replay(self):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
