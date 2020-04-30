@@ -134,7 +134,12 @@ class DeckPlayer:
         slot.paused = False
         slot.track = track
         self._tracks[self._index] = slot
+        await self.update_deck()
         return self
+
+    @property
+    def index_point(self):
+        return self._index
 
 
 class Audio(commands.Cog):
@@ -207,6 +212,40 @@ class Audio(commands.Cog):
         if ctx.guild.id not in self.active_players:
             return await ctx.send("<:wellfuck:704784002166554776> **Sorry! I cant add a track "
                                   "without a active audio deck running. run SETUP first before adding a track**")
+        else:
+            player = self.bot.lavalink.player_manager.get(ctx.guild.id)
+
+            query = track.strip('<>')
+
+            if not url_rx.match(query):
+                query = f'ytsearch:{query}'
+
+            results = await player.node.get_tracks(query)
+
+            if not results or not results['tracks']:
+                return await ctx.send(
+                    "<:wellfuck:704784002166554776> **Sorry! I didn't find anything with that term.**")
+
+            # Valid loadTypes are:
+            #   TRACK_LOADED    - single video/direct URL)
+            #   PLAYLIST_LOADED - direct URL to playlist)
+            #   SEARCH_RESULT   - query prefixed with either ytsearch: or scsearch:.
+            #   NO_MATCHES      - query yielded no results
+            #   LOAD_FAILED     - most likely, the video encountered an exception during loading.
+            if results['loadType'] == 'PLAYLIST_LOADED':
+                tracks = results['tracks']
+
+                #for track in tracks:   todo add playlist support
+                #    player.add(requester=ctx.author.id, track=track)
+
+                text = "<:wellfuck:704784002166554776> **Sorry! I dont currently support playlists on a single disc.**"
+            else:
+                track = results['tracks'][0]
+                track = lavalink.models.AudioTrack(track, ctx.author.id, recommended=True)
+                deck: DeckPlayer = self.active_players[ctx.guild.id]
+                await deck.add_track(track)
+                text = f"<:gelati_cute:704784002355036190> **Added audio track to disc {deck.index_point}**"
+            await ctx.send(text)
 
     @classmethod
     def get_player_msg_ids(cls):
@@ -302,19 +341,22 @@ class Audio(commands.Cog):
         player = self.bot.lavalink.player_manager.create(ctx.guild.id, endpoint=str(ctx.guild.region))
 
         if not ctx.author.voice or not ctx.author.voice.channel:
-            raise commands.CommandInvokeError('Join a voicechannel first.')
+            raise commands.CommandInvokeError(
+                '<:wellfuck:704784002166554776> **Join a voicechannel first.**')
 
         if not player.is_connected:
             permissions = ctx.author.voice.channel.permissions_for(ctx.me)
 
             if not permissions.connect or not permissions.speak:  # Check user limit too?
-                raise commands.CommandInvokeError('I need the `CONNECT` and `SPEAK` permissions.')
+                raise commands.CommandInvokeError(
+                    '<:wellfuck:704784002166554776> **I need the `CONNECT` and `SPEAK` permissions.**')
 
             player.store('channel', ctx.channel.id)
             await self.connect_to(ctx.guild.id, str(ctx.author.voice.channel.id))
         else:
             if int(player.channel_id) != ctx.author.voice.channel.id:
-                raise commands.CommandInvokeError('You need to be in my voicechannel.')
+                raise commands.CommandInvokeError(
+                    '<:wellfuck:704784002166554776> **You need to be in my voicechannel.**')
 
 
 def setup(bot):
