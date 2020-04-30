@@ -9,6 +9,37 @@ import re
 url_rx = re.compile(r'https?://(?:www\.)?.+')
 
 
+class Voice:
+    @classmethod
+    async def connect_to(cls, guild_id: int, channel_id: str, bot):
+        """ Connects to the given voicechannel ID. A channel_id of `None` means disconnect. """
+        ws = bot._connection._get_websocket(guild_id)
+        await ws.voice_state(str(guild_id), channel_id)
+
+    @classmethod
+    async def ensure_voice(cls, ctx, bot):
+        """ This check ensures that the bot and command author are in the same voicechannel. """
+        player = bot.lavalink.player_manager.create(ctx.guild.id, endpoint=str(ctx.guild.region))
+
+        if not ctx.author.voice or not ctx.author.voice.channel:
+            raise commands.CommandInvokeError(
+                '<:wellfuck:704784002166554776> **Join a voicechannel first.**')
+
+        if not player.is_connected:
+            permissions = ctx.author.voice.channel.permissions_for(ctx.me)
+
+            if not permissions.connect or not permissions.speak:  # Check user limit too?
+                raise commands.CommandInvokeError(
+                    '<:wellfuck:704784002166554776> **I need the `CONNECT` and `SPEAK` permissions.**')
+
+            player.store('channel', ctx.channel.id)
+            await cls.connect_to(ctx.guild.id, str(ctx.author.voice.channel.id), bot)
+        else:
+            if int(player.channel_id) != ctx.author.voice.channel.id:
+                raise commands.CommandInvokeError(
+                    '<:wellfuck:704784002166554776> **You need to be in my voicechannel.**')
+
+
 class Track:
     def __init__(self, id_, name, guild_id):
         self.id = id_
@@ -49,6 +80,7 @@ class DeckPlayer:
         self.author = ctx.message.author
         self.creator_id = ctx.message.author.id
         self.channel = ctx.message.channel
+        self.ctx = ctx
 
         # Track settings
         self.volume = 100
@@ -99,7 +131,7 @@ class DeckPlayer:
             else:
                 text += f"{track}"
             if track.playing:
-                text += f"\u200b **- [ Active ]** <a:8104LoadingEmote:661571011434643486>"
+                text += f"\u200b **- [ Active ]** <a:discspinblue:705458311792689154>"
             elif track.paused and track.id == self._now_playing.id:
                 text += f"\u200b **- [ Paused ]**"
             embed.add_field(name="\u200b", value=text, inline=False)
@@ -145,10 +177,6 @@ class DeckPlayer:
     def index_point(self):
         return self._index
 
-    async def _disconnected(self):
-        await self.deck_message.delete()
-        await self.channel.send("**I have been disconnected from the voice call, Stopping deck.**")
-
     async def play_pause(self, reaction_remove=False):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         track = self._tracks[self._index]
@@ -164,18 +192,22 @@ class DeckPlayer:
                     track.paused = False
                     track.name = track.track.title
                     self._tracks[self._index] = track
+                    self._now_playing = track
             else:
                 if not player.is_connected:
-                    return await self._disconnected()
-                else:
-                    await player.play(track.track)
-                    track.playing = True
-                    track.paused = False
-                    track.name = track.track.title
-                    self._tracks[self._index] = track
+                    await Voice.ensure_voice(self.ctx, self.bot)
+                await player.play(track.track)
+                track.playing = True
+                track.paused = False
+                track.name = track.track.title
+                self._tracks[self._index] = track
+                self._now_playing = track
             await self.update_deck()
 
     async def replay(self):
+        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
+        track = self._now_playing
+        await player.play(track.track)
 
     async def toggle_mute(self):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
@@ -402,11 +434,6 @@ class Audio(commands.Cog):
             if deck.looping:
                 await deck.replay()
 
-    async def connect_to(self, guild_id: int, channel_id: str):
-        """ Connects to the given voicechannel ID. A channel_id of `None` means disconnect. """
-        ws = self.bot._connection._get_websocket(guild_id)
-        await ws.voice_state(str(guild_id), channel_id)
-
     def cog_unload(self):
         """ Cog unload handler. This removes any event hooks that were registered. """
         self.bot.lavalink._event_hooks.clear()
@@ -416,34 +443,14 @@ class Audio(commands.Cog):
         guild_check = ctx.guild is not None
 
         if guild_check:
-            await self.ensure_voice(ctx)
+            await Voice.ensure_voice(ctx, self.bot)
         return guild_check
 
     async def cog_command_error(self, ctx, error):
         if isinstance(error, commands.CommandInvokeError):
             await ctx.send(error.original)
 
-    async def ensure_voice(self, ctx):
-        """ This check ensures that the bot and command author are in the same voicechannel. """
-        player = self.bot.lavalink.player_manager.create(ctx.guild.id, endpoint=str(ctx.guild.region))
 
-        if not ctx.author.voice or not ctx.author.voice.channel:
-            raise commands.CommandInvokeError(
-                '<:wellfuck:704784002166554776> **Join a voicechannel first.**')
-
-        if not player.is_connected:
-            permissions = ctx.author.voice.channel.permissions_for(ctx.me)
-
-            if not permissions.connect or not permissions.speak:  # Check user limit too?
-                raise commands.CommandInvokeError(
-                    '<:wellfuck:704784002166554776> **I need the `CONNECT` and `SPEAK` permissions.**')
-
-            player.store('channel', ctx.channel.id)
-            await self.connect_to(ctx.guild.id, str(ctx.author.voice.channel.id))
-        else:
-            if int(player.channel_id) != ctx.author.voice.channel.id:
-                raise commands.CommandInvokeError(
-                    '<:wellfuck:704784002166554776> **You need to be in my voicechannel.**')
 
 
 def setup(bot):
