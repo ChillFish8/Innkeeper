@@ -211,6 +211,17 @@ class DeckPlayer:
         track = self._now_playing
         await player.play(track.track)
 
+    async def on_track_end(self):
+        self._now_playing.playing = False
+        self._now_playing.paused = False
+        self._tracks[self._now_playing.id - 1].playing = False
+        self._tracks[self._now_playing.id - 1].paused = False
+        await self.update_deck()
+
+    @property
+    def looping(self):
+        return self._looping
+
     async def toggle_mute(self):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         self.muted = not self.muted
@@ -234,17 +245,6 @@ class DeckPlayer:
     async def toggle_loop(self):
         self._looping = not self._looping
         await self.update_deck()
-
-    async def on_track_end(self):
-        self._now_playing.playing = False
-        self._now_playing.paused = False
-        self._tracks[self._now_playing.id - 1].playing = False
-        self._tracks[self._now_playing.id - 1].paused = False
-        await self.update_deck()
-
-    @property
-    def looping(self):
-        return self._looping
 
 
 class Audio(commands.Cog):
