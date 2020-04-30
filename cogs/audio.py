@@ -184,7 +184,13 @@ class DeckPlayer:
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         track = self._tracks[self._index]
         if track.track is None:
-            return
+            if reaction_remove:
+                await player.set_pause(True)
+                track.playing = False
+                track.paused = True
+                self._now_playing.paused = True
+                self._tracks[self._index] = track
+                await self.update_deck()
         else:
             if player.is_playing and player.is_connected:
                 if not track.paused and reaction_remove and self._now_playing.id == track.id:
@@ -434,7 +440,14 @@ class Audio(commands.Cog):
                We take the Ids then fetch the message object
                and go from there.
         """
-        pass
+        guild_id = member.guild.id
+        if guild_id in self.active_players:
+            channel: discord.VoiceChannel = after.channel
+            if len(channel.members) < 1:
+                player: DeckPlayer = self.active_players[guild_id]
+                await player.channel.send("**Closing audio deck, no one left in the voice call.**")
+                await Voice.connect_to(guild_id, None, self.bot)
+                self.bot.lavalink.player_manager.remove(guild_id)
 
     async def track_hook(self, event: lavalink.Event):
         if isinstance(event, lavalink.events.QueueEndEvent):
