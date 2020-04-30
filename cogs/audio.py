@@ -49,10 +49,14 @@ class DeckPlayer:
         self.author = ctx.message.author
         self.creator_id = ctx.message.author.id
         self.channel = ctx.message.channel
+
+        # Track settings
         self.volume = 100
         self.muted = False
-        self.max_tacks = 5
+        self._looping = False
 
+        # Display settings
+        self.max_tacks = 5
         self._id = uuid.uuid4()
         self._active = False
         self._initial_start = True
@@ -77,7 +81,7 @@ class DeckPlayer:
                f"> **Length:** `{self._now_playing.track.duration if self._now_playing.playing else 0}`\n" \
                f"> **Volume:** `{self.volume if not self.muted else 0}%`\n" \
                f"> **Repeat:**  " \
-               f"{'<:online:705030764437438565> True' if player.repeat else '<:offline:705030763950899241> False'}\n" \
+               f"{'<:online:705030764437438565> True' if self._looping else '<:offline:705030763950899241> False'}\n" \
                f"> **Status:** "
 
         if player.is_playing:
@@ -171,6 +175,8 @@ class DeckPlayer:
                     self._tracks[self._index] = track
             await self.update_deck()
 
+    async def replay(self):
+
     async def toggle_mute(self):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         self.muted = not self.muted
@@ -178,7 +184,26 @@ class DeckPlayer:
             await player.set_volume(0)
         else:
             await player.set_volume(self.volume)
+        await self.update_deck()
 
+    async def set_vol(self, gain):
+        if gain == -10 and not self.volume:
+            return
+        elif gain == 10 and self.volume == 100:
+            return
+        else:
+            self.volume += gain
+            player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
+            await player.set_volume(self.volume)
+            await self.update_deck()
+
+    async def toggle_loop(self):
+        self._looping = not self._looping
+        await self.update_deck()
+
+    @property
+    def looping(self):
+        return self._looping
 
 
 class Audio(commands.Cog):
@@ -320,6 +345,20 @@ class Audio(commands.Cog):
         if await self.filter_payload(payload=payload):
             pos = self.VALID_EMOJIS.index(str(payload.emoji))
             player: DeckPlayer = self.active_players[payload.guild_id]
+            if not pos:
+                await player.shift_index(-1)    # Yes 1 is actually down and -1 is up
+            elif pos == 1:
+                await player.shift_index(1)     # Yes 1 is actually down and -1 is up
+            elif pos == 2:
+                await player.toggle_mute()
+            elif pos == 3:
+                await player.set_vol(-10)
+            elif pos == 4:
+                await player.set_vol(10)
+            elif pos == 5:
+                await player.play_pause()
+            elif pos == 6:
+                await player.toggle_loop()
 
     @commands.Cog.listener()
     async def on_raw_reaction_remove(self, payload):
@@ -334,12 +373,12 @@ class Audio(commands.Cog):
         if await self.filter_payload(payload=payload):
             pos = self.VALID_EMOJIS.index(str(payload.emoji))
             player: DeckPlayer = self.active_players[payload.guild_id]
-            if not pos:
-                await player.shift_index(1)
-            elif pos == 1:
-                await player.shift_index(-1)
-            elif pos == 2:
-                await player.
+            if pos == 2:
+                await player.toggle_mute()
+            elif pos == 5:
+                await player.play_pause(reaction_remove=True)
+            elif pos == 6:
+                await player.toggle_loop()
 
     @commands.Cog.listener()
     async def on_voice_state_update(self,
@@ -356,9 +395,12 @@ class Audio(commands.Cog):
         """
         pass
 
-    async def track_hook(self, event):
+    async def track_hook(self, event: lavalink.Event):
         if isinstance(event, lavalink.events.QueueEndEvent):
-            pass
+            player: lavalink.DefaultPlayer = event.player
+            deck: DeckPlayer = self.active_players[player.guild_id]
+            if deck.looping:
+                await deck.replay()
 
     async def connect_to(self, guild_id: int, channel_id: str):
         """ Connects to the given voicechannel ID. A channel_id of `None` means disconnect. """
