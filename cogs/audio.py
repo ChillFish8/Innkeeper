@@ -204,8 +204,9 @@ class Audio(commands.Cog):
             This will get used for managing which tracks
             are in what section and binded to the relevant reaction.
         """
-
-
+        if ctx.guild.id not in self.active_players:
+            return await ctx.send("<:wellfuck:704784002166554776> **Sorry! I cant add a track "
+                                  "without a active audio deck running. run SETUP first before adding a track**")
 
     @classmethod
     def get_player_msg_ids(cls):
