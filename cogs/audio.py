@@ -308,7 +308,7 @@ class Audio(commands.Cog):
             await ctx.send("<:wellfuck:704784002166554776> **You already have an active deck running."
                            " Please close the existing deck first.**")
 
-    @commands.command(aliases=['at', 'p'])
+    @commands.command(aliases=['at'])
     async def addtrack(self, ctx: commands.Context, track: str):
         """
         + This spawns a embed which acts as the 'deck'

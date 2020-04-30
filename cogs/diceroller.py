@@ -9,7 +9,7 @@ class DiceRoller(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=['r'])
     async def roll(self, ctx, dice_str: str):
         await ctx.send(Roll.roll(dice_str), embed=None)
 
@@ -25,7 +25,7 @@ class DiceRoller(commands.Cog):
 
     async def cog_command_error(self, ctx, error):
         if isinstance(error, commands.CommandInvokeError):
-            await ctx.send(error.original)
+            return await ctx.send(error.original)
 
 
 class Roll:
@@ -175,10 +175,13 @@ class RandDice:
         self.e = exp
 
         if kh and kl:
-            raise ValueError("KH and KL cannot be specified on the same throw")
+            raise commands.CommandInvokeError(
+                "<:wellfuck:704784002166554776> KH and KL cannot be specified on the same throw")
 
         if dice_sides == 1 and exp == 1:
-            raise ValueError("Hold on there, you can't just go around throwing infinite dice like you own the place")
+            raise commands.CommandInvokeError(
+                "<:wellfuck:704784002166554776> **Hold on there, you can't just go around "
+                "throwing infinite dice like you own the place**")
 
         if self.kh is None:
             self.kh = -1
@@ -188,12 +191,15 @@ class RandDice:
             self.e = -1
 
         if self.kh < 0 and self.kh != -1 or self.kl < 0 and self.kl != -1:
-            raise ValueError("I'm sorry but you can't keep a negative number of dice, that just doesn't work does it")
+            raise commands.CommandInvokeError(
+                "<:wellfuck:704784002166554776> **I'm sorry but you can't keep a negative "
+                "number of dice, that just doesn't work does it**")
 
     def __mul__(self, other):
         if other > self.max_rolls:
-            raise ValueError("Sorry but you can only roll a dice up to 100 times, "
-                             "what do you want a number that big for anyways")
+            raise commands.CommandInvokeError(
+                "<:wellfuck:704784002166554776> **Sorry but you can only roll a dice up to 100 times, "
+                "what do you want a number that big for anyways?**")
 
         output = []
         for _ in range(other):
