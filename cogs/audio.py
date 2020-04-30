@@ -141,6 +141,35 @@ class DeckPlayer:
     def index_point(self):
         return self._index
 
+    async def _disconnected(self):
+        await self.deck_message.delete()
+        await self.channel.send("**I have been disconnected from the voice call, Stopping deck.**")
+
+    async def play_pause(self, reaction_remove=False):
+        player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
+        track = self._tracks[self._index]
+        if track.track is None:
+            return
+        else:
+            if player.is_playing and player.is_connected:
+                if not track.paused and reaction_remove and self._now_playing.id == track.id:
+                    await player.set_pause(True)
+                elif track.paused and not reaction_remove and self._now_playing.id != track.id:
+                    await player.play(track.track)
+                    track.playing = True
+                    track.paused = False
+                    track.name = track.track.title
+                    self._tracks[self._index] = track
+            else:
+                if not player.is_connected:
+                    return await self._disconnected()
+                else:
+                    await player.play(track.track)
+                    track.playing = True
+                    track.paused = False
+                    track.name = track.track.title
+                    self._tracks[self._index] = track
+            await self.update_deck()
 
 class Audio(commands.Cog):
     """
