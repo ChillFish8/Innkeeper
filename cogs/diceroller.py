@@ -11,7 +11,14 @@ class DiceRoller(commands.Cog):
 
     @commands.command(aliases=['r'])
     async def roll(self, ctx, *, dice_str: str):
-        await ctx.send(Roll.roll(dice_str), embed=None)
+        text = Roll.roll(dice_str)
+        if text.startswith("!!"):
+            embed = discord.Embed(color=self.bot.colour, description=text[2:])
+            embed.set_author(icon_url="https://cdn.discordapp.com/emojis/704784002254503966.png?v=1",
+                             name="An error happened:")
+            await ctx.send(embed=embed)
+        else:
+            await ctx.send(text)
 
     @commands.command()
     async def randstats(self, ctx):
@@ -191,8 +198,8 @@ class Utilities:
     @classmethod
     def show_error(cls, string, sub_string):
         index = cls.index_substring(string, cls.difference(string, sub_string))
-        error_text = f"{string}\n{'-'*index}^ error near here\n"
-
+        error_text = f"<:wellfuck:704784002166554776> **An error happened:**\n > `{string}`\n > " \
+                     f"`{'-'*index}^` **error near here**\n"
         return error_text
 
 

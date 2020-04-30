@@ -386,3 +386,228 @@
 2020-04-30 20:57:43.124  INFO 9968 --- [XNIO-1 task-91] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64232
 2020-04-30 20:57:43.124  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
 2020-04-30 20:58:42.407  INFO 9968 --- [pool-34-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:00:44.626  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64232 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:00:45.333  INFO 9968 --- [XNIO-1 task-92] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64310
+2020-04-30 21:00:45.336  INFO 9968 --- [XNIO-1 task-92] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64310
+2020-04-30 21:00:45.338  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:01:44.627  INFO 9968 --- [pool-35-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:04:11.395  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64310 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:04:12.062  INFO 9968 --- [XNIO-1 task-93] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64400
+2020-04-30 21:04:12.071  INFO 9968 --- [XNIO-1 task-93] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64400
+2020-04-30 21:04:12.072  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:05:11.396  INFO 9968 --- [pool-36-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:11:57.834  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64400 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:11:58.500  INFO 9968 --- [XNIO-1 task-94] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64548
+2020-04-30 21:11:58.508  INFO 9968 --- [XNIO-1 task-94] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64548
+2020-04-30 21:11:58.508  INFO 9968 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:12:44.657  WARN 9968 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:12:44.657  INFO 9968 --- [XNIO-1 I/O-12] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:12:44.658  INFO 9968 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64548 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:12:45.307  INFO 9968 --- [XNIO-1 task-95] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64579
+2020-04-30 21:12:45.310  INFO 9968 --- [XNIO-1 task-95] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64579
+2020-04-30 21:12:45.311  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:12:57.834  INFO 9968 --- [pool-37-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:13:07.899  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64579 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:13:08.578  INFO 9968 --- [XNIO-1 task-96] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64596
+2020-04-30 21:13:08.581  INFO 9968 --- [XNIO-1 task-96] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64596
+2020-04-30 21:13:08.582  INFO 9968 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:13:35.417  WARN 9968 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:13:35.418  INFO 9968 --- [XNIO-1 I/O-12] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:13:35.418  INFO 9968 --- [XNIO-1 I/O-12] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64596 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:13:36.089  INFO 9968 --- [XNIO-1 task-1] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64607
+2020-04-30 21:13:36.092  INFO 9968 --- [XNIO-1 task-1] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64607
+2020-04-30 21:13:36.093  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:13:44.660  INFO 9968 --- [pool-38-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:14:07.900  INFO 9968 --- [pool-39-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:14:35.419  INFO 9968 --- [pool-40-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:15:08.757  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64607 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:15:09.409  INFO 9968 --- [XNIO-1 task-2] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64641
+2020-04-30 21:15:09.413  INFO 9968 --- [XNIO-1 task-2] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64641
+2020-04-30 21:15:09.414  INFO 9968 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:15:23.493  WARN 9968 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:15:23.493  INFO 9968 --- [XNIO-1 I/O-9] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:15:23.494  INFO 9968 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64641 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:15:24.149  INFO 9968 --- [XNIO-1 task-3] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64659
+2020-04-30 21:15:24.152  INFO 9968 --- [XNIO-1 task-3] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64659
+2020-04-30 21:15:24.157  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:16:08.758  INFO 9968 --- [pool-41-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:16:23.495  INFO 9968 --- [pool-42-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:18:05.572  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64659 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:18:06.243  INFO 9968 --- [XNIO-1 task-4] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64717
+2020-04-30 21:18:06.247  INFO 9968 --- [XNIO-1 task-4] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64717
+2020-04-30 21:18:06.247  INFO 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:18:58.230  WARN 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:18:58.230  INFO 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:18:58.231  INFO 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64717 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:18:58.898  INFO 9968 --- [XNIO-1 task-5] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64734
+2020-04-30 21:18:58.903  INFO 9968 --- [XNIO-1 task-5] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64734
+2020-04-30 21:18:58.903  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:19:05.573  INFO 9968 --- [pool-43-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:19:27.375  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64734 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:19:28.047  INFO 9968 --- [XNIO-1 task-6] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64755
+2020-04-30 21:19:28.050  INFO 9968 --- [XNIO-1 task-6] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64755
+2020-04-30 21:19:28.050  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:19:58.206  WARN 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:19:58.207  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:19:58.207  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64755 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:19:58.232  INFO 9968 --- [pool-44-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:19:58.860  INFO 9968 --- [XNIO-1 task-7] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64779
+2020-04-30 21:19:58.867  INFO 9968 --- [XNIO-1 task-7] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64779
+2020-04-30 21:19:58.868  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:20:27.377  INFO 9968 --- [pool-45-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:20:58.209  INFO 9968 --- [pool-46-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:21:50.849  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64779 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:21:51.504  INFO 9968 --- [XNIO-1 task-8] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64817
+2020-04-30 21:21:51.507  INFO 9968 --- [XNIO-1 task-8] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64817
+2020-04-30 21:21:51.508  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:22:50.851  INFO 9968 --- [pool-47-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:22:51.886  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64817 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:22:52.556  INFO 9968 --- [XNIO-1 task-9] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64851
+2020-04-30 21:22:52.559  INFO 9968 --- [XNIO-1 task-9] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64851
+2020-04-30 21:22:52.560  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:23:51.887  INFO 9968 --- [pool-48-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:24:09.972  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64851 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:24:10.636  INFO 9968 --- [XNIO-1 task-10] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64904
+2020-04-30 21:24:10.640  INFO 9968 --- [XNIO-1 task-10] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64904
+2020-04-30 21:24:10.642  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:24:24.358  WARN 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:24:24.358  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:24:24.359  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64904 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:24:25.030  INFO 9968 --- [XNIO-1 task-11] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64917
+2020-04-30 21:24:25.034  INFO 9968 --- [XNIO-1 task-11] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64917
+2020-04-30 21:24:25.034  INFO 9968 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:25:09.973  INFO 9968 --- [pool-49-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:25:21.025  INFO 9968 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64917 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:25:21.683  INFO 9968 --- [XNIO-1 task-12] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64948
+2020-04-30 21:25:21.686  INFO 9968 --- [XNIO-1 task-12] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64948
+2020-04-30 21:25:21.687  INFO 9968 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:25:24.361  INFO 9968 --- [pool-50-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:26:03.580  INFO 9968 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64948 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:26:04.264  INFO 9968 --- [XNIO-1 task-13] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:64967
+2020-04-30 21:26:04.269  INFO 9968 --- [XNIO-1 task-13] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:64967
+2020-04-30 21:26:04.269  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:26:21.026  INFO 9968 --- [pool-51-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:27:03.583  INFO 9968 --- [pool-52-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:28:33.268  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:64967 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:28:34.016  INFO 9968 --- [XNIO-1 task-14] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65022
+2020-04-30 21:28:34.025  INFO 9968 --- [XNIO-1 task-14] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65022
+2020-04-30 21:28:34.025  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:28:54.128  WARN 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:28:54.128  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:28:54.129  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65022 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:28:54.791  INFO 9968 --- [XNIO-1 task-15] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65035
+2020-04-30 21:28:55.302  INFO 9968 --- [XNIO-1 task-15] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65035
+2020-04-30 21:28:55.303  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:29:33.269  INFO 9968 --- [pool-53-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:29:54.129  INFO 9968 --- [pool-54-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:31:11.249  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65035 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:31:11.925  INFO 9968 --- [XNIO-1 task-16] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65102
+2020-04-30 21:31:11.929  INFO 9968 --- [XNIO-1 task-16] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65102
+2020-04-30 21:31:11.929  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:31:34.374  WARN 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:31:34.374  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:31:34.375  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65102 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:31:35.033  INFO 9968 --- [XNIO-1 task-17] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65118
+2020-04-30 21:31:35.040  INFO 9968 --- [XNIO-1 task-17] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65118
+2020-04-30 21:31:35.040  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:32:11.251  INFO 9968 --- [pool-55-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:32:34.376  INFO 9968 --- [pool-56-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:32:52.691  INFO 9968 --- [XNIO-1 I/O-6] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65118 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:32:53.356  INFO 9968 --- [XNIO-1 task-18] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65159
+2020-04-30 21:32:53.361  INFO 9968 --- [XNIO-1 task-18] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65159
+2020-04-30 21:32:53.371  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:33:52.692  INFO 9968 --- [pool-57-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:33:58.915  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65159 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:33:59.590  INFO 9968 --- [XNIO-1 task-19] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65191
+2020-04-30 21:33:59.593  INFO 9968 --- [XNIO-1 task-19] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65191
+2020-04-30 21:33:59.594  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:34:58.918  INFO 9968 --- [pool-58-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:35:25.940  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65191 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:35:26.614  INFO 9968 --- [XNIO-1 task-20] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65227
+2020-04-30 21:35:26.617  INFO 9968 --- [XNIO-1 task-20] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65227
+2020-04-30 21:35:26.618  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:36:25.941  INFO 9968 --- [pool-59-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:36:39.481  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65227 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:36:40.148  INFO 9968 --- [XNIO-1 task-21] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65255
+2020-04-30 21:36:40.151  INFO 9968 --- [XNIO-1 task-21] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65255
+2020-04-30 21:36:40.152  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:36:50.795  WARN 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:36:50.796  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:36:50.798  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65255 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:36:51.460  INFO 9968 --- [XNIO-1 task-22] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65267
+2020-04-30 21:36:51.463  INFO 9968 --- [XNIO-1 task-22] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65267
+2020-04-30 21:36:51.468  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:37:08.027  WARN 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:37:08.028  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:37:08.031  INFO 9968 --- [XNIO-1 I/O-11] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65267 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:37:08.686  INFO 9968 --- [XNIO-1 task-23] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65282
+2020-04-30 21:37:08.689  INFO 9968 --- [XNIO-1 task-23] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65282
+2020-04-30 21:37:08.690  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:37:30.965  WARN 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:37:30.966  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:37:30.967  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65282 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:37:31.623  INFO 9968 --- [XNIO-1 task-24] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65301
+2020-04-30 21:37:31.627  INFO 9968 --- [XNIO-1 task-24] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65301
+2020-04-30 21:37:31.627  INFO 9968 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:37:39.483  INFO 9968 --- [pool-60-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:37:50.798  INFO 9968 --- [pool-61-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:38:01.907  INFO 9968 --- [XNIO-1 I/O-9] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65301 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:38:02.560  INFO 9968 --- [XNIO-1 task-25] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65320
+2020-04-30 21:38:02.564  INFO 9968 --- [XNIO-1 task-25] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65320
+2020-04-30 21:38:02.565  INFO 9968 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:38:08.031  INFO 9968 --- [pool-62-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:38:16.690  INFO 9968 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65320 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:38:17.364  INFO 9968 --- [XNIO-1 task-26] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65335
+2020-04-30 21:38:17.367  INFO 9968 --- [XNIO-1 task-26] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65335
+2020-04-30 21:38:17.368  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:38:30.968  INFO 9968 --- [pool-63-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:39:01.907  INFO 9968 --- [pool-64-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:39:16.691  INFO 9968 --- [pool-65-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:39:22.093  INFO 9968 --- [XNIO-1 I/O-7] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65335 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:39:22.771  INFO 9968 --- [XNIO-1 task-27] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65366
+2020-04-30 21:39:22.778  INFO 9968 --- [XNIO-1 task-27] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65366
+2020-04-30 21:39:22.778  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:40:22.095  INFO 9968 --- [pool-66-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:40:54.577  INFO 9968 --- [XNIO-1 I/O-2] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65366 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:40:55.241  INFO 9968 --- [XNIO-1 task-28] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65401
+2020-04-30 21:40:55.244  INFO 9968 --- [XNIO-1 task-28] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65401
+2020-04-30 21:40:55.245  INFO 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:41:15.833  WARN 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:41:15.834  INFO 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:41:15.835  INFO 9968 --- [XNIO-1 I/O-1] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65401 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:41:16.500  INFO 9968 --- [XNIO-1 task-29] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65415
+2020-04-30 21:41:16.503  INFO 9968 --- [XNIO-1 task-29] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65415
+2020-04-30 21:41:16.504  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:41:38.042  WARN 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:41:38.043  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:41:38.044  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65415 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:41:38.745  INFO 9968 --- [XNIO-1 task-30] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65434
+2020-04-30 21:41:38.749  INFO 9968 --- [XNIO-1 task-30] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65434
+2020-04-30 21:41:38.750  INFO 9968 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:41:54.578  INFO 9968 --- [pool-67-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:42:15.836  INFO 9968 --- [pool-68-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:42:38.044  INFO 9968 --- [pool-69-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:47:03.154  INFO 9968 --- [XNIO-1 I/O-10] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65434 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:47:03.821  INFO 9968 --- [XNIO-1 task-31] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:65524
+2020-04-30 21:47:03.825  INFO 9968 --- [XNIO-1 task-31] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:65524
+2020-04-30 21:47:03.826  INFO 9968 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:47:25.471  WARN 9968 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:47:25.471  INFO 9968 --- [XNIO-1 I/O-4] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:47:25.472  INFO 9968 --- [XNIO-1 I/O-4] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:65524 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:47:26.144  INFO 9968 --- [XNIO-1 task-32] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49155
+2020-04-30 21:47:26.147  INFO 9968 --- [XNIO-1 task-32] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:49155
+2020-04-30 21:47:26.148  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:47:47.646  WARN 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Shutdown resumable session with key default-node because it has the same key as a newly disconnected resumable session.
+2020-04-30 21:47:47.646  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:47:47.648  INFO 9968 --- [XNIO-1 I/O-3] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49155 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:47:48.319  INFO 9968 --- [XNIO-1 task-33] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49268
+2020-04-30 21:47:48.323  INFO 9968 --- [XNIO-1 task-33] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:49268
+2020-04-30 21:47:48.323  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:48:03.157  INFO 9968 --- [pool-70-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:48:25.474  INFO 9968 --- [pool-71-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:48:47.650  INFO 9968 --- [pool-72-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
+2020-04-30 21:49:12.617  INFO 9968 --- [XNIO-1 I/O-8] lavalink.server.io.SocketServer          : Connection closed from /127.0.0.1:49268 with status CloseStatus[code=1006, reason=] -- Session can be resumed within the next 60 seconds with key default-node
+2020-04-30 21:49:13.285  INFO 9968 --- [XNIO-1 task-34] l.server.io.HandshakeInterceptorImpl     : Incoming connection from /127.0.0.1:49289
+2020-04-30 21:49:13.290  INFO 9968 --- [XNIO-1 task-34] lavalink.server.io.SocketServer          : Connection successfully established from /127.0.0.1:49289
+2020-04-30 21:49:13.290  INFO 9968 --- [XNIO-1 I/O-5] lavalink.server.io.SocketServer          : {"op": "configureResuming", "key": "default-node", "timeout": 60}
+2020-04-30 21:50:12.618  INFO 9968 --- [pool-73-thread-1] lavalink.server.io.SocketContext         : Shutting down 0 playing players.
