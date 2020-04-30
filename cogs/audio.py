@@ -100,6 +100,9 @@ class DeckPlayer:
         """ Used for debugging """
         return f"Player - {self._id} - {self.guild.id}"
 
+    def _get_amount_of_loaded_tracks(self):
+        return len(list(filter(None, [True if item.track is not None else False for item in self._tracks])))
+
     def _get_embed(self):
         """ Loads and generates the description markdown """
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
@@ -186,12 +189,13 @@ class DeckPlayer:
             if player.is_playing and player.is_connected:
                 if not track.paused and reaction_remove and self._now_playing.id == track.id:
                     await player.set_pause(True)
+                    track.paused = True
+                    self._now_playing.paused = True
                 elif track.paused and not reaction_remove and self._now_playing.id != track.id:
                     await player.play(track.track)
                     track.playing = True
                     track.paused = False
                     track.name = track.track.title
-                    self._tracks[self._index] = track
                     self._now_playing = track
             else:
                 if not player.is_connected:
@@ -200,8 +204,8 @@ class DeckPlayer:
                 track.playing = True
                 track.paused = False
                 track.name = track.track.title
-                self._tracks[self._index] = track
                 self._now_playing = track
+            self._tracks[self._index] = track
             await self.update_deck()
 
     async def replay(self):
@@ -341,6 +345,10 @@ class Audio(commands.Cog):
                 deck: DeckPlayer = self.active_players[ctx.guild.id]
                 await deck.add_track(track)
                 text = f"<:gelati_cute:704784002355036190> **Added audio track to disc {deck.index_point}**"
+            try:
+                await ctx.message.delete()
+            except discord.Forbidden:
+                pass
             await ctx.send(text)
 
     @classmethod
@@ -430,6 +438,7 @@ class Audio(commands.Cog):
     async def track_hook(self, event: lavalink.Event):
         if isinstance(event, lavalink.events.QueueEndEvent):
             player: lavalink.DefaultPlayer = event.player
+            print("player")
             deck: DeckPlayer = self.active_players[player.guild_id]
             if deck.looping:
                 await deck.replay()
