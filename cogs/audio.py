@@ -185,27 +185,32 @@ class DeckPlayer:
             self._now_playing.paused = False
             self._tracks[self._now_playing.id - 1] = self._now_playing
         elif pause:
-            self._now_playing.playing = False
-            self._now_playing.paused = True
+            self._now_playing.playing = not self._now_playing.playing
+            self._now_playing.paused = not self._now_playing.paused
             self._tracks[self._now_playing.id - 1] = self._now_playing
 
     async def play_pause(self, reaction_remove=False):
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         track = self._tracks[self._index]
-        if track.track is not None:
-            if player.is_playing:
+        if player.is_playing:
+            if self._now_playing.paused:
                 if reaction_remove:
-                    await player.set_pause(not player.paused)
+                    await player.set_pause(True)
                     self._update_track(pause=True)
                 else:
                     await player.play(track.track)
                     self._update_track(play=True)
             else:
-                await player.play(track.track)
-                self._update_track(play=True)
+                if reaction_remove:
+                    await player.set_pause(False)
+                    self._update_track(pause=True)
+                else:
+                    await player.play(track.track)
+                    self._update_track(play=True)
         else:
-            await player.set_pause(not player.paused)
-            self._update_track(pause=True)
+            await player.play(track.track)
+            self._update_track(play=True)
+
         await self.update_deck()
 
     async def replay(self):

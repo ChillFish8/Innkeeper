@@ -84,7 +84,7 @@ class ErrorProcessor:
         elif isinstance(exception, commands.NoPrivateMessage):  # the command is guild only
             return await ctx.send(cls.guild_only())
 
-        elif ctx.command.name in ("roll", 'addtrack'):
+        elif ctx.command.name in ("roll", "setup"):
             return
 
         else:
