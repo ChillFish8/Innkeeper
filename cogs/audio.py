@@ -455,18 +455,18 @@ class Audio(commands.Cog):
         """
         guild_id = member.guild.id
         if guild_id in self.active_players:
-            channel: discord.VoiceChannel = after.channel
-            if len(channel.members) < 1:
-                player: DeckPlayer = self.active_players[guild_id]
-                await player.channel.send("**Closing audio deck, no one left in the voice call.**")
-                await Voice.connect_to(guild_id, None, self.bot)
-                self.bot.lavalink.player_manager.remove(guild_id)
+            channel: discord.VoiceChannel = before.channel
+            if channel is not None:
+                if len(channel.members) < 1:
+                    player: DeckPlayer = self.active_players[guild_id]
+                    await player.channel.send("**Closing audio deck, no one left in the voice call.**")
+                    await Voice.connect_to(guild_id, None, self.bot)
+                    self.bot.lavalink.player_manager.remove(guild_id)
 
     async def track_hook(self, event: lavalink.Event):
         if isinstance(event, lavalink.events.QueueEndEvent):
             player: lavalink.DefaultPlayer = event.player
-            print("player")
-            deck: DeckPlayer = self.active_players[player.guild_id]
+            deck: DeckPlayer = self.active_players[int(player.guild_id)]
             if deck.looping:
                 await deck.replay()
 
