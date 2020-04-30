@@ -10,7 +10,7 @@ class DiceRoller(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['r'])
-    async def roll(self, ctx, dice_str: str):
+    async def roll(self, ctx, *, dice_str: str):
         await ctx.send(Roll.roll(dice_str), embed=None)
 
     @commands.command()
@@ -58,10 +58,8 @@ class Roll:
                 return e
 
             total += sum(roll) * neg
-            throws += f"{throw}: `{', '.join([str(num) for num in roll])}` <:d20:642067624385183753>\n"
-
-        throws += f"Roll: `{total}`"
-
+            throws += f"• {throw}: `{', '.join([str(num) for num in roll])}`\n"
+        throws += f"<:d20:642067624385183753> **Roll:** `{total}`"
         return throws
 
     @classmethod

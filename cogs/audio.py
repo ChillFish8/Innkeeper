@@ -309,7 +309,7 @@ class Audio(commands.Cog):
                            " Please close the existing deck first.**")
 
     @commands.command(aliases=['at'])
-    async def addtrack(self, ctx: commands.Context, track: str):
+    async def addtrack(self, ctx: commands.Context, *, track: str):
         """
         + This spawns a embed which acts as the 'deck'
             This will get used for managing which tracks
