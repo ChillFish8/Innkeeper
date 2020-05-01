@@ -190,7 +190,20 @@ class DeckPlayer:
             self._tracks[self._now_playing.id - 1] = self._now_playing
 
     async def play_pause(self, reaction_remove=False):
-        """"""
+        """ + This handles the playing and pausing of a track:
+                Requires a player (LL) and a track (From the Track Class)
+                IF: Checks if the track is paused first, we dont want to play
+                    the next track we want to unpause. Then we call _update_track()
+
+                ElIF: If the track is playing we dont want to skip the track so
+                    we pause it. Then we call _update_track()
+
+                ELSE:
+                    IF: The reaction is being added, we play a track, Then we call _update_track()
+
+                We then call update_deck()
+
+        """
 
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         track = self._tracks[self._index]
