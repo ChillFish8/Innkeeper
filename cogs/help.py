@@ -22,9 +22,9 @@ class HelpCommand(commands.Cog):
 
         # Dice Rolling
         desc_2 = f"<:d20:642067624385183753>  **Dice Rolling**  <:d20:642067624385183753>\n" \
-                 f"`?roll <dice string>` - Roll a set of dice, e.g. `4d6kh3`\n"
-                 #f"`?charoll <dice or custom>` - Roll dice from a custom character's stats.\n" \
-                 #f"`?randstats` - Rolls the default 4d6kh3 for stats."
+                 f"`?roll <dice string>` - Roll a set of dice, e.g. `4d6kh3`\n" \
+                 f"`?randstats` - Rolls the default 4d6kh3 for stats."
+                 # f"`?charoll <dice or custom>` - Roll dice from a custom character's stats.\n" \
         embed.add_field(name="\u200b", value=desc_2, inline=False)
 
         # Content Commands
