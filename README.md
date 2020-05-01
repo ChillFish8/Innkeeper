@@ -35,3 +35,14 @@ The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio
 - [requests]()
 - [bs4]()
 
+### Getting started:
+- NOTE: This assumes you are firmilliar with the python syntax and processes used and is written for a windows user.
+
+1. go to the `Innkeeper` folder and type `cmd` into the file path bar.
+2. run `python3 -m venv project-env`
+3. run `project-env\Scripts\activate.bat`
+4. run `pip install -r requirements.txt`
+5. create a [config file]()
+6. run `py main.py` in the venv
+
+
