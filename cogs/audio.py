@@ -150,6 +150,12 @@ class DeckPlayer:
                 await player.set_volume(self.volume)
 
     async def shift_index(self, offset: int):
+        """ + Moves the index point by +- 1 providing it is valid.
+                - Checks if the index point is above 0 if offset is -1
+                - Checks if the index point is at its max if offset is +1
+                this prevents it from going index out of range.
+        """
+
         if offset == -1 and not self._index:
             return
         elif offset == 1 and self._index == (self.max_tacks - 1):
@@ -159,6 +165,9 @@ class DeckPlayer:
             await self.update_deck()
 
     async def setup(self):
+        """ + Get the initial embed after being init'd and sends it to the channel.
+                - Adds the valid emojis using a loop.
+                :return DeckPlayer"""
         embed = self._get_embed()
         self.deck_message = await self.channel.send(embed=embed)
         for emoji in self.VALID_EMOJIS:
@@ -166,6 +175,10 @@ class DeckPlayer:
         return self
 
     async def add_track(self, track: lavalink.AudioTrack):
+        """ + Get the current track that the index point is at, Sets the track title, playing, paused, track.
+                - calls update_deck()
+                :returns self
+        """
         slot = self._tracks[self._index]
         slot.name = track.title
         slot.playing = False
