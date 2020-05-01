@@ -1,6 +1,6 @@
 # The Innkeeper discord bot
 
-The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio intergration, better initative tracking, full compatability dice rolling and fully custom content intergration.
+The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio intergration, better initative tracking, full compatability dice rolling and fully custom content intergration. Used by over 180,000 Users across discord.
 
 ## Commands:
 <dl>
