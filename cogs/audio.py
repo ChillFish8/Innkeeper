@@ -140,6 +140,7 @@ class DeckPlayer:
         return embed
 
     async def update_deck(self, volume=False):
+        """ Gets the embed object from _get_embed(), edits the message to be the updated deck. """
         embed = self._get_embed()
         await self.deck_message.edit(embed=embed)
         if volume:
