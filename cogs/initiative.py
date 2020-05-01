@@ -2,6 +2,19 @@ from discord.ext import commands
 import discord
 
 
+class Tracker:
+    """ This class self contains the tracking of users, initiatives affects etc... """
+
+    def __init__(self, ctx: commands.Context):
+        self.init_message = None
+        self.dungeon_master = ctx.author
+        self.permissioned_users = []
+        self.guild = ctx.guild
+
+
+
+
+
 class Initiative(commands.Cog):
     active_initiatives = {}
     VALID_EMOJIS = ['🔄', '🗑️', '<:TickNo:640187792911237131>']
@@ -17,22 +30,23 @@ class Initiative(commands.Cog):
                                   " Please close the existing tracker first.**")
 
     @classmethod
-    def get_player_msg_ids(cls):
-        return [player.deck_message.id for player in cls.active_initiatives.values()]
+    def get_initiative_msg_ids(cls):
+        """ gets a list of initiative message ids """
+        return [initiatives.init_message.id for initiatives in cls.active_initiatives.values()]
 
     @classmethod
-    def get_player_user_ids(cls):
-        return [player.creator_id for player in cls.active_initiatives.values()]
+    def get_initiative_user_ids(cls):
+        """ :returns a list of creator (DM) ids """
+        return [initiatives.creator_id for initiatives in cls.active_initiatives.values()]
 
     @classmethod
     async def filter_payload(cls, payload):
+        """ Filters out the payloads we want to respond to and ones we dont """
         if payload.guild_id not in cls.active_initiatives:
             return False
         elif str(payload.emoji) not in cls.VALID_EMOJIS:
             return False
-        elif payload.user_id not in cls.get_player_user_ids():
-            return False
-        elif payload.message_id not in cls.get_player_msg_ids():
+        elif payload.message_id not in cls.get_initiative_msg_ids():
             return False
         else:
             return True
