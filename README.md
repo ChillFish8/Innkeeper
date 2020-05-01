@@ -25,3 +25,13 @@ The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio
   </dd>
 </dl>
 
+## Self-Hosting
+### Requirements:
+- [Discord.py - VOICE]()
+- [lxml]()
+- [Java JDK 11]()
+- [Lavalink.py]()
+- [Pandas]()
+- [requests]()
+- [bs4]()
+
