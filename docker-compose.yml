@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  crunchy:
+    build: .
+    restart: on-failure
+    command: python main.py
+    volumes:
+      - .:/code

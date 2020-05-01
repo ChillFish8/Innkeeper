@@ -1,6 +1,5 @@
 Django
 bs4~=0.0.1
-diceroller
 discord.py[voice]
 lxml
 pandas~=1.0.3
