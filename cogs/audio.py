@@ -190,6 +190,8 @@ class DeckPlayer:
             self._tracks[self._now_playing.id - 1] = self._now_playing
 
     async def play_pause(self, reaction_remove=False):
+        """"""
+
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         track = self._tracks[self._index]
 
@@ -207,11 +209,13 @@ class DeckPlayer:
         await self.update_deck()
 
     async def replay(self):
+        """ Gets called if looping is set to TRUE, it gets the last played track and plays it """
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         track = self._now_playing
         await player.play(track.track)
 
     async def on_track_end(self):
+        """ This is called when the playing track ends, this updates the deck and track values to display on screen """
         self._now_playing.playing = False
         self._now_playing.paused = False
         self._tracks[self._now_playing.id - 1].playing = False
@@ -220,6 +224,7 @@ class DeckPlayer:
 
     @property
     def looping(self):
+        """ Literally just returns the private value """
         return self._looping
 
     async def toggle_mute(self):
