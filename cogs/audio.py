@@ -223,6 +223,11 @@ class DeckPlayer:
         return self._looping
 
     async def toggle_mute(self):
+        """ + First we get the websocket player, then we invert the muted var (T/F)
+                - If muted we set the volume to 0 via the websocket
+                - Else (Un-muted) sets the volume to be the standard volume var
+                - Last but not least we update the deck
+        """
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
         self.muted = not self.muted
         if self.muted:
@@ -232,6 +237,11 @@ class DeckPlayer:
         await self.update_deck()
 
     async def set_vol(self, gain):
+        """ + Updates the volume in 10% increases / decreases (This is just what gets passed via gain)
+                - If gain -10 and volume is 0 it returns
+                - If gain +10 and volume is 100 it returns (Lavalink supports upto 999 but that's just insane)
+                - Else: set the volume +- the gain then update the deck and websocket
+        """
         if gain == -10 and not self.volume:
             return
         elif gain == 10 and self.volume == 100:
@@ -243,6 +253,7 @@ class DeckPlayer:
             await self.update_deck()
 
     async def toggle_loop(self):
+        """ 'not's the current looping var (T/F) and then calls update deck """
         self._looping = not self._looping
         await self.update_deck()
 
@@ -310,9 +321,9 @@ class Audio(commands.Cog):
     @commands.command(aliases=['at'])
     async def addtrack(self, ctx: commands.Context, *, track: str):
         """
-        + This spawns a embed which acts as the 'deck'
-            This will get used for managing which tracks
-            are in what section and binded to the relevant reaction.
+        + Adds a track to the deck, this track is added to the disc the index pointer is aimed at.
+            - Must have a active deck setup first
+            - Player by default searches youtube
         """
         if ctx.guild.id not in self.active_players:
             return await ctx.send("<:wellfuck:704784002166554776> **Sorry! I cant add a track "
@@ -358,6 +369,7 @@ class Audio(commands.Cog):
 
     @classmethod
     def get_player_msg_ids(cls):
+        """ Returns a list of all the message ids relating to the decks """
         return [player.deck_message.id for player in cls.active_players.values()]
 
     @classmethod
