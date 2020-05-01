@@ -26,14 +26,6 @@ The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio
 </dl>
 
 ## Self-Hosting
-### Requirements:
-- [Discord.py - VOICE](https://pypi.org/project/discord.py/)
-- [lxml](https://pypi.org/project/lxml/)
-- [Java JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
-- [Lavalink.py](https://pypi.org/project/lavalink/)
-- [Pandas](https://pypi.org/project/pandas/)
-- [requests](https://pypi.org/project/requests/)
-- [bs4](https://pypi.org/project/beautifulsoup4/)
 
 ### Creating a config file
 - Create a new file called `config.json`
@@ -45,6 +37,24 @@ The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio
   "shard_count": 1
 }
 ```
+
+## Self-Hosting - With docker-compose
+### Getting started:
+- NOTE: This assumes you already have [docker desktop](https://www.docker.com/products/docker-desktop) installed (For windows)
+1. go to the `Innkeeper` folder and type `cmd` into the file path bar.
+2. make sure you have made the [config file](https://github.com/ChillFish8/Innkeeper/blob/master/README.md#creating-a-config-file)
+3. run `docker-compose build`
+4. run `docker-compose up` to start the bot.
+
+## Self-Hosting - Without docker-compose
+### Requirements:
+- [Discord.py - VOICE](https://pypi.org/project/discord.py/)
+- [lxml](https://pypi.org/project/lxml/)
+- [Java JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [Lavalink.py](https://pypi.org/project/lavalink/)
+- [Pandas](https://pypi.org/project/pandas/)
+- [requests](https://pypi.org/project/requests/)
+- [bs4](https://pypi.org/project/beautifulsoup4/)
 
 ### Getting started:
 - NOTE: This assumes you are firmilliar with the python syntax and processes used and is written for a windows user.
