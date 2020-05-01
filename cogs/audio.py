@@ -177,9 +177,11 @@ class DeckPlayer:
 
     @property
     def index_point(self):
+        """ Returns the protected var index """
         return self._index
 
     def _update_track(self, play=False, pause=False):
+        """ This applies the relevant Variable changes, Applied in a function to stop repeating code """
         if play:
             self._now_playing.playing = True
             self._now_playing.paused = False
