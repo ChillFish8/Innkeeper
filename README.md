@@ -27,13 +27,13 @@ The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio
 
 ## Self-Hosting
 ### Requirements:
-- [Discord.py - VOICE]()
-- [lxml]()
-- [Java JDK 11]()
-- [Lavalink.py]()
-- [Pandas]()
-- [requests]()
-- [bs4]()
+- [Discord.py - VOICE](https://pypi.org/project/discord.py/)
+- [lxml](https://pypi.org/project/lxml/)
+- [Java JDK 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html)
+- [Lavalink.py](https://pypi.org/project/lavalink/)
+- [Pandas](https://pypi.org/project/pandas/)
+- [requests](https://pypi.org/project/requests/)
+- [bs4](https://pypi.org/project/beautifulsoup4/)
 
 ### Creating a config file
 - Create a new file called `config.json`
