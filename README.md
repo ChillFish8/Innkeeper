@@ -35,6 +35,17 @@ The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio
 - [requests]()
 - [bs4]()
 
+### Creating a config file
+- Create a new file called `config.json`
+- add the following to the file:
+```
+{
+  "token": "YOUR TOKEN HERE",
+  "dev_ids": [YOUR DISCORD ID HERE,],
+  "shard_count": 1
+}
+```
+
 ### Getting started:
 - NOTE: This assumes you are firmilliar with the python syntax and processes used and is written for a windows user.
 
@@ -44,5 +55,6 @@ The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio
 4. run `pip install -r requirements.txt`
 5. create a [config file]()
 6. run `py main.py` in the venv
+
 
 
