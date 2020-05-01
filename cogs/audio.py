@@ -1,8 +1,6 @@
 from discord.ext import commands
 import discord
 import uuid
-import asyncio
-from datetime import timedelta
 import lavalink
 import re
 
@@ -10,6 +8,8 @@ url_rx = re.compile(r'https?://(?:www\.)?.+')
 
 
 class Voice:
+    """ This is used by both the deck object and add track so it is contained in a class to keep the code clean """
+
     @classmethod
     async def connect_to(cls, guild_id: int, channel_id: str, bot):
         """ Connects to the given voicechannel ID. A channel_id of `None` means disconnect. """
@@ -41,6 +41,15 @@ class Voice:
 
 
 class Track:
+    """ + **The track class contains:**
+            - The id (This is normally just a index pointer (1, 2, 3, 4)
+            - The name of the track (None by default gets set via LL)
+            - Contains the guild id to be fetched back later
+            - Weather the track is playing or not ( Track specific not player specific )
+            - The lavalink track object (Used to get sent to the server)
+            - Weather the track is paused.
+        """
+
     def __init__(self, id_, name, guild_id):
         self.id = id_
         self.name = name
@@ -101,10 +110,15 @@ class DeckPlayer:
         return f"Player - {self._id} - {self.guild.id}"
 
     def _get_amount_of_loaded_tracks(self):
+        """ Returns the length of the active players according to a list filter.
+        :returns int
+        """
         return len(list(filter(None, [True if item.track is not None else False for item in self._tracks])))
 
     def _get_embed(self):
-        """ Loads and generates the description markdown """
+        """ Loads and generates the discord embed, markdown etc...
+         :returns discord.Embed
+         """
 
         embed = discord.Embed(color=self.bot.colour)
         embed.set_author(name="Audio Deck", icon_url="https://cdn.discordapp.com/emojis/642858638116913202.png?v=1")
@@ -218,7 +232,6 @@ class DeckPlayer:
                     IF: The reaction is being added, we play a track, Then we call _update_track()
 
                 We then call update_deck()
-
         """
 
         player: lavalink.DefaultPlayer = self.bot.lavalink.player_manager.get(self.guild.id)
@@ -497,6 +510,7 @@ class Audio(commands.Cog):
                     self.bot.lavalink.player_manager.remove(guild_id)
 
     async def track_hook(self, event: lavalink.Event):
+        """ Called when lavalink emits a event """
         if isinstance(event, lavalink.events.QueueEndEvent):
             player: lavalink.DefaultPlayer = event.player
             deck: DeckPlayer = self.active_players[int(player.guild_id)]
@@ -518,6 +532,7 @@ class Audio(commands.Cog):
         return guild_check
 
     async def cog_command_error(self, ctx, error):
+        """ We catch out own error locally to keep it simple """
         if isinstance(error, commands.CommandInvokeError):
             await ctx.send(error.original)
 
