@@ -11,8 +11,8 @@ class Tracker:
         self.permissioned_users = []
         self.guild = ctx.guild
 
-
-
+    def _get_embed(self):
+        pass
 
 
 class Initiative(commands.Cog):

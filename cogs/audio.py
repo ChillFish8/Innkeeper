@@ -238,16 +238,27 @@ class DeckPlayer:
         track = self._tracks[self._index]
 
         if self._now_playing.paused:
-            await player.set_pause(False)
-            self._update_track(pause=True)
+            if self._index == self._now_playing.id - 1:
+                await player.set_pause(False)
+                self._update_track(pause=True)
+            else:
+                if track.track is not None:
+                    await player.play(track.track)
+                    self._update_track(play=True)
 
         elif self._now_playing.playing:
-            await player.set_pause(True)
-            self._update_track(pause=True)
+            if reaction_remove:
+                await player.set_pause(True)
+                self._update_track(pause=True)
+            elif not reaction_remove and self._index == self._now_playing.id - 1:
+                if track.track is not None:
+                    await player.play(track.track)
+                    self._update_track(play=True)
         else:
             if not reaction_remove:
-                await player.play(track.track)
-                self._update_track(play=True)
+                if track.track is not None:
+                    await player.play(track.track)
+                    self._update_track(play=True)
         await self.update_deck()
 
     async def replay(self):
