@@ -53,7 +53,7 @@ The Innkeeper is one of the most advanced D&D 5e discord bots around, Full Audio
 2. run `python3 -m venv project-env`
 3. run `project-env\Scripts\activate.bat`
 4. run `pip install -r requirements.txt`
-5. create a [config file]()
+5. create a [config file](https://github.com/ChillFish8/Innkeeper/blob/master/README.md#creating-a-config-file)
 6. run `py main.py` in the venv
 
 
