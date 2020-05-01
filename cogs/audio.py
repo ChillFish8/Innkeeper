@@ -362,10 +362,12 @@ class Audio(commands.Cog):
 
     @classmethod
     def get_player_user_ids(cls):
+        """ Just returns a list of ids that are controlling the active players """
         return [player.creator_id for player in cls.active_players.values()]
 
     @classmethod
     async def filter_payload(cls, payload):
+        """ Filters out any non relevant reaction events """
         if payload.guild_id not in cls.active_players:
             return False
         elif str(payload.emoji) not in cls.VALID_EMOJIS:
