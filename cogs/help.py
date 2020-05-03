@@ -43,10 +43,10 @@ class HelpCommand(commands.Cog):
         #embed.add_field(name="\u200b", value=desc_4, inline=False)
 
         # Dungeon master's audio
-        desc_5 = f"<:gelati_cute:704784002355036190>  **Dungeon Master's Audio**  <:gelati_cute:704784002355036190>\n" \
-                 f"`?setup` - Start a audio deck ready to play!.\n" \
-                 f"`?addtrack` - Load a audio track onto a disc on the deck.\n"
-        embed.add_field(name="\u200b", value=desc_5, inline=False)
+        #desc_5 = f"<:gelati_cute:704784002355036190>  **Dungeon Master's Audio**  <:gelati_cute:704784002355036190>\n" \
+        #         f"`?setup` - Start a audio deck ready to play!.\n" \
+        #         f"`?addtrack` - Load a audio track onto a disc on the deck.\n"
+        #embed.add_field(name="\u200b", value=desc_5, inline=False)
 
         await ctx.send(embed=embed)
 
