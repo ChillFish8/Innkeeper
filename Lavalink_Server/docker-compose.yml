@@ -7,3 +7,5 @@ services:
     command: java -jar Lavalink.jar
     volumes:
       - .:/code
+    ports:
+    - "2333:2333"
