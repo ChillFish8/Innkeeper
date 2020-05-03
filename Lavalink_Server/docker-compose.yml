@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  lavalink:
+    build: .
+    restart: on-failure
+    command: java -jar Lavalkink.jar
+    volumes:
+      - .:/code
