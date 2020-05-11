@@ -6,7 +6,7 @@ import discord
 
 
 class GetSpells:
-    with open('./resources/monsters.json', 'r') as file:
+    with open('./resources/spells.json', 'r') as file:
         spells = json.load(file)
     spells_data_frame = pd.DataFrame(spells, columns=['name', 'url'])
 
