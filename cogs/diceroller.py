@@ -53,20 +53,25 @@ class Roll:
             return command
 
         total = 0
+        base = 0
         throws = ""
 
         for throw in command:
             neg = -1 if (throw[0] == "-") else 1
-            rolls, dice_meta = cls.setup_command(throw.replace("-", ""))
+            if throw[0] == "-" and throw[1:].isdigit() or throw.isdigit():
+                base += int(throw)
+            else:
+                rolls, dice_meta = cls.setup_command(throw.replace("-", ""))
 
-            try:
-                roll = RandDice(**dice_meta) * rolls
-            except ValueError as e:
-                return e
+                try:
+                    roll = RandDice(**dice_meta) * rolls
+                except ValueError as e:
+                    return e
 
-            total += sum(roll) * neg
-            throws += f"• {throw}: `{', '.join([str(num) for num in roll])}`\n"
-        throws += f"<:d20:642067624385183753> **Roll:** `{total}`"
+                total += sum(roll) * neg
+                throws += f"• {throw}: `{', '.join([str(num) for num in roll])}`\n"
+        throws += f"Base: {base}\n"
+        throws += f"<:d20:642067624385183753> **Roll Total:** `{total + base}`"
         return throws
 
     @classmethod
@@ -112,7 +117,8 @@ class Roll:
         command = command.lower()
         state_1 = re.compile("-?\d*d\d+(k[hl]\d+)?(e\d+)?").search
         state_2 = re.compile("-?\d*d\d+(e\d+)?(k[hl]\d+)?").search
-        invalid = re.compile("(d\D|^-\d$)").findall
+        const = re.compile("^[-]?\d(\d)*$").search
+        invalid = re.compile("-?(d\D|^-\d$|[a-ce-zA-Z]$|^-?[a-ce-zA-Z]|\D$)").findall
         command = command.replace("-", "+-").replace(" ", "").split("+")
         command_parts = []
         for dice_roll in command:
@@ -121,6 +127,8 @@ class Roll:
                 option_2 = state_2(dice_roll).group()
                 if dice_roll == option_1 or dice_roll == option_2:
                     command_parts.append(dice_roll)
+            elif const(dice_roll):
+                command_parts.append(dice_roll)
 
         if command_parts == command:
             return command_parts
