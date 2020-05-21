@@ -7,8 +7,9 @@ aiohttp~=3.6.2
 pafy~=0.5.5
 beautifulsoup4~=4.9.0
 requests~=2.23.0
-lavalink
+lavalink~=3.1.0
 google-api-python-client
 google-auth-httplib2
 google-auth-oauthlib
-gspread
+gspread~=3.6.0
+pymongo~=3.10.1

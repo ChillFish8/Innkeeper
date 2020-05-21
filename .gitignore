@@ -4,3 +4,4 @@
 /Lavalink_Server/logs/spring.log
 /api_creds/spreadsheet_credentials.json
 /cogs/dmv.py
+/custom_data/config.json
