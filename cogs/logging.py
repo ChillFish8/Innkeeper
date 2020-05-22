@@ -24,22 +24,28 @@ class Logger(commands.Cog):
                 await hook.send(embed=embed)
 
     @commands.Cog.listener()
-    async def on_guild_join(self, guild):
+    async def on_guild_join(self, guild: discord.Guild):
         if not self.guild_hook:
             return
-        embed = discord.Embed(color=discord.Colour.green())
-        embed.set_author(name=f"Joined guild {guild}", icon_url=guild.icon_url)
-        embed.set_footer(text=f"Total guild: {len(self.bot.guilds)}")
-        await self.send_to_wh(embed, self.guild_hook)
+        desc = "💜"
+        if len(guild.members) > 1000:
+            desc += "🔥"
+        if len(guild.members) > 10000:
+            desc += "🌟"
+        desc += " " + f"Joined guild {guild}, Total members: {len(guild.members)}"
+        await self.send_to_wh(desc, self.guild_hook, text=True)
 
     @commands.Cog.listener()
-    async def on_guild_join(self, guild):
+    async def on_guild_remove(self, guild):
         if not self.guild_hook:
             return
-        embed = discord.Embed(color=discord.Colour.red())
-        embed.set_author(name=f"Joined guild {guild}", icon_url=guild.icon_url)
-        embed.set_footer(text=f"Total guild: {len(self.bot.guilds)}")
-        await self.send_to_wh(embed, self.guild_hook)
+        desc = "💔"
+        if len(guild.members) > 1000:
+            desc += "💔"
+        if len(guild.members) > 10000:
+            desc += "💔"
+        desc += " " + f"Lost guild {guild}, Total members: {len(guild.members)}"
+        await self.send_to_wh(desc, self.guild_hook, text=True)
 
     @commands.Cog.listener()
     async def on_command(self, ctx: commands.Context):
