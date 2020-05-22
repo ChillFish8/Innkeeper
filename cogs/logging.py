@@ -15,10 +15,13 @@ class Logger(commands.Cog):
         self.command_hook = self.settings.get('command_logging_webhook', False)
 
     @classmethod
-    async def send_to_wh(cls, embed, url):
+    async def send_to_wh(cls, embed, url, text=False):
         async with aiohttp.ClientSession() as sess:
             hook = Webhook.from_url(url, adapter=AsyncWebhookAdapter(sess))
-            await hook.send(embed=embed)
+            if text:
+                await hook.send(content=embed)
+            else:
+                await hook.send(embed=embed)
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
@@ -42,11 +45,10 @@ class Logger(commands.Cog):
     async def on_command(self, ctx: commands.Context):
         if not self.command_hook:
             return
-        embed = discord.Embed(color=discord.Colour.purple(),
-                              description=f"**User:** `{ctx.author.id}` **|** "
-                                          f"**Guild:** `{ctx.guild.id if ctx.guild is not None else 'direct message'}` **|** "
-                                          f"**Command:** `{ctx.command}`")
-        await self.send_to_wh(embed, self.command_hook)
+        desc = f"**User:** `{ctx.author.id}` **|** " \
+               f"**Guild:** `{ctx.guild.id if ctx.guild is not None else 'direct message'}` **|** " \
+               f"**Command:** `{ctx.command}`"
+        await self.send_to_wh(desc, self.command_hook, text=True)
 
 def setup(bot):
     bot.add_cog(Logger(bot))
