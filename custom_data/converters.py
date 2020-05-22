@@ -57,6 +57,12 @@ class MongoDatabase:
                                                                            'complete': resp.acknowledged}))
             return resp.inserted_id
 
+    def reset_guild_config(self, guild_id: int):
+        current_data = self.guild_configs.find_one_and_delete({'_id': guild_id})
+        logging.log(
+            logging.DEBUG, "DELETE-GUILD: Guild with Id: {} returned with results: {}".format(guild_id, current_data))
+        return "COMPLETE"
+
     def get_guild_config(self, guild_id: int) -> dict:
         current_data = self.guild_configs.find_one({'_id': guild_id})
         logging.log(
