@@ -37,7 +37,7 @@ class MongoDatabase:
     def close_conn(self):
         self.db.logout()
 
-    # Guild settings
+    """ Custom Guild settings """
     def set_guild_config(self, guild_id: int, config: dict) -> [dict, int]:
         current_data = self.guild_configs.find_one({'_id': guild_id})
         logging.log(
@@ -70,7 +70,7 @@ class MongoDatabase:
             logging.DEBUG, "GET-GUILD:  Guild with Id: {} returned with results: {}".format(guild_id, current_data))
         return current_data if current_data is not None else Settings.get_config_default()
 
-    # Spells
+    """ User's custom spells url storage and monitoring """
     def add_user_spells(self, user_id: int, name: str, url: str) -> [dict, int]:
         current_data = self.user_spells.find_one({'_id': user_id})
         logging.log(logging.DEBUG, "ADD-SPELLS: User with Id: {} returned with results: {}".format(
@@ -97,7 +97,7 @@ class MongoDatabase:
 
         current_data = self.user_spells.find_one({'_id': user_id})
         logging.log(logging.DEBUG,
-                    "DELETE-SPELLS: User with Id: {} returned with results: {}".format(user_id, current_data))
+                    "REMOVE-SPELL: User with Id: {} returned with results: {}".format(user_id, current_data))
         if current_data is not None:
             urls = current_data['urls']
             urls = list(filter(check, urls))
@@ -108,11 +108,18 @@ class MongoDatabase:
         else:
             return "NO-SPELLS"
 
-    def get_user_spells(self, user_id: int) -> dict:
+    def get_user_spells(self, user_id: int) -> [dict, None]:
         current_data = self.user_spells.find_one({'_id': user_id})
         logging.log(logging.DEBUG, "GET-SPELLS: User with Id: {} returned with results: {}".format(user_id,
                                                                                                    current_data))
         return current_data
+
+    def reset_all_user_spells(self, user_id: int):
+        current_data = self.guild_configs.find_one_and_delete({'_id': user_id})
+        logging.log(
+            logging.DEBUG,
+            "DELETE-ALL-SPELLS: User with Id: {} returned with results: {}".format(user_id, current_data))
+        return "COMPLETE"
 
 
 class CustomSpells:
