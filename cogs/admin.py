@@ -15,7 +15,7 @@ class Admin(commands.Cog):
 
     @commands.is_owner()
     @commands.command()
-    async def debug(self, ctx):
+    async def info(self, ctx):
         pass
 
 

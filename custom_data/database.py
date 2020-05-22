@@ -4,6 +4,7 @@ import pymongo
 import json
 import logging
 import os
+import pandas as pd
 
 
 class Settings:
@@ -18,7 +19,7 @@ class Settings:
 
 
 class MongoDatabase:
-    with open(r'{}/custom_data/config.json'.format(os.getcwd()), 'r') as file:
+    with open(r'config.json', 'r') as file:
         config = json.load(file)
 
     def __init__(self):
@@ -253,10 +254,39 @@ class GuildConfig:
         return Settings.get_config_default().pop('prefix')
 
 
+class CustomSpells:
+    def __init__(self, user_id, database=None):
+        self.user_id = user_id
+        self._db = db if database is None else database
+        self.data = self._db.get_user_spells(user_id=user_id)
+        self.spells_data_frame = None
+        asyncio.get_event_loop().create_task(self.load_spells_background())
+
+    async def load_spells_background(self):
+        _spells = {}
+        self.spells_data_frame = pd.DataFrame(_spells, columns=['name', 'data'])
+        if self.data is not None:
+            urls_to_process = self.data.pop('urls')
+
+            def append_to(value):
+                if 'name' in value:
+                    return {'null': None}
+                return {value['name']: value}
+
+            async with aiohttp.ClientSession() as sess:
+                for url_data in urls_to_process:
+                    async with sess.get(url_data['url']) as resp:
+                        if resp.status == 200:
+                            spell_data = await resp.json()
+                            df2 = pd.DataFrame(list(map(append_to, spell_data)), columns=['name', 'data'])
+                            self.spells_data_frame.append(df2, ignore_index=True)
+
+
 def setup(bot):
     Settings.bot = bot
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
-    db = MongoDatabase()
+    spells = [{'name': 'my custom spell', 'data': {'desc': 'this thing has 120hp'}}]
+    spells_data_frame = pd.DataFrame(spells, columns=['name', 'data'])
+    print(spells_data_frame.to_dict('records'))
