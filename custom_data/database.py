@@ -6,6 +6,8 @@ import logging
 
 
 class Settings:
+    bot = None
+
     @classmethod
     def get_config_default(cls) -> dict:
         return {
@@ -74,7 +76,7 @@ class MongoDatabase:
         current_data = self.guild_configs.find_one({'_id': guild_id})
         logging.log(
             logging.DEBUG, "GET-GUILD:  Guild with Id: {} returned with results: {}".format(guild_id, current_data))
-        return current_data if current_data is not None else Settings.get_config_default()
+        return current_data['config'] if current_data is not None else Settings.get_config_default()
 
     """ User's custom spells url storage and monitoring """
     def add_user_spells(self, user_id: int, name: str, url: str) -> [dict, int]:
@@ -230,11 +232,18 @@ class MongoDatabase:
         return "COMPLETE"
 
 
+class GuildConfig:
+    def __init__(self, guild_id, database=None):
+        self.guild_id = guild_id
+        _db = db if database is None else database
+        data = _db.get_guild_config(guild_id=guild_id)
 
-class CustomSpells:
-    def __init__(self, user_id):
-        self.user_id = user_id
-        self.spell_df = None
+        self.prefix = data.pop('prefix', '?')  # Emergency safe guard
+        self.premium = data.pop('premium', False)  # Emergency safe guard
+
+
+def setup(bot):
+    Settings.bot = bot
 
 
 if __name__ == "__main__":
