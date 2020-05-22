@@ -4,8 +4,6 @@ from custom_data.database import GuildConfig, MongoDatabase
 
 
 class GuildSettings(commands.Cog):
-    bot = commands.Bot
-
     def __init__(self, bot):
         self.bot = bot
 
