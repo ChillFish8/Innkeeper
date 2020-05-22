@@ -11,7 +11,8 @@ class Settings:
     @classmethod
     def get_config_default(cls) -> dict:
         return {
-
+            'prefix': '?',
+            'premium': False
         }
 
 
