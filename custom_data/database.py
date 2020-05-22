@@ -3,6 +3,7 @@ import aiohttp
 import pymongo
 import json
 import logging
+import os
 
 
 class Settings:
@@ -17,7 +18,7 @@ class Settings:
 
 
 class MongoDatabase:
-    with open(r'custom_data\config.json', 'r') as file:
+    with open(r'{}/custom_data\config.json'.format(os.getcwd()), 'r') as file:
         config = json.load(file)
 
     def __init__(self):
