@@ -5,7 +5,6 @@ from custom_data.database import GuildConfig, MongoDatabase
 
 class GuildSettings(commands.Cog):
     bot = commands.Bot
-    bot_id = 641381762785607698
 
     def __init__(self, bot):
         self.bot = bot
