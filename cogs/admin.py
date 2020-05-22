@@ -13,6 +13,11 @@ class Admin(commands.Cog):
         text += "```"
         return await ctx.send(text)
 
+    @commands.is_owner()
+    @commands.command()
+    async def debug(self, ctx):
+        pass
+
 
 def setup(bot):
     bot.add_cog(Admin(bot))
