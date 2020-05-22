@@ -16,8 +16,10 @@ class HelpCommand(commands.Cog):
 
         # General Commands
         desc_1 = f"<:discord:642859572524220427>  **General Commands**  <:discord:642859572524220427>\n" \
-                 f"`{ctx.prefix}help` - Brings up this help page.\n"
-                 #f"`{ctx.prefix}setprefix <New Prefix>` - Set a custom Prefix.\n"
+                 f"`{ctx.prefix}help` - Brings up this help page.\n" \
+                 f"`{ctx.prefix}setprefix <New Prefix>` - Set a custom Prefix.\n" \
+                 f"`{ctx.prefix}resetprefix` - Reset this server's prefix to default.\n" \
+                 f"`{ctx.prefix}getprefix` - Get the this server's prefix.\n"
         embed.add_field(name="\u200b", value=desc_1, inline=False)
 
         # Dice Rolling
