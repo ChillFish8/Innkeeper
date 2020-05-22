@@ -42,8 +42,10 @@ class Logger(commands.Cog):
     async def on_command(self, ctx: commands.Context):
         if not self.command_hook:
             return
-        embed = discord.Embed(color=discord.Colour.purple())
-        embed.set_author(name=f"{ctx.author.id} | {ctx.command}")
+        embed = discord.Embed(color=discord.Colour.purple(),
+                              description=f"**User:** `{ctx.author.id}` **|** "
+                                          f"**Guild:** `{ctx.guild.id if ctx.guild is not None else 'direct message'}` **|** "
+                                          f"**Command:** `{ctx.command}`")
         await self.send_to_wh(embed, self.command_hook)
 
 def setup(bot):
