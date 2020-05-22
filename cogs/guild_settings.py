@@ -1,6 +1,5 @@
 from discord.ext import commands
-import discord
-from custom_data.database import GuildConfig, MongoDatabase
+from custom_data.database import GuildConfig
 
 
 class GuildSettings(commands.Cog):
