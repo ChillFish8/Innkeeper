@@ -3,6 +3,8 @@ import discord
 import os
 import json
 
+from custom_data import database
+
 with open('config.json', 'r') as file:
     config = json.load(file)
 
@@ -25,6 +27,7 @@ class Innkeeper(commands.AutoShardedBot):
         self.owner_ids = DEVELOPER_IDS
         self.colour = 0x3deaf5
         self.icon = "https://cdn.discordapp.com/attachments/638140888949719080/704697130576511056/OrcPubLogo.png"
+        self.database = database.MongoDatabase()
 
     def startup(self):
         """
@@ -52,9 +55,13 @@ class Innkeeper(commands.AutoShardedBot):
     #    """ This fires at every shard connect """
     #    print(f"Shard - [{shard_id}] Connected!")
 
+    async def get_config(self, context):
+        guild_data = database.GuildConfig(context.guild.id if context.guild is not None else 0, database=self.database)
+        setattr(context, 'config', guild_data)
+        return context
+
     async def on_message(self, message):
         """ This will be used for custom Prefixes """
-
         await self.process_commands(message)
 
     async def on_command_error(self, ctx, exception):
@@ -112,13 +119,18 @@ class ErrorProcessor:
                f"in a server, not private message.**"
 
 
+async def get_custom_prefix(bot: Innkeeper, message: discord.Message):
+    guild_data = database.GuildConfig(message.guild.id if message.guild is not None else 0, database=bot.database)
+    return guild_data.prefix
+
 if __name__ == "__main__":
     the_innkeeper = Innkeeper(
-        command_prefix=commands.when_mentioned_or(*DEFAULT_PREFIX),
+        command_prefix=get_custom_prefix,
         case_insensitive=True,
         fetch_offline_member=False,
         activity=discord.Game(name=f"RPGs | ?help"),
         shard_count=SHARD_COUNT,
-    )
+        )
+    the_innkeeper.before_invoke(the_innkeeper.get_config)
     the_innkeeper.startup()
     the_innkeeper.run(TOKEN)
