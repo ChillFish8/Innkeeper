@@ -78,7 +78,7 @@ class Classes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(aliases=['class'])
     async def classes(self, ctx, class_: str):
         """ Gets a class_ either from database or site """
 

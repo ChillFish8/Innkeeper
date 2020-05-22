@@ -236,11 +236,20 @@ class MongoDatabase:
 class GuildConfig:
     def __init__(self, guild_id, database=None):
         self.guild_id = guild_id
-        _db = db if database is None else database
-        data = _db.get_guild_config(guild_id=guild_id)
+        self._db = db if database is None else database
+        data = self._db.get_guild_config(guild_id=guild_id)
 
         self.prefix = data.pop('prefix', '?')  # Emergency safe guard
         self.premium = data.pop('premium', False)  # Emergency safe guard
+
+    def set_prefix(self, new_prefix):
+        self.prefix = new_prefix
+        self._db.set_guild_config(self.guild_id, config={'prefix': self.prefix, 'premium': self.premium})
+        return self.prefix
+
+    def reset_prefix(self):
+        self._db.reset_guild_config(self.guild_id)
+        return Settings.get_config_default().pop('prefix')
 
 
 def setup(bot):
