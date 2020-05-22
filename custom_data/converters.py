@@ -35,6 +35,7 @@ class MongoDatabase:
         # custom content
         self.user_spells = self.db["TheInnkeeper-Spells"]
         self.user_races = self.db["TheInnkeeper-Races"]
+        self.user_monsters = self.db["TheInnkeeper-Monsters"]
 
         # custom guild configs
         self.guild_configs = self.db["TheInnkeeper-Guilds"]
@@ -128,19 +129,19 @@ class MongoDatabase:
 
     """ Custom Races """
     def add_user_races(self, user_id: int, name: str, url: str) -> [dict, int]:
-        current_data = self.user_spells.find_one({'_id': user_id})
+        current_data = self.user_races.find_one({'_id': user_id})
         logging.log(logging.DEBUG, "ADD-RACES: User with Id: {} returned with results: {}".format(
             user_id, current_data))
         if current_data is not None:
             urls = current_data['urls']
             urls.append({'name': name, 'url': url})
-            resp = self.user_spells.update_one({'_id': user_id}, {'$set': {'urls': urls}})
+            resp = self.user_races.update_one({'_id': user_id}, {'$set': {'urls': urls}})
             logging.log(logging.INFO, "Data updated area with UserId: {},\n"
                                       "      resp: {}\n".format(user_id, resp.raw_result))
             return resp.raw_result
         else:
             data = {'_id': user_id, 'urls': [{'name': name, 'url': url}]}
-            resp = self.user_spells.insert_one(data)
+            resp = self.user_races.insert_one(data)
             logging.log(logging.INFO, "Data inserted into area with UserId: {},\n"
                                       "      resp: {}\n".format(user_id,
                                                                 {'_id': resp.inserted_id,
@@ -151,13 +152,13 @@ class MongoDatabase:
         def check(value):
             return not value['name'] == name
 
-        current_data = self.user_spells.find_one({'_id': user_id})
+        current_data = self.user_races.find_one({'_id': user_id})
         logging.log(logging.DEBUG,
                     "REMOVE-RACES: User with Id: {} returned with results: {}".format(user_id, current_data))
         if current_data is not None:
             urls = current_data['urls']
             urls = list(filter(check, urls))
-            resp = self.user_spells.update_one({'_id': user_id}, {'$set': {'urls': urls}})
+            resp = self.user_races.update_one({'_id': user_id}, {'$set': {'urls': urls}})
             logging.log(logging.INFO, "Data updated area with UserId: {},\n"
                                       "      resp: {}\n".format(user_id, resp.raw_result))
             return resp.raw_result
@@ -165,17 +166,70 @@ class MongoDatabase:
             return "NO-SPELLS"
 
     def get_user_races(self, user_id: int) -> [dict, None]:
-        current_data = self.user_spells.find_one({'_id': user_id})
+        current_data = self.user_races.find_one({'_id': user_id})
         logging.log(logging.DEBUG, "GET-RACES: User with Id: {} returned with results: {}".format(user_id,
-                                                                                                   current_data))
+                                                                                                  current_data))
         return current_data
 
     def reset_all_user_races(self, user_id: int):
-        current_data = self.user_spells.find_one_and_delete({'_id': user_id})
+        current_data = self.user_races.find_one_and_delete({'_id': user_id})
         logging.log(
             logging.DEBUG,
             "DELETE-ALL-RACES: User with Id: {} returned with results: {}".format(user_id, current_data))
         return "COMPLETE"
+
+    """ Custom Monsters """
+    def add_user_monsters(self, user_id: int, name: str, url: str) -> [dict, int]:
+        current_data = self.user_monsters.find_one({'_id': user_id})
+        logging.log(logging.DEBUG, "ADD-MONSTER: User with Id: {} returned with results: {}".format(
+            user_id, current_data))
+        if current_data is not None:
+            urls = current_data['urls']
+            urls.append({'name': name, 'url': url})
+            resp = self.user_monsters.update_one({'_id': user_id}, {'$set': {'urls': urls}})
+            logging.log(logging.INFO, "Data updated area with UserId: {},\n"
+                                      "      resp: {}\n".format(user_id, resp.raw_result))
+            return resp.raw_result
+        else:
+            data = {'_id': user_id, 'urls': [{'name': name, 'url': url}]}
+            resp = self.user_monsters.insert_one(data)
+            logging.log(logging.INFO, "Data inserted into area with UserId: {},\n"
+                                      "      resp: {}\n".format(user_id,
+                                                                {'_id': resp.inserted_id,
+                                                                 'complete': resp.acknowledged}))
+            return resp.inserted_id
+
+    def remove_user_monsters(self, user_id: int, name: str):
+        def check(value):
+            return not value['name'] == name
+
+        current_data = self.user_monsters.find_one({'_id': user_id})
+        logging.log(logging.DEBUG,
+                    "REMOVE-MONSTER: User with Id: {} returned with results: {}".format(user_id, current_data))
+        if current_data is not None:
+            urls = current_data['urls']
+            urls = list(filter(check, urls))
+            resp = self.user_monsters.update_one({'_id': user_id}, {'$set': {'urls': urls}})
+            logging.log(logging.INFO, "Data updated area with UserId: {},\n"
+                                      "      resp: {}\n".format(user_id, resp.raw_result))
+            return resp.raw_result
+        else:
+            return "NO-SPELLS"
+
+    def get_user_monsters(self, user_id: int) -> [dict, None]:
+        current_data = self.user_monsters.find_one({'_id': user_id})
+        logging.log(logging.DEBUG, "GET-MONSTER: User with Id: {} returned with results: {}".format(user_id,
+                                                                                                  current_data))
+        return current_data
+
+    def reset_all_user_monsters(self, user_id: int):
+        current_data = self.user_monsters.find_one_and_delete({'_id': user_id})
+        logging.log(
+            logging.DEBUG,
+            "DELETE-ALL-MONSTERS: User with Id: {} returned with results: {}".format(user_id, current_data))
+        return "COMPLETE"
+
+
 
 class CustomSpells:
     def __init__(self, user_id):
@@ -186,4 +240,3 @@ class CustomSpells:
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
     db = MongoDatabase()
-    print(db.add_user_spells(12345, "https://helpme.com/", "fireball"))
