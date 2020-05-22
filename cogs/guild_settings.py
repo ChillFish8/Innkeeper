@@ -5,12 +5,13 @@ from custom_data.database import GuildConfig, MongoDatabase
 
 class GuildSettings(commands.Cog):
     bot = commands.Bot
+    bot_id = 641381762785607698
 
     def __init__(self, bot):
         self.bot = bot
 
     @commands.guild_only()
-    @commands.has_guild_permissions(manage_server=True)
+    @commands.has_guild_permissions(administrator=True)
     @commands.command(aliases=['setprefix'])
     async def set_prefix(self, ctx, *, prefix: str):
         config: GuildConfig = ctx.config
@@ -18,14 +19,14 @@ class GuildSettings(commands.Cog):
         await ctx.send(f"<:gelati_cute:704784002355036190> **My prefix is now** `{config.prefix}`")
 
     @commands.guild_only()
-    @commands.has_guild_permissions(manage_server=True)
+    @commands.has_guild_permissions(administrator=True)
     @commands.command(aliases=['resetprefix'])
     async def reset_prefix(self, ctx):
         config: GuildConfig = ctx.config
         new = config.reset_prefix()
         await ctx.send(f"<:gelati_cute:704784002355036190> **My prefix is now back to** `{new}` **(default)**")
 
-    @commands.command(aliases=[f'<@{bot.user.id}>', f'<@!{bot.user.id}>'])
+    @commands.command(aliases=['getprefix'])
     async def get_prefix(self, ctx):
         config: GuildConfig = ctx.config
         await ctx.send(f"<:gelati_cute:704784002355036190> **My prefix is** `{config.prefix}`")
@@ -34,7 +35,7 @@ class GuildSettings(commands.Cog):
         """ We catch out own error locally to keep it simple """
         if isinstance(error, commands.MissingPermissions):
             await ctx.send(
-                "<:wellfuck:704784002166554776> **Sorry! Your dont seem to have the permission** `MANAGE_SERVER`"
+                "<:wellfuck:704784002166554776> **Sorry! Your dont seem to have the permission** `ADMINISTRATOR`"
                 " **Please make sure you have this permission before using this command.")
 
 def setup(bot):
