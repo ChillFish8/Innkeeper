@@ -277,6 +277,12 @@ class GuildConfig:
         self.premium = data.pop('premium', False)  # Emergency safe guard
 
     def set_prefix(self, new_prefix):
+        """
+        This function sets it's own attr to the new prefix then
+        calls the db setting the new prefix from it's attr to avoid desync
+
+        :returns prefix
+        """
         self.prefix = new_prefix
         self._db.set_guild_config(self.guild_id, config={'prefix': self.prefix, 'premium': self.premium})
         return self.prefix
