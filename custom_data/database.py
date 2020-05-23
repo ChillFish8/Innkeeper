@@ -7,6 +7,8 @@ import pandas as pd
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
 import concurrent.futures
+import discord
+from discord.ext import commands
 
 
 class Settings:
@@ -253,7 +255,7 @@ class GuildConfig:
 
         This also handles all DB interactions and self contains it.
 
-        :returns GuildConfig object
+        :returns GuildConfig object:
     """
     def __init__(self, guild_id, database=None):
         """
@@ -466,6 +468,18 @@ class CustomRaces:
     @property
     def can_page(self) -> bool:
         return self._can_page
+
+    async def get_list(self, ctx: commands.Context, bot) -> list:
+        all_races = self.races_data_frame.to_dict('r')
+        pages, remaining = divmod(len(all_races), 10)
+        amount_of_pages = pages + (1 if remaining else 0)
+        embed_list_output = []
+        for i in range(0, pages, 10):
+            embed = discord.Embed(
+                title=f"{ctx.author.name}'s Custom Races Page {i + 1}/{amount_of_pages}",
+                color=bot.colour)
+
+        return embed_list_output
 
 
 class DriveControl:
