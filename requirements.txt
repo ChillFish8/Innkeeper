@@ -13,3 +13,4 @@ google-auth-httplib2
 google-auth-oauthlib
 gspread~=3.6.0
 pymongo~=3.10.1
+PyDrive2~=1.4.13

@@ -3,8 +3,10 @@ import aiohttp
 import pymongo
 import json
 import logging
-import os
 import pandas as pd
+from pydrive2.auth import GoogleAuth
+from pydrive2.drive import GoogleDrive
+import concurrent.futures
 
 
 class Settings:
@@ -19,7 +21,7 @@ class Settings:
 
 
 class MongoDatabase:
-    with open(r'custom_data\config.json', 'r') as file:
+    with open(r'config.json', 'r') as file:
         config = json.load(file)
 
     def __init__(self):
@@ -82,19 +84,19 @@ class MongoDatabase:
         return current_data['config'] if current_data is not None else Settings.get_config_default()
 
     """ User's custom spells url storage and monitoring """
-    def add_user_spells(self, user_id: int, name: str, url: str) -> [dict, int]:
+    def add_user_spells(self, user_id: int, url: str) -> [dict, int]:
         current_data = self.user_spells.find_one({'_id': user_id})
         logging.log(logging.DEBUG, "ADD-SPELLS: User with Id: {} returned with results: {}".format(
             user_id, current_data))
         if current_data is not None:
             urls = current_data['urls']
-            urls.append({'name': name, 'url': url})
+            urls.append({'url': url})
             resp = self.user_spells.update_one({'_id': user_id}, {'$set': {'urls': urls}})
             logging.log(logging.INFO, "Data updated area with UserId: {},\n"
                                       "      resp: {}\n".format(user_id, resp.raw_result))
             return resp.raw_result
         else:
-            data = {'_id': user_id, 'urls': [{'name': name, 'url': url}]}
+            data = {'_id': user_id, 'urls': [{'url': url}]}
             resp = self.user_spells.insert_one(data)
             logging.log(logging.INFO, "Data inserted into area with UserId: {},\n"
                                       "      resp: {}\n".format(user_id,
@@ -102,22 +104,11 @@ class MongoDatabase:
                                                                  'complete': resp.acknowledged}))
             return resp.inserted_id
 
-    def remove_user_spells(self, user_id: int, name: str):
-        def check(value):
-            return not value['name'] == name
-
-        current_data = self.user_spells.find_one({'_id': user_id})
-        logging.log(logging.DEBUG,
-                    "REMOVE-SPELL: User with Id: {} returned with results: {}".format(user_id, current_data))
-        if current_data is not None:
-            urls = current_data['urls']
-            urls = list(filter(check, urls))
-            resp = self.user_spells.update_one({'_id': user_id}, {'$set': {'urls': urls}})
-            logging.log(logging.INFO, "Data updated area with UserId: {},\n"
-                                      "      resp: {}\n".format(user_id, resp.raw_result))
-            return resp.raw_result
-        else:
-            return "NO-SPELLS"
+    def update_user_spells(self, user_id: int, spells_urls: list) -> [dict, str]:
+        resp = self.user_spells.find_one_and_update({"_id": user_id}, {'$set': {'urls': spells_urls}})
+        logging.log(logging.INFO, "Data updated area with UserId: {},\n"
+                                  "      resp: {}\n".format(user_id, resp.raw_result))
+        return resp.raw_result
 
     def get_user_spells(self, user_id: int) -> [dict, None]:
         current_data = self.user_spells.find_one({'_id': user_id})
@@ -139,13 +130,13 @@ class MongoDatabase:
             user_id, current_data))
         if current_data is not None:
             urls = current_data['urls']
-            urls.append({'name': name, 'url': url})
+            urls.append({'url': url})
             resp = self.user_races.update_one({'_id': user_id}, {'$set': {'urls': urls}})
             logging.log(logging.INFO, "Data updated area with UserId: {},\n"
                                       "      resp: {}\n".format(user_id, resp.raw_result))
             return resp.raw_result
         else:
-            data = {'_id': user_id, 'urls': [{'name': name, 'url': url}]}
+            data = {'_id': user_id, 'urls': [{'url': url}]}
             resp = self.user_races.insert_one(data)
             logging.log(logging.INFO, "Data inserted into area with UserId: {},\n"
                                       "      resp: {}\n".format(user_id,
@@ -153,9 +144,9 @@ class MongoDatabase:
                                                                  'complete': resp.acknowledged}))
             return resp.inserted_id
 
-    def remove_user_races(self, user_id: int, name: str):
+    def remove_user_races(self, user_id: int, url: str):
         def check(value):
-            return not value['name'] == name
+            return not value['url'] == url
 
         current_data = self.user_races.find_one({'_id': user_id})
         logging.log(logging.DEBUG,
@@ -262,31 +253,88 @@ class CustomSpells:
         self.spells_data_frame = None
         asyncio.get_event_loop().create_task(self.load_spells_background())
 
-    async def load_spells_background(self):
-        _spells = {}
-        self.spells_data_frame = pd.DataFrame(_spells, columns=['name', 'data'])
-        if self.data is not None:
-            urls_to_process = self.data.pop('urls')
+    @staticmethod
+    async def _process_folder(folder_urls: list):
+        def mapper(value):
+            return value['webContentLink']
 
-            def append_to(value):
-                if 'name' in value:
+        def wrapper(urls_):
+            results = []
+            for folder_url in urls_:
+                result = DriveControl.get_files(folder_url)
+                results.append(*list(map(mapper, result)))
+
+        with concurrent.futures.ThreadPoolExecutor() as pool:
+            urls = await asyncio.get_event_loop().run_in_executor(pool, wrapper, folder_urls)
+        return urls
+
+    async def load_spells_background(self):
+        self.spells_data_frame = []
+        if self.data is not None:
+            folder_urls_to_process = self.data.pop('urls')
+            urls_to_process = await self._process_folder(folder_urls_to_process)
+
+            def append_to(value: dict):
+                if 'name' not in value:
                     return {'null': None}
-                return {value['name']: value}
+                data = {'name': value['name'], 'data': value}
+                return data
 
             async with aiohttp.ClientSession() as sess:
                 for url_data in urls_to_process:
                     async with sess.get(url_data['url']) as resp:
                         if resp.status == 200:
-                            spell_data = await resp.json()
-                            df2 = pd.DataFrame(list(map(append_to, spell_data)), columns=['name', 'data'])
-                            self.spells_data_frame.append(df2, ignore_index=True)
+                            spell_data = await resp.text()
+                            spell_data = json.loads(spell_data)
+                            sec = list(map(append_to, spell_data))
+                            self.spells_data_frame.append(*sec)
+        self.spells_data_frame = pd.DataFrame(sec, columns=['name', 'data'])
+
+
+class DriveControl:
+    gauth = GoogleAuth()
+    gauth.LocalWebserverAuth()
+
+    @classmethod
+    def get_id_by_url(cls, url: str) -> [str, int]:
+        if url.startswith('https://drive.google.com/drive/folders/') or\
+                url.startswith("https://drive.google.com/open?id="):
+            return url.strip('?usp=sharing')\
+                .strip('https://drive.google.com/drive/folders/')\
+                .strip("https://drive.google.com/open?id=")
+        elif url.startswith('http://'):
+            return 1
+        elif "drive.google.com/drive/folders" not in url:
+            return 2
+        else:
+            return 3
+
+    @classmethod
+    def get_files(cls, url: str) -> [str, list]:
+        id_ = cls.get_id_by_url(url)
+        if id_ == 1:
+            return "You have not parsed a secure link."
+        elif id_ == 1:
+            return "You have not parsed a google drive folder link."
+        elif id_ == 1:
+            return "You have parsed a incorrect url format."
+        else:
+            drive = GoogleDrive(cls.gauth)
+            file_list = drive.ListFile({'q': f"'{id_}' in parents and trashed=false"}).GetList()
+            return file_list
 
 
 def setup(bot):
     Settings.bot = bot
 
 
+async def main():
+    spell = CustomSpells(1234)
+    await asyncio.sleep(10)
+    print(spell.spells_data_frame)
+
 if __name__ == "__main__":
-    spells = [{'name': 'my custom spell', 'data': {'desc': 'this thing has 120hp'}}]
-    spells_data_frame = pd.DataFrame(spells, columns=['name', 'data'])
-    print(spells_data_frame.to_dict('records'))
+    db = MongoDatabase()
+    db.add_user_spells(1234, url="https://drive.google.com/uc?export=download&id=1vVQkXdqYLjhF_AVfNpSPe62cwvUQD4Nw")
+
+    asyncio.run(main())
