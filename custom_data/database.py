@@ -1,14 +1,15 @@
 import asyncio
-import aiohttp
-import pymongo
+import concurrent.futures
 import json
 import logging
+
+import aiohttp
+import discord
 import pandas as pd
+import pymongo
+from discord.ext import commands
 from pydrive2.auth import GoogleAuth
 from pydrive2.drive import GoogleDrive
-import concurrent.futures
-import discord
-from discord.ext import commands
 
 
 class Settings:
@@ -105,7 +106,7 @@ class RacesDoc:
     def get_user_races(self, user_id: int) -> [dict, None]:
         current_data = self.user_races.find_one({'_id': user_id})
         logging.log(logging.DEBUG, "GET-RACES: User with Id: {} returned with results: {}".format(user_id,
-                                                                                                   current_data))
+                                                                                                  current_data))
         return current_data
 
     def reset_all_user_races(self, user_id: int):
@@ -152,7 +153,7 @@ class MonsterDoc:
     def get_user_monsters(self, user_id: int) -> [dict, None]:
         current_data = self.user_monsters.find_one({'_id': user_id})
         logging.log(logging.DEBUG, "GET-MONSTERS: User with Id: {} returned with results: {}".format(user_id,
-                                                                                                   current_data))
+                                                                                                     current_data))
         return current_data
 
     def reset_all_user_monsters(self, user_id: int):
@@ -257,6 +258,7 @@ class GuildConfig:
 
         :returns GuildConfig object:
     """
+
     def __init__(self, guild_id, database=None):
         """
         :param guild_id:
@@ -311,6 +313,7 @@ class CustomSpells:
 
     :returns CustomRaces Object
     """
+
     def __init__(self, user_id, database=None):
         self.user_id = user_id
         self._db = db if database is None else database
@@ -383,6 +386,82 @@ class CustomSpells:
     def can_page(self) -> bool:
         return self._can_page
 
+    async def get_list(self, ctx: commands.Context, bot) -> list:
+        all_races = self.spells_data_frame.to_dict('r')
+        pages, remaining = divmod(len(all_races), 10)
+        amount_of_pages = pages + (1 if remaining else 0)
+        embed_list_output, i, spells_done = [], 0, 0
+
+        for i in range(0, pages, 10):
+            embed = discord.Embed(color=bot.colour)
+            embed.set_author(
+                name=f"{ctx.author.name}'s Custom Spell Page {i + 1}/{amount_of_pages}",
+                icon_url=ctx.author.avatar_url)
+            for si in range(i, i + 10):
+                embed.add_field(name="\u200b", value=f"\u200b**{si + 1}) - {all_races[si]['name']}**", inline=False)
+                spells_done += 1
+            embed.set_footer(text="Custom content commands part of The Innkeeper, Powered by CF8")
+            embed_list_output.append(embed)
+
+        if remaining:
+            embed = discord.Embed(color=bot.colour)
+            embed.set_author(
+                name=f"{ctx.author.name}'s Custom Spell Page {i + 1}/{amount_of_pages}",
+                icon_url=ctx.author.avatar_url)
+            for si in range(remaining + spells_done):
+                embed.add_field(
+                    name="\u200b",
+                    value=f"\u200b**{si + 1}) - {all_races[si]['name']}**",
+                    inline=False)
+            embed.set_footer(text="Custom content commands part of The Innkeeper, Powered by CF8")
+            embed_list_output.append(embed)
+        return embed_list_output
+
+    def _search_list(self, search: str):
+        """ The heavy lifter, pandas searches the frame for matches """
+        results: pd.DataFrame = self.spells_data_frame[
+            self.spells_data_frame['name'].str.contains(search)]
+        data: dict = results.to_dict(orient='index')
+        return list(data.values())
+
+    @staticmethod
+    def _filter_exact(spell_exact, results):
+        """ Filter the result if it has an exact match """
+        for spell in results:
+            if spell['name'] == spell_exact:
+                return spell
+        return None
+
+    @staticmethod
+    def _get_result_embed(ctx, bot, content):
+        pass
+
+    async def search(self, ctx, bot, query_string):
+        results: list = self._search_list(query_string)
+        if len(results) != 0:
+            exact = self._filter_exact(query_string, results)
+            if exact is not None:
+                data = exact
+            else:
+                data = results[0]
+            return self._get_result_embed(ctx, bot, data['data'])
+        else:
+            attempt_2: list = self._search_list(query_string[0])  # lets get the first term and see
+            if len(attempt_2) > 0:
+                text = f"**Maybe you were looking for:**\n"
+                text += '\n'.join([f"**•** `{item['name']}`" for item in attempt_2[:5]])
+
+                embed = discord.Embed(color=bot.colour)
+                embed.set_author(name="Oops! I cant find anything with that search term.",
+                                 icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
+                embed.description = text
+
+            else:
+                embed = discord.Embed(color=bot.colour)
+                embed.set_author(name="Oops! I cant find any results relating to your search.",
+                                 icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
+            return embed
+
 
 class CustomRaces:
     """
@@ -397,6 +476,7 @@ class CustomRaces:
 
     :returns CustomRaces Object
     """
+
     def __init__(self, user_id, database=None):
         self.user_id = user_id
         self._db = db if database is None else database
@@ -545,16 +625,17 @@ class CustomRaces:
                                  icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
             return embed
 
+
 class DriveControl:
     gauth = GoogleAuth()
     gauth.LocalWebserverAuth()
 
     @classmethod
     def get_id_by_url(cls, url: str) -> [str, int]:
-        if url.startswith('https://drive.google.com/drive/folders/') or\
+        if url.startswith('https://drive.google.com/drive/folders/') or \
                 url.startswith("https://drive.google.com/open?id="):
-            return url.strip('?usp=sharing')\
-                .strip('https://drive.google.com/drive/folders/')\
+            return url.strip('?usp=sharing') \
+                .strip('https://drive.google.com/drive/folders/') \
                 .strip("https://drive.google.com/open?id=")
         elif url.startswith('http://'):
             return 1
@@ -589,7 +670,8 @@ async def main():
     await asyncio.wait_for(spell.wait_for_full(), timeout=5)
     print(spell.races_data_frame)
 
+
 if __name__ == "__main__":
-    #logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
     db = MongoDatabase()
     asyncio.run(main())
