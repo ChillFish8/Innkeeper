@@ -19,7 +19,7 @@ class Settings:
 
 
 class MongoDatabase:
-    with open(r'config.json', 'r') as file:
+    with open(r'custom_data\config.json', 'r') as file:
         config = json.load(file)
 
     def __init__(self):
