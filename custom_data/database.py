@@ -294,6 +294,7 @@ class CustomSpells:
                             self.spells_data_frame = pd.DataFrame(temp, columns=['name', 'data'])
                             self._can_page = True
         self.spells_data_frame = pd.DataFrame(temp, columns=['name', 'data'])
+        self._can_page = True
         self._cache_complete = True
 
     async def wait_for_full(self) -> None:
@@ -354,10 +355,11 @@ def setup(bot):
 
 async def main():
     spell = CustomSpells(1234)
-    print(asyncio.current_task())
+    await asyncio.wait_for(spell.wait_for_chunk(), timeout=5)
+    print(spell.spells_data_frame)
+    await asyncio.wait_for(spell.wait_for_full(), timeout=5)
     print(spell.spells_data_frame)
 
 if __name__ == "__main__":
     db = MongoDatabase()
-    #db.add_user_spells(1234, url="https://drive.google.com/open?id=1UebsEhaClxJYo-jgVIg1DzYDPn4RW8pk")
     asyncio.run(main())
