@@ -276,18 +276,22 @@ class GuildConfig:
         self.prefix = data.pop('prefix', '?')  # Emergency safe guard
         self.premium = data.pop('premium', False)  # Emergency safe guard
 
-    def set_prefix(self, new_prefix):
+    def set_prefix(self, new_prefix) -> str:
         """
         This function sets it's own attr to the new prefix then
         calls the db setting the new prefix from it's attr to avoid desync
 
-        :returns prefix
+        :returns prefix:
         """
         self.prefix = new_prefix
         self._db.set_guild_config(self.guild_id, config={'prefix': self.prefix, 'premium': self.premium})
         return self.prefix
 
-    def reset_prefix(self):
+    def reset_prefix(self) -> str:
+        """
+        resets guild config on db.
+        :returns default_prefix:
+        """
         self._db.reset_guild_config(self.guild_id)
         return Settings.get_config_default().pop('prefix')
 
