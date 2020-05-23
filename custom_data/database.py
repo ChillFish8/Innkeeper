@@ -256,6 +256,19 @@ class GuildConfig:
         :returns GuildConfig object
     """
     def __init__(self, guild_id, database=None):
+        """
+        :param guild_id:
+        :param database: -> Optional
+
+        If database is None it falls back to a global var,
+        THIS ONLY EXISTS WHEN RUNNING THE FILE AS MAIN!
+
+        On creation the class calls the database getting the guild settings
+        if prefix is None it reverts back to `?`, this should never happen
+        under normal circumstances.
+        Premium by default is False and will default to False in case of
+        failure.
+        """
         self.guild_id = guild_id
         self._db = db if database is None else database
         data = self._db.get_guild_config(guild_id=guild_id)
