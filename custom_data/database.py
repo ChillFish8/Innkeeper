@@ -307,7 +307,7 @@ class CustomSpells:
     - can_page Returns True when it has cached the first file.
     - cache_complete Returns True when every file has been cached.
 
-    :returns CustomSpells Object
+    :returns CustomRaces Object
     """
     def __init__(self, user_id, database=None):
         self.user_id = user_id
@@ -382,6 +382,92 @@ class CustomSpells:
         return self._can_page
 
 
+class CustomRaces:
+    """
+    Object representing the user's custom races (Part of custom Content)
+    this manages interactions with the database and processing the data.
+
+    - When this object is created it creates a background task to cache all the content
+    in a folder provided by the user (GDrive).
+
+    - can_page Returns True when it has cached the first file.
+    - cache_complete Returns True when every file has been cached.
+
+    :returns CustomRaces Object
+    """
+    def __init__(self, user_id, database=None):
+        self.user_id = user_id
+        self._db = db if database is None else database
+        self.data = self._db.get_user_races(user_id=user_id)
+        self.races_data_frame = None
+        self.downloader = asyncio.get_event_loop().create_task(self.load_spells_background())
+        self._cache_complete = False
+        self._can_page = False
+        self._error_code = 200
+
+    async def _process_folder(self, folder_urls: list) -> list:
+        def mapper(value):
+            return value['webContentLink']
+
+        def wrapper(urls_):
+            results = []
+            for folder_url in urls_:
+                result, status = DriveControl.get_files(folder_url['url'])
+                if not status:
+                    self._error_code = result
+                else:
+                    results.append(*list(map(mapper, result)))
+            return results
+
+        with concurrent.futures.ThreadPoolExecutor() as pool:
+            urls = await asyncio.get_event_loop().run_in_executor(pool, wrapper, folder_urls)
+        return urls
+
+    async def load_spells_background(self) -> None:
+        temp = []
+        if self.data is not None:
+            folder_urls_to_process = self.data.pop('urls')
+            urls_to_process = await self._process_folder(folder_urls_to_process)
+
+            def append_to(value: dict):
+                if 'name' not in value:
+                    return {'null': None}
+                data = {'name': value['name'], 'data': value}
+                return data
+
+            async with aiohttp.ClientSession() as sess:
+                for url_data in urls_to_process:
+                    async with sess.get(url_data) as resp:
+                        if resp.status == 200:
+                            spell_data = await resp.text()
+                            spell_data = json.loads(spell_data)
+                            sec = list(map(append_to, spell_data))
+                            temp.append(*sec)
+                            self.races_data_frame = pd.DataFrame(temp, columns=['name', 'data'])
+                            self._can_page = True
+        self.races_data_frame = pd.DataFrame(temp, columns=['name', 'data'])
+        self._can_page = True
+        self._cache_complete = True
+
+    async def wait_for_full(self) -> None:
+        while not self._cache_complete:
+            await asyncio.sleep(0.25)
+        return
+
+    async def wait_for_chunk(self) -> None:
+        while not self._can_page:
+            await asyncio.sleep(0.25)
+        return
+
+    @property
+    def cache_complete(self) -> bool:
+        return self._cache_complete
+
+    @property
+    def can_page(self) -> bool:
+        return self._can_page
+
+
 class DriveControl:
     gauth = GoogleAuth()
     gauth.LocalWebserverAuth()
@@ -420,11 +506,11 @@ def setup(bot):
 
 
 async def main():
-    spell = CustomSpells(1234)
+    spell = CustomRaces(1234)
     await asyncio.wait_for(spell.wait_for_chunk(), timeout=5)
-    print(spell.spells_data_frame)
+    print(spell.races_data_frame)
     await asyncio.wait_for(spell.wait_for_full(), timeout=5)
-    print(spell.spells_data_frame)
+    print(spell.races_data_frame)
 
 if __name__ == "__main__":
     #logging.basicConfig(level=logging.DEBUG)
