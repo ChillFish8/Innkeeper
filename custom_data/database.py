@@ -254,22 +254,23 @@ class CustomSpells:
         asyncio.get_event_loop().create_task(self.load_spells_background())
 
     @staticmethod
-    async def _process_folder(folder_urls: list):
+    async def _process_folder(folder_urls: list) -> list:
         def mapper(value):
             return value['webContentLink']
 
         def wrapper(urls_):
             results = []
             for folder_url in urls_:
-                result = DriveControl.get_files(folder_url)
+                result = DriveControl.get_files(folder_url['url'])
                 results.append(*list(map(mapper, result)))
+            return results
 
         with concurrent.futures.ThreadPoolExecutor() as pool:
             urls = await asyncio.get_event_loop().run_in_executor(pool, wrapper, folder_urls)
         return urls
 
     async def load_spells_background(self):
-        self.spells_data_frame = []
+        temp = []
         if self.data is not None:
             folder_urls_to_process = self.data.pop('urls')
             urls_to_process = await self._process_folder(folder_urls_to_process)
@@ -282,13 +283,14 @@ class CustomSpells:
 
             async with aiohttp.ClientSession() as sess:
                 for url_data in urls_to_process:
-                    async with sess.get(url_data['url']) as resp:
+                    async with sess.get(url_data) as resp:
                         if resp.status == 200:
                             spell_data = await resp.text()
                             spell_data = json.loads(spell_data)
                             sec = list(map(append_to, spell_data))
-                            self.spells_data_frame.append(*sec)
-        self.spells_data_frame = pd.DataFrame(sec, columns=['name', 'data'])
+                            temp.append(*sec)
+                            self.spells_data_frame = pd.DataFrame(temp, columns=['name', 'data'])
+        self.spells_data_frame = pd.DataFrame(temp, columns=['name', 'data'])
 
 
 class DriveControl:
@@ -330,11 +332,10 @@ def setup(bot):
 
 async def main():
     spell = CustomSpells(1234)
-    await asyncio.sleep(10)
+    await asyncio.sleep(5)
     print(spell.spells_data_frame)
 
 if __name__ == "__main__":
     db = MongoDatabase()
-    db.add_user_spells(1234, url="https://drive.google.com/uc?export=download&id=1vVQkXdqYLjhF_AVfNpSPe62cwvUQD4Nw")
-
+    #db.add_user_spells(1234, url="https://drive.google.com/open?id=1UebsEhaClxJYo-jgVIg1DzYDPn4RW8pk")
     asyncio.run(main())

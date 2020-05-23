@@ -6,3 +6,5 @@
 /cogs/dmv.py
 /custom_data/config.json
 /api_creds/spreadsheeet_oauth.json
+/custom_data/client_secrets.json
+/tests/
