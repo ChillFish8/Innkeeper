@@ -254,17 +254,20 @@ class CustomSpells:
         self.downloader = asyncio.get_event_loop().create_task(self.load_spells_background())
         self._cache_complete = False
         self._can_page = False
+        self._error_code = 200
 
-    @staticmethod
-    async def _process_folder(folder_urls: list) -> list:
+    async def _process_folder(self, folder_urls: list) -> list:
         def mapper(value):
             return value['webContentLink']
 
         def wrapper(urls_):
             results = []
             for folder_url in urls_:
-                result = DriveControl.get_files(folder_url['url'])
-                results.append(*list(map(mapper, result)))
+                result, status = DriveControl.get_files(folder_url['url'])
+                if not status:
+                    self._error_code = result
+                else:
+                    results.append(*list(map(mapper, result)))
             return results
 
         with concurrent.futures.ThreadPoolExecutor() as pool:
@@ -338,15 +341,15 @@ class DriveControl:
     def get_files(cls, url: str) -> [str, list]:
         id_ = cls.get_id_by_url(url)
         if id_ == 1:
-            return "You have not parsed a secure link."
+            return "You have not parsed a secure link.", False
         elif id_ == 1:
-            return "You have not parsed a google drive folder link."
+            return "You have not parsed a google drive folder link.", False
         elif id_ == 1:
-            return "You have parsed a incorrect url format."
+            return "You have parsed a incorrect url format.", False
         else:
             drive = GoogleDrive(cls.gauth)
             file_list = drive.ListFile({'q': f"'{id_}' in parents and trashed=false"}).GetList()
-            return file_list
+            return file_list, True
 
 
 def setup(bot):
