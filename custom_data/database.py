@@ -473,12 +473,31 @@ class CustomRaces:
         all_races = self.races_data_frame.to_dict('r')
         pages, remaining = divmod(len(all_races), 10)
         amount_of_pages = pages + (1 if remaining else 0)
-        embed_list_output = []
-        for i in range(0, pages, 10):
-            embed = discord.Embed(
-                title=f"{ctx.author.name}'s Custom Races Page {i + 1}/{amount_of_pages}",
-                color=bot.colour)
+        embed_list_output, i, spells_done = [], 0, 0
 
+        for i in range(0, pages, 10):
+            embed = discord.Embed(color=bot.colour)
+            embed.set_author(
+                name=f"{ctx.author.name}'s Custom Races Page {i + 1}/{amount_of_pages}",
+                icon_url=ctx.author.avatar_url)
+            for si in range(i, i + 10):
+                embed.add_field(name="\u200b", value=f"\u200b**{si + 1}) - {all_races[si]['name']}**", inline=False)
+                spells_done += 1
+            embed.set_footer(text="Custom content commands part of The Innkeeper, Powered by CF8")
+            embed_list_output.append(embed)
+
+        if remaining:
+            embed = discord.Embed(color=bot.colour)
+            embed.set_author(
+                name=f"{ctx.author.name}'s Custom Races Page {i + 1}/{amount_of_pages}",
+                icon_url=ctx.author.avatar_url)
+            for si in range(remaining + spells_done):
+                embed.add_field(
+                    name="\u200b",
+                    value=f"\u200b**{si + 1}) - {all_races[si]['name']}**",
+                    inline=False)
+            embed.set_footer(text="Custom content commands part of The Innkeeper, Powered by CF8")
+            embed_list_output.append(embed)
         return embed_list_output
 
 
