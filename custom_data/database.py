@@ -226,6 +226,14 @@ class MongoDatabase(SpellsDoc, RacesDoc, MonsterDoc, GuildData):
 
 
 class GuildConfig:
+    """
+        Object representing a guild's custom settings, this system can
+        be modified to expand settings as an when they are needed (relies on Settings Class).
+
+        This also handles all DB interactions and self contains it.
+
+        :returns GuildConfig object
+    """
     def __init__(self, guild_id, database=None):
         self.guild_id = guild_id
         self._db = db if database is None else database
@@ -245,6 +253,18 @@ class GuildConfig:
 
 
 class CustomSpells:
+    """
+    Object representing the user's custom spells (Part of custom Content)
+    this manages interactions with the database and processing the data.
+
+    - When this object is created it creates a background task to cache all the content
+    in a folder provided by the user (GDrive).
+
+    - can_page Returns True when it has cached the first file.
+    - cache_complete Returns True when every file has been cached.
+
+    :returns CustomSpells Object
+    """
     def __init__(self, user_id, database=None):
         self.user_id = user_id
         self._db = db if database is None else database
