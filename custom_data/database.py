@@ -400,7 +400,7 @@ class CustomRaces:
         self._db = db if database is None else database
         self.data = self._db.get_user_races(user_id=user_id)
         self.races_data_frame = None
-        self.downloader = asyncio.get_event_loop().create_task(self.load_spells_background())
+        self.downloader = asyncio.get_event_loop().create_task(self.load_races_background())
         self._cache_complete = False
         self._can_page = False
         self._error_code = 200
@@ -423,7 +423,7 @@ class CustomRaces:
             urls = await asyncio.get_event_loop().run_in_executor(pool, wrapper, folder_urls)
         return urls
 
-    async def load_spells_background(self) -> None:
+    async def load_races_background(self) -> None:
         temp = []
         if self.data is not None:
             folder_urls_to_process = self.data.pop('urls')
@@ -439,9 +439,9 @@ class CustomRaces:
                 for url_data in urls_to_process:
                     async with sess.get(url_data) as resp:
                         if resp.status == 200:
-                            spell_data = await resp.text()
-                            spell_data = json.loads(spell_data)
-                            sec = list(map(append_to, spell_data))
+                            races_data = await resp.text()
+                            races_data = json.loads(races_data)
+                            sec = list(map(append_to, races_data))
                             temp.append(*sec)
                             self.races_data_frame = pd.DataFrame(temp, columns=['name', 'data'])
                             self._can_page = True
