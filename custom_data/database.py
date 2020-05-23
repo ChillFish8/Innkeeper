@@ -500,6 +500,50 @@ class CustomRaces:
             embed_list_output.append(embed)
         return embed_list_output
 
+    def _search_list(self, search: str):
+        """ The heavy lifter, pandas searches the frame for matches """
+        results: pd.DataFrame = self.races_data_frame[
+            self.races_data_frame['name'].str.contains(search)]
+        data: dict = results.to_dict(orient='index')
+        return list(data.values())
+
+    @staticmethod
+    def _filter_exact(spell_exact, results):
+        """ Filter the result if it has an exact match """
+        for spell in results:
+            if spell['name'] == spell_exact:
+                return spell
+        return None
+
+    @staticmethod
+    def _get_result_embed(ctx, bot, content):
+        pass
+
+    async def search(self, ctx, bot, query_string):
+        results: list = self._search_list(query_string)
+        if len(results) != 0:
+            exact = self._filter_exact(query_string, results)
+            if exact is not None:
+                data = exact
+            else:
+                data = results[0]
+            return self._get_result_embed(ctx, bot, data['data'])
+        else:
+            attempt_2: list = self._search_list(query_string[0])  # lets get the first term and see
+            if len(attempt_2) > 0:
+                text = f"**Maybe you were looking for:**\n"
+                text += '\n'.join([f"**•** `{item['name']}`" for item in attempt_2[:5]])
+
+                embed = discord.Embed(color=bot.colour)
+                embed.set_author(name="Oops! I cant find anything with that search term.",
+                                 icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
+                embed.description = text
+
+            else:
+                embed = discord.Embed(color=bot.colour)
+                embed.set_author(name="Oops! I cant find any results relating to your search.",
+                                 icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
+            return embed
 
 class DriveControl:
     gauth = GoogleAuth()
