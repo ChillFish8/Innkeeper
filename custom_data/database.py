@@ -1,10 +1,9 @@
+import aiohttp
 import asyncio
 import concurrent.futures
+import discord
 import json
 import logging
-
-import aiohttp
-import discord
 import pandas as pd
 import pymongo
 from discord.ext import commands
@@ -626,7 +625,7 @@ class CustomRaces:
             return embed
 
 
-class DriveControl:
+"""class DriveControl:
     gauth = GoogleAuth()
     gauth.LocalWebserverAuth()
 
@@ -656,7 +655,7 @@ class DriveControl:
         else:
             drive = GoogleDrive(cls.gauth)
             file_list = drive.ListFile({'q': f"'{id_}' in parents and trashed=false"}).GetList()
-            return file_list, True
+            return file_list, True"""
 
 
 def setup(bot):

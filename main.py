@@ -3,7 +3,7 @@ import json
 import os
 from discord.ext import commands
 
-#from custom_data import database
+from custom_data import database
 
 with open('config.json', 'r') as file:
     config = json.load(file)
