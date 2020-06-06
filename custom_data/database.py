@@ -203,7 +203,7 @@ class GuildData:
         return current_data['config'] if current_data is not None else Settings.get_config_default()
 
 
-class MongoDatabase(SpellsDoc, RacesDoc, MonsterDoc, GuildData):
+class MongoDatabase(GuildData):
     """
     This is the main Mongo DB class, this pull data from config.json and
     connects to the remote mongoDB (Falls back to local host if config missing)
