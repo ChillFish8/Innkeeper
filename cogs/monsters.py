@@ -1,8 +1,8 @@
-from discord.ext import commands
 import aiohttp
+import discord
 import json
 import pandas as pd
-import discord
+from discord.ext import commands
 
 
 class GetMonster:
@@ -73,7 +73,7 @@ class Monsters(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def monster(self, ctx, monster: str):
+    async def monster(self, ctx, *, monster: str):
         """ Gets a class_ either from database or site """
 
         if not monster.isalpha():
