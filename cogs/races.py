@@ -1,8 +1,8 @@
-from discord.ext import commands
 import aiohttp
+import discord
 import json
 import pandas as pd
-import discord
+from discord.ext import commands
 
 
 class GetRace:
@@ -62,7 +62,7 @@ class Races(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def race(self, ctx, race: str):
+    async def race(self, ctx, *, race: str):
         """ Gets a class_ either from database or site """
 
         if not race.isalpha():
