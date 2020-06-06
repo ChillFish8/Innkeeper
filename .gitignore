@@ -8,3 +8,4 @@
 /api_creds/spreadsheeet_oauth.json
 /custom_data/client_secrets.json
 /tests/
+/utils/edn_to_json/test_orcbrew.orcbrew

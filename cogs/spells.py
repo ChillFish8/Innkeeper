@@ -1,8 +1,8 @@
-from discord.ext import commands
 import aiohttp
+import discord
 import json
 import pandas as pd
-import discord
+from discord.ext import commands
 
 
 class GetSpells:
@@ -73,7 +73,7 @@ class Spells(commands.Cog):
         self.bot = bot
 
     @commands.command()
-    async def spell(self, ctx, spell: str):
+    async def spell(self, ctx, *, spell: str):
         """ Gets a class_ either from database or site """
 
         if not spell.isalpha():
