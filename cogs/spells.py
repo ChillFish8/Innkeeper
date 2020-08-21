@@ -74,9 +74,9 @@ class Spells(commands.Cog):
 
     @commands.command()
     async def spell(self, ctx, *, spell: str):
-        """ Gets a class_ either from database or site """
+        """ Gets a spell either from database or site """
 
-        if not spell.isalpha():
+        if not spell.replace(" ", "").isalpha():
             embed = discord.Embed(color=self.bot.colour)
             embed.set_author(name="Oops! I cant search for things that are not words or letters.",
                              icon_url="https://cdn.discordapp.com/emojis/704784002166554776.png?v=1")
